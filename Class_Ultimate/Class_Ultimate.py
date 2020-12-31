@@ -12,7 +12,6 @@ class Ultimate:
 
                                 board[i].append(TicTacToe())
 
-
         def MakeGlobalMove(player, global_row, global_col, local_row, local_col):
 
                 if board[global_row][global_col].CheckLocalState() == None:
@@ -36,7 +35,6 @@ class Ultimate:
                                 return 0
 
                 return None
-                
 
         def CheckColWin():
                 
@@ -69,8 +67,7 @@ class Ultimate:
                 if -1 == board[2][0].CheckLocalState() == board[1][1].CheckLocalState() == board[0][2].CheckLocalState():
                                 
                         return -1
-
-
+                
         def CheckGlobalState():
 
                 if CheckRowWin() == 1 or CheckColWin() == 1 or CheckDiagWin() == 1:
