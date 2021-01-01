@@ -10,6 +10,9 @@ class TicTacToe:
         else:
             self.board = board
     
+    def __str__(self):
+        return str([str(square) for square in self.board])
+
     def get_board(self):
         return self.board.copy()
     

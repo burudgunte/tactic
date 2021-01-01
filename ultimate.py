@@ -5,6 +5,9 @@ class Ultimate:
         def __init__(self):
                 self.board = [[TicTacToe()] * 3] * 3
 
+        def __str__(self):
+                return str([str(board) for board in self.board])
+
         def get_board(self):
                 return self.board
 
