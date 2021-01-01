@@ -1,5 +1,6 @@
 import json
-from Class_Ultimate import Ultimate
+from tictactoe import TicTacToe
+from ultimate import Ultimate
 
 class Game:
 
