@@ -1,18 +1,20 @@
 from tictactoe import TicTacToe
 
 class Ultimate:
-   def __init__(self):
-                board = []
-                for i in range(3):
-                        board.append([])
-                        for j in range(3):
-                                board[i].append(TicTacToe())
 
-        def make_global_move(player, global_row, global_col, local_row, local_col):
-                if board[global_row][global_col].check_local_state() == None:
-                        board[global_row][global_col] = board[global_row][global_col].MakeLocalMove(player, local_row, local_col)
+        def __init__(self):
+                self.board = [[TicTacToe()] * 3] * 3
 
-        def check_row_win():
+        def get_board(self):
+                return self.board
+
+        def make_global_move(self, player, global_row, global_col, local_row, local_col):
+                board = self.get_board()
+                if not board[global_row][global_col].check_local_state():
+                        board[global_row][global_col] = board[global_row][global_col].make_local_move(player, local_row, local_col)
+
+        def check_row_win(self):
+                board = self.get_board()
                 for i in range(3):
                         
                         if board[i][0].check_local_state() == board[i][1].check_local_state() == board[i][2].check_local_state() == 1:
@@ -29,8 +31,8 @@ class Ultimate:
 
                 return None
 
-        def check_col_win():
-                
+        def check_col_win(self):
+                board = self.get_board() 
                 for j in range(3):
                         
                         if 1 == board[0][j].check_local_state() == board[1][j].check_local_state() == board[2][j].check_local_state():
@@ -41,7 +43,8 @@ class Ultimate:
                                 
                                 return -1
 
-        def check_diag_win():
+        def check_diag_win(self):
+                board = self.get_board()
 
                 #top left to bottom right
                 if 1 == board[0][0].check_local_state() == board[1][1].check_local_state() == board[2][2].check_local_state():
@@ -61,13 +64,13 @@ class Ultimate:
                                 
                         return -1
                 
-        def check_global_state():
+        def check_global_state(self):
 
-                if check_row_win() == 1 or check_col_win() == 1 or check_diag_win() == 1:
+                if self.check_row_win() == 1 or self.check_col_win() == 1 or self.check_diag_win() == 1:
 
                         return 1
 
-                if check_row_win() == -1 or check_col_win() == -1 or check_diag_win() == -1:
+                if self.check_row_win() == -1 or self.check_col_win() == -1 or self.check_diag_win() == -1:
 
                         return -1
 
@@ -75,7 +78,7 @@ class Ultimate:
 
                         for j in range(3):
 
-                                if board[i][j].check_local_state() == None:
+                                if self.get_board()[i][j].check_local_state() == None:
 
                                         return None
                                 

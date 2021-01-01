@@ -1,5 +1,4 @@
 import json
-from tictactoe import TicTacToe
 from ultimate import Ultimate
 
 class Game:
@@ -10,7 +9,7 @@ class Game:
         self.pointed_to = pointed_to
 
     def get_board(self):
-        return self.board.copy()
+        return self.board
 
     def get_player(self):
         return self.player
@@ -33,7 +32,11 @@ class Game:
         return json.dumps(state)
 
     def play(self):
-        while not self.board.check_global_state():
+        while not self.get_board().check_global_state():
+
+            print("Current player:", self.get_player())
+            print("Current pointed_to:", self.get_pointed_to())
+            print("Current board:", self.get_board())
 
             # Choose a  board
             if not self.get_pointed_to():
@@ -60,3 +63,14 @@ class Game:
 
         winner = self.board.check_global_state()
         print("{} wins the game".format(winner))
+
+#########################
+# Testing
+#########################
+
+def main():
+    testgame = Game()
+    testgame.play()
+
+if __name__ == "__main__":
+    main()
