@@ -1,10 +1,14 @@
 class TicTacToe:
-    def __init__(self):
-        board = []
-        for num1 in range(3):
-            board.append([])
-            for num2 in range(3):
-                board[-1].append(None)
+
+    def __init__(self, board = None):
+        if board == None:
+            self.board = []
+            for num1 in range(3):
+                self.board.append([])
+                for num2 in range(3):
+                    self.board[-1].append(None)
+        else:
+            self.board = board
     
     def get_board(self):
         return self.board.copy()
@@ -25,6 +29,12 @@ class TicTacToe:
         for col in range(3):
             if self.board[0][col] == self.board[1][col] == self.board[2][col] != None:
                 return self.board[0][col]
+            
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != None:
+            return self.board[1][1]
+        
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] != None:
+            return self.board[1][1]
         
         for row in self.board:
             for col in range(3):
@@ -33,3 +43,29 @@ class TicTacToe:
         
         return 0
     
+
+#This is a script that will run it like a game of TicTacToe for testing purposes.
+# =============================================================================
+# game = TicTacToe()
+# 
+# player = 1
+# 
+# while game.check_local_state() == None:
+#     for row in game.get_board():
+#         print(row)
+#     
+#     while True:
+#         row_input = input("Please type the row you'd like to play.")
+#         col_input = input("Please type the column you'd like to play.")
+#         if 0 <= int(row_input) <= 2 and 0 <= int(col_input) <= 2:
+#             if game.get_space(int(row_input), int(col_input)) == None:
+#                 break
+#         else:
+#             print("Please input a valid move.")
+#         
+#     game = TicTacToe(game.make_local_move(player, int(row_input), int(col_input)))
+#     
+#     player *= -1
+# 
+# print("Congratulations!", game.check_local_state(), "has won!")
+# =============================================================================
