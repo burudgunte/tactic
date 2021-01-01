@@ -11,12 +11,24 @@ class TicTacToe:
             self.board = board
     
     def __str__(self):
-        return str([str(square) for square in self.board])
+        symbols = ""
+        for row in self.board:
+            for num in range(3):
+                if row[num] == 1:
+                    symbols += "X"
+                elif row[num] == -1:
+                    symbols += "O"
+                else:
+                    symbols += "·"
+                if num < 2:
+                    symbols += " "
+            symbols += "\n"
+        return symbols
 
     def get_board(self):
         return self.board.copy()
     
-    def get_space(self, row, col):
+    def get_square(self, row, col):
         return self.board[row][col]
     
     def make_local_move(self, player, row, col):
@@ -48,27 +60,29 @@ class TicTacToe:
     
 
 #This is a script that will run it like a game of TicTacToe for testing purposes.
-# =============================================================================
+
 # game = TicTacToe()
-# 
+
 # player = 1
-# 
+
 # while game.check_local_state() == None:
-#     for row in game.get_board():
-#         print(row)
-#     
+#     #for row in game.get_board():
+#       #   print(row)
+#     print(game)
+    
 #     while True:
 #         row_input = input("Please type the row you'd like to play.")
 #         col_input = input("Please type the column you'd like to play.")
 #         if 0 <= int(row_input) <= 2 and 0 <= int(col_input) <= 2:
-#             if game.get_space(int(row_input), int(col_input)) == None:
+#             if game.get_square(int(row_input), int(col_input)) == None:
 #                 break
+#             else:
+#                 print("Please input a valid move.")
 #         else:
 #             print("Please input a valid move.")
-#         
+        
 #     game = TicTacToe(game.make_local_move(player, int(row_input), int(col_input)))
-#     
+    
 #     player *= -1
-# 
+
 # print("Congratulations!", game.check_local_state(), "has won!")
-# =============================================================================
