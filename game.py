@@ -62,6 +62,8 @@ class Game:
             self.set_ultimate(newultimate)
 
             # Choose the board for the next move
+            print("Set ultimate to:")
+            print(self.get_ultimate())
             local_board = self.get_ultimate().get_local_board(local_row, local_col)
             print(type(local_board))
             if not local_board.check_local_state():
