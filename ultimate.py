@@ -6,7 +6,15 @@ class Ultimate:
                 self.board = [[TicTacToe()] * 3] * 3
 
         def __str__(self):
-                return str([str(board) for board in self.board])
+                grid = ""
+                for row in self.board:
+                        for board in row:
+                                grid += str(board) + "\n"
+                        grid += "\n"
+                return grid
+
+        def __getitem__(self, row, col):
+                return self.board[row][col]
 
         def get_board(self):
                 return self.board
