@@ -39,13 +39,17 @@ class Game:
         self.pointed_to = new_pointed_to
 
     def to_json(self):
-        state = {"ultimate":self.get_ultimate(), "player":self.get_player(),
-                 "pointed_to":self.pointed_to()}
+        """
+        Returns a json representation of the game's current state.
+        """
+        state = {"board":self.get_ultimate().to_array(), "player":self.get_player(),
+                 "pointed_to":self.get_pointed_to()}
         return json.dumps(state)
 
     def play(self):
         """
-        Plays the game with the starting position passed as an argument to __init__.
+        Plays the game with the starting position passed as an argument to the
+        init function.
         """
         while not self.get_ultimate().check_global_state():
 
@@ -69,7 +73,7 @@ class Game:
                                                      global_col, local_row, local_col)
             self.set_ultimate(newultimate)
 
-            # Choose the board for the next move
+            # Choose board for next move
             print("Set ultimate to:")
             print(self.get_ultimate())
             local_board = self.get_ultimate().get_local_board(local_row, local_col)
@@ -91,7 +95,7 @@ class Game:
 
 def main():
     testgame = Game()
-    testgame.play()
+    print(testgame.to_json())
 
 if __name__ == "__main__":
     main()
