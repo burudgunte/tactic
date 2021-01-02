@@ -3,7 +3,7 @@ class TicTacToe:
     An object of this class represents a TicTacToe board.
     
     Attributes:
-        board - a representation of the board.
+        local_board - a representation of the board.
     
     Methods:
         __init__ - Constructor for the board. Default empty, can accept existing board.
@@ -14,22 +14,22 @@ class TicTacToe:
         check_local_state - Determines the status of the game.
     """
     
-    def __init__(self, board = None):
+    def __init__(self, local_board = None):
         """
         The constructor for the class. Creates an empty board or implements
         an existing one.
         
         Inputs:
-            board - Optional input. By default is None.
+            local_board - Optional input. By default is None.
         """
-        if board == None:
-            self.board = []
+        if local_board == None:
+            self.local_board = []
             for num1 in range(3):
-                self.board.append([])
+                self.local_board.append([])
                 for num2 in range(3):
-                    self.board[-1].append(None)
+                    self.local_board[-1].append(None)
         else:
-            self.board = board
+            self.local_board = local_board
     
     def __str__(self):
         """
@@ -42,7 +42,7 @@ class TicTacToe:
         Returns a string representation of the board.
         """
         symbols = ""
-        for row in self.board:
+        for row in self.local_board:
             for num in range(3):
                 if row[num] == 1:
                     symbols += "X"
@@ -55,7 +55,7 @@ class TicTacToe:
             symbols += "\n"
         return symbols
 
-    def get_board(self):
+    def get_local_board(self):
         """
         Getter for the board.
         
@@ -64,7 +64,7 @@ class TicTacToe:
         
         Returns a copy of the board.
         """
-        return self.board.copy()
+        return self.local_board.copy()
     
     def get_square(self, row, col):
         """
@@ -76,7 +76,7 @@ class TicTacToe:
         
         Returns the value (1, -1, or None) at the given location.
         """
-        return self.board[row][col]
+        return self.local_board[row][col]
     
     def make_local_move(self, player, row, col):
         """
@@ -89,7 +89,7 @@ class TicTacToe:
         
         Returns a board identical to the existing board but with the move played.
         """
-        new_board = self.board.copy()
+        new_board = self.local_board.copy()
         new_board[row][col] = player
         return TicTacToe(new_board)
     
@@ -103,21 +103,21 @@ class TicTacToe:
         Returns 1 or -1 if the related player has won the game, 0 if the game
         ended with a tie, or None if the game has not been completed.
         """
-        for row in self.board:
+        for row in self.local_board:
             if row[0] == row[1] == row[2] != None:
                 return row[0]
         
         for col in range(3):
-            if self.board[0][col] == self.board[1][col] == self.board[2][col] != None:
-                return self.board[0][col]
+            if self.local_board[0][col] == self.local_board[1][col] == self.local_board[2][col] != None:
+                return self.local_board[0][col]
             
-        if self.board[0][0] == self.board[1][1] == self.board[2][2] != None:
-            return self.board[1][1]
+        if self.local_board[0][0] == self.local_board[1][1] == self.local_board[2][2] != None:
+            return self.local_board[1][1]
         
-        if self.board[0][2] == self.board[1][1] == self.board[2][0] != None:
-            return self.board[1][1]
+        if self.local_board[0][2] == self.local_board[1][1] == self.local_board[2][0] != None:
+            return self.local_board[1][1]
         
-        for row in self.board:
+        for row in self.local_board:
             for col in range(3):
                 if row[col] == None:
                     return None
@@ -132,8 +132,6 @@ class TicTacToe:
 # player = 1
 
 # while game.check_local_state() == None:
-#     #for row in game.get_board():
-#       #   print(row)
 #     print(game)
     
 #     while True:
@@ -147,8 +145,13 @@ class TicTacToe:
 #         else:
 #             print("Please input a valid move.")
         
-#     game = TicTacToe(game.make_local_move(player, int(row_input), int(col_input)))
+#     game = game.make_local_move(player, int(row_input), int(col_input))
     
 #     player *= -1
 
-# print("Congratulations!", game.check_local_state(), "has won!")
+# if game.check_local_state() == 1:
+#     print("Congratulations! X has won!")
+# elif game.check_local_state() == -1:
+#     print("Congratulations! O has won!")
+# else:
+#     print("The game has ended in a tie.")
