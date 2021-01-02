@@ -30,8 +30,13 @@ class Game:
     def set_player(self, newplayer):
         self.player = newplayer
 
-    def set_pointed_to(self, row, col):
-        self.pointed_to = (row, col)
+    def set_pointed_to(self, new_pointed_to):
+        """
+        Mutates the game, changing pointed_to.
+
+        Input: a tuple (row, col) or None
+        """
+        self.pointed_to = new_pointed_to
 
     def to_json(self):
         state = {"ultimate":self.get_ultimate(), "player":self.get_player(),
@@ -39,6 +44,9 @@ class Game:
         return json.dumps(state)
 
     def play(self):
+        """
+        Plays the game with the starting position passed as an argument to __init__.
+        """
         while not self.get_ultimate().check_global_state():
 
             player_symbol = "X" if self.player == 1 else "O"
