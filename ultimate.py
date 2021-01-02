@@ -3,8 +3,15 @@ from copy import deepcopy
 
 class Ultimate:
 
-        def __init__(self, ult_board=[[TicTacToe()] * 3] * 3):
-                self.ult_board = ult_board
+        def __init__(self, ult_board=None):
+                if ult_board:
+                        self.ult_board = ult_board
+                else:
+                        self.ult_board = []
+                        for row in range(3):
+                                self.ult_board.append([])
+                                for col in range(3):
+                                        self.ult_board[-1].append(TicTacToe())
 
         def __str__(self):
                 grid = ""
