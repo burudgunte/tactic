@@ -132,8 +132,6 @@ class TicTacToe:
 # player = 1
 
 # while game.check_local_state() == None:
-#     #for row in game.get_board():
-#       #   print(row)
 #     print(game)
     
 #     while True:
@@ -147,8 +145,13 @@ class TicTacToe:
 #         else:
 #             print("Please input a valid move.")
         
-#     game = TicTacToe(game.make_local_move(player, int(row_input), int(col_input)))
+#     game = game.make_local_move(player, int(row_input), int(col_input))
     
 #     player *= -1
 
-# print("Congratulations!", game.check_local_state(), "has won!")
+# if game.check_local_state() == 1:
+#     print("Congratulations! X has won!")
+# elif game.check_local_state() == -1:
+#     print("Congratulations! O has won!")
+# else:
+#     print("The game has ended in a tie.")
