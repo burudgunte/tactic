@@ -55,7 +55,7 @@ class Game:
             print("Current board state:")
             print(self.ultimate)
 
-            # Choose a  board
+            # Choose a board
             if not self.get_pointed_to():
                 global_row = int(input("Row for global board: "))
                 global_col = int(input("Column for global board: "))
