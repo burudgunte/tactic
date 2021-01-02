@@ -91,7 +91,7 @@ class TicTacToe:
         """
         new_board = self.board.copy()
         new_board[row][col] = player
-        return new_board
+        return TicTacToe(new_board)
     
     def check_local_state(self):
         """
