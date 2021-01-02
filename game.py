@@ -53,7 +53,7 @@ class Game:
             print("Current player:", player_symbol)
             print("Current global board:", self.pointed_to)
             print("Current board state:")
-            print(self.ultimate)
+            print(self.get_ultimate())
 
             # Choose a  board
             if not self.get_pointed_to():
@@ -65,7 +65,7 @@ class Game:
             # Prompt for move
             local_row = int(input("Row for move: "))
             local_col = int(input("Column for move: "))
-            newultimate = self.ultimate.make_global_move(self.get_player(), global_row,
+            newultimate = self.get_ultimate().make_global_move(self.get_player(), global_row,
                                                      global_col, local_row, local_col)
             self.set_ultimate(newultimate)
 
@@ -75,14 +75,14 @@ class Game:
             local_board = self.get_ultimate().get_local_board(local_row, local_col)
             print(type(local_board))
             if not local_board.check_local_state():
-                self.set_pointed_to(local_row, local_col)
+                self.set_pointed_to((local_row, local_col))
             else:
                 self.set_pointed_to(None)
 
             # Switch player
             self.set_player(-1 * self.get_player())
 
-        winner = self.ultimate.check_global_state()
+        winner = self.get_ultimate().check_global_state()
         print("{} wins the game".format(winner))
 
 #########################
