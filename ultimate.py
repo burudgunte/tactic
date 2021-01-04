@@ -1,7 +1,6 @@
 from copy import deepcopy
 from tictactoe import TicTacToe
 
-#This class represents the overall board, made up of 9 local boards
 class Ultimate:
         """
         Represents the overall board, made up of 9 local boards
@@ -12,14 +11,14 @@ class Ultimate:
                         self.ult_board = ult_board
                 else:
                         self.ult_board = []
-                        for row in range(3):
+                        for dummy_row in range(3):
                                 self.ult_board.append([])
-                                for col in range(3):
+                                for dummy_col in range(3):
                                         self.ult_board[-1].append(TicTacToe())
 
         def __str__(self):
                 """
-                String representation as a 3x3 grid of local boards
+                Returns string representation as a 3x3 grid of local boards
                 """
                 grid = ""
                 for row in self.ult_board:

@@ -1,28 +1,30 @@
 import json
+from copy import deepcopy
+
 from ultimate import Ultimate
 
 class Game:
 
-    def __init__(self, ultimate=Ultimate(), player=1, pointed_to=None):
+    def __init__(self, ultimate=Ultimate(), player=1, next_global_coords=None):
         self.ultimate = ultimate
         self.player = player
-        self.pointed_to = pointed_to
+        self.next_global_coords = next_global_coords
 
     def __str__(self):
         player_symbol = "X" if self.player == 1 else "O"
         print("Current player:", player_symbol)
-        print("Current global board:", self.pointed_to)
+        print("Current global board:", self.next_global_coords)
         print("Current board state:")
-        print(self.board)
+        print(self.ultimate)
 
     def get_ultimate(self):
-        return self.ultimate
+        return deepcopy(self.ultimate)
 
     def get_player(self):
         return self.player
 
-    def get_pointed_to(self):
-        return self.pointed_to
+    def get_next_global_coords(self):
+        return self.next_global_coords
 
     def set_ultimate(self, newultimate):
         self.ultimate = newultimate
@@ -30,21 +32,28 @@ class Game:
     def set_player(self, newplayer):
         self.player = newplayer
 
-    def set_pointed_to(self, new_pointed_to):
+    def set_next_global_coords(self, new_next_global_coords):
         """
-        Mutates the game, changing pointed_to.
+        Returns a new instance of Game with next_global_coords replaced.
 
         Input: a tuple (row, col) or None
         """
-        self.pointed_to = new_pointed_to
+        self.next_global_coords = new_next_global_coords
 
     def to_json(self):
         """
         Returns a json representation of the game's current state.
         """
         state = {"board":self.get_ultimate().to_array(), "player":self.get_player(),
-                 "pointed_to":self.get_pointed_to()}
+                 "next_global_coords":self.get_next_global_coords()}
         return json.dumps(state)
+
+    def next_move(self, next_global_coords, local_row, local_col):
+        """
+        Plays the next move with given parameters.
+        Returns a json representation of the game after the move has been played.
+        """
+        pass
 
     def play(self):
         """
@@ -52,19 +61,22 @@ class Game:
         init function.
         """
         while not self.get_ultimate().check_global_state():
+            
+            with open("test.json", "w") as f:
+                f.write(self.to_json())
 
             player_symbol = "X" if self.player == 1 else "O"
             print("Current player:", player_symbol)
-            print("Current global board:", self.pointed_to)
+            print("Current global board:", self.next_global_coords)
             print("Current board state:")
             print(self.get_ultimate())
 
             # Choose a board
-            if not self.get_pointed_to():
+            if not self.get_next_global_coords():
                 global_row = int(input("Row for global board: "))
                 global_col = int(input("Column for global board: "))
             else:
-                global_row, global_col = self.get_pointed_to()
+                global_row, global_col = self.get_next_global_coords()
 
             # Prompt for move
             local_row = int(input("Row for move: "))
@@ -79,9 +91,9 @@ class Game:
             local_board = self.get_ultimate().get_local_board(local_row, local_col)
             print(type(local_board))
             if not local_board.check_local_state():
-                self.set_pointed_to((local_row, local_col))
+                self.set_next_global_coords((local_row, local_col))
             else:
-                self.set_pointed_to(None)
+                self.set_next_global_coords(None)
 
             # Switch player
             self.set_player(-1 * self.get_player())
@@ -95,7 +107,7 @@ class Game:
 
 def main():
     testgame = Game()
-    print(testgame.to_json())
+    testgame.play()
 
 if __name__ == "__main__":
     main()

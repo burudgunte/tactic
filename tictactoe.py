@@ -24,9 +24,9 @@ class TicTacToe:
         """
         if local_board == None:
             self.local_board = []
-            for num1 in range(3):
+            for dummy_num1 in range(3):
                 self.local_board.append([])
-                for num2 in range(3):
+                for dummy_num2 in range(3):
                     self.local_board[-1].append(None)
         else:
             self.local_board = local_board
