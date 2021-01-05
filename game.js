@@ -1,16 +1,3 @@
-class Square {
-
-    constructor(digit) {
-        if (digit == 1) {
-            this.symbol = "X";
-        } else if (digit == -1) {
-            this.symbol = "O";
-        } else if (digit == 0) {
-            this.symbol = "";
-        }
-    }
-}
-
 function digitToSymbol(digit) {
     if (digit == 1) {
         return "X";
@@ -35,15 +22,11 @@ class LocalGame {
     constructor(localBoard = [[null, null, null], 
                               [null, null, null], 
                               [null, null, null]]) {
-        this.localBoard = localBoard;
+        this._localBoard = localBoard;
     }
 
     get localBoard() {
-        return this.localBoard;
-    }
-
-    get square(row, col) {
-        return this.localBoard[row][col];
+        return this._localBoard;
     }
 
     makeLocalMove(player, row, col) {
@@ -85,13 +68,13 @@ class LocalGame {
         for (const row of this.localBoard) {
             for (let col = 0; col < 3; col++) {
                 if (row[col] !== null) {
-                    return null
+                    return null;
                 }
             }
         }
 
         // Game tied
-        return 0
+        return 0;
     }
 
     draw(ctx, xCoord, yCoord, color = null) {
@@ -119,14 +102,30 @@ class LocalGame {
     }
 }
 
-class UltimateGame {
+class GlobalGame {
 
-    constructor(json_layout) {
-        let layout = JSON.parse(json_layout);
-        this.ultimateBoard = layout["ultimateBoard"];
-        this.player = layout["player"];
-        this.nextGlobalCoords = layout["nextGlobalCoords"];
-        // this.winner = layout["winner"];
+    constructor(globalBoard = null, player = null, nextGlobalCoords = null) {
+        if (!globalBoard) {
+            this._globalBoard = [[new LocalGame(), new LocalGame(), new LocalGame()], 
+                                [new LocalGame(), new LocalGame(), new LocalGame()],
+                                [new LocalGame(), new LocalGame(), new LocalGame()]]
+        } else {
+            this._globalBoard = globalBoard
+        }
+        this._player = player;
+        this._nextGlobalCoords = nextGlobalCoords;
+    }
+
+    get globalBoard() {
+        return this._globalBoard;
+    }
+
+    get player() {
+        return this._player;
+    }
+
+    get nextGlobalCoords() {
+        return this._nextGlobalCoords;
     }
 
     validMoveColor() {
@@ -138,19 +137,19 @@ class UltimateGame {
     }
 
     draw(ctx) {
-        alert("nextglobalcoords = " + this.nextGlobalCoords)
         for (let i = 0; i < 3; i++) {
             let xCoord = 300 + 300 * i;
-            alert("xCoord " + xCoord);
+            
             for (let j = 0; j < 3; j++) {
                 let yCoord = 300 * j;
-                alert("yCoord " + yCoord);
-                // alert(this.ultimateBoard[i][j])
-                let game = new LocalGame(this.ultimateBoard[i][j]);
+                let game = this.globalBoard[i][j];
+                
+                // Color spaces if valid
                 if (this.nextGlobalCoords === [j, i] ) {
                     alert(this.nextGlobalCoords + j + i);
                     game.draw(ctx, xCoord, yCoord, this.ValidMoveColor());
                 }
+                
                 game.draw(ctx, xCoord, yCoord);
             }
         }  
@@ -172,11 +171,5 @@ ctx.lineWidth = 5;
 ctx.fillStyle = 'white';
 ctx.font = '48px georgia';
 
-alert('drew game');
-let board = [[0, 0, 1], [-1, 0, 0], [0, 0, 0]];
-let game = new LocalGame(localBoard = board);
-game.draw(ctx, 300, 300, null);
-
-// let json_layout = '{"ultimateBoard": [[[[null, null, null], [null, null, null], [null, 1, null]], [[null, null, null], [null, null, null], [null, null, null]], [[null, null, null], [null, null, null], [null, null, null]]], [[[null, null, null], [null, null, null], [null, null, null]], [[-1, null, null], [null, 1, null], [null, null, null]], [[null, null, null], [null, null, null], [null, null, null]]], [[[null, null, null], [null, null, null], [null, null, null]], [[null, null, null], [null, null, null], [null, null, null]], [[null, null, null], [null, null, null], [null, null, null]]]], "player": -1, "nextGlobalCoords": [2, 1]}';
-// let testGame = new UltimateGame(json_layout);
-// testGame.draw(ctx);
+let testGame = new GlobalGame();
+testGame.draw(ctx);
