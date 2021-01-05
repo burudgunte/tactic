@@ -1,16 +1,3 @@
-class Square {
-
-    constructor(digit) {
-        if (digit == 1) {
-            this.symbol = "X";
-        } else if (digit == -1) {
-            this.symbol = "O";
-        } else if (digit == 0) {
-            this.symbol = "";
-        }
-    }
-}
-
 function digitToSymbol(digit) {
     if (digit == 1) {
         return "X";
@@ -40,10 +27,6 @@ class LocalGame {
 
     get localBoard() {
         return this.localBoard;
-    }
-
-    get square(row, col) {
-        return this.localBoard[row][col];
     }
 
     makeLocalMove(player, row, col) {
@@ -96,7 +79,6 @@ class LocalGame {
 
     draw(ctx, xCoord, yCoord, color = null) {
         ctx.strokeRect(xCoord, yCoord, 300, 300);
-
         for (let i = 0; i < 3; i++) {
             let xSquare = xCoord + 100 * i;
             for (let j = 0; j < 3; j++) {
@@ -138,7 +120,7 @@ class UltimateGame {
     }
 
     draw(ctx) {
-        alert("nextglobalcoords = " + this.nextGlobalCoords)
+        alert("nextglobalcoords = " + this.nextGlobalCoords);
         for (let i = 0; i < 3; i++) {
             let xCoord = 300 + 300 * i;
             alert("xCoord " + xCoord);
@@ -157,7 +139,8 @@ class UltimateGame {
     }
 }
 
-const canvas = document.querySelector('.ultimateBoard');
+
+const canvas = document.querySelector('.game');
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
 
@@ -172,8 +155,7 @@ ctx.lineWidth = 5;
 ctx.fillStyle = 'white';
 ctx.font = '48px georgia';
 
-alert('drew game');
-let board = [[0, 0, 1], [-1, 0, 0], [0, 0, 0]];
+let board = [[null, null, 1], [-1, null, null], [null, null, null]];
 let game = new LocalGame(localBoard = board);
 game.draw(ctx, 300, 300, null);
 
