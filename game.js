@@ -29,8 +29,12 @@ class LocalGame {
         return this._localBoard;
     }
 
+    copy() {
+        return JSON.parse(JSON.stringify(this.localBoard));
+    }
+
     makeLocalMove(player, row, col) {
-        let newLocalBoard = JSON.parse(JSON.stringify(this.localBoard));
+        let newLocalBoard = this.copy();
         newLocalBoard[row][col] = player;
         let newLocalGame = new LocalGame(newLocalBoard);
         return newLocalGame;
@@ -55,10 +59,10 @@ class LocalGame {
         }
 
         // Check diagonals
-        diag1 = [this.localBoard[0][0], this.localBoard[1][1]], this.localBoard[2[2]];
-        diag2 = [this.localBoard[0][2], this.localBoard[1][1], this.localBoard[2][0]];
-        
-        for (const diag of [diag1, diag2]) {
+        let diag1 = [this.localBoard[0][0], this.localBoard[1][1], this.localBoard[2][2]];
+        let diag2 = [this.localBoard[0][2], this.localBoard[1][1], this.localBoard[2][0]];
+        let diags = [diag1, diag2];
+        for (const diag of diags) {
             if (allSame(diag) && diag[0] !== null) {
                 return diag[0];
             }
@@ -128,6 +132,118 @@ class GlobalGame {
         return this._nextGlobalCoords;
     }
 
+    getLocalBoard(row, col) {
+        return this.globalBoard[row][col];
+    }
+
+    toJSON() {
+        let str = "";
+        for (r = 0; r < 3; r++) {
+          for (c = 0; c < 3; c++) {
+            str += JSON.stringify(globalBoard[r][c]) + " ";
+          }
+        }
+        return str;
+    }
+    
+    copyGlobalBoard() {
+        let newGlobalBoard = [];
+        for (const localGame of this.globalBoard) {
+            newGlobalBoard.push(localGame.copy())
+        }
+        return newGlobalBoard;
+    }
+
+    makeGlobalMove(globalRow, globalCol, localRow, localCol) {
+        let newGlobalBoard = this.copyGlobalBoard();
+        newGlobalBoard[globalRow][globalCol] = newGlobalBoard[globalRow][globalCol].makeLocalMove(this.player, localRow, localCol);
+        return new GlobalGame(newGlobalBoard);
+      }
+
+    checkRowWin() {
+        for (const row of this.globalBoard) {
+            let winners = [];
+            for (let col = 0; col < 3; col++) {
+                winners.push(row[col].getLocalState());
+            }
+            // Check if winner exists
+            if (allSame(winners) && winners[0] !== null) {
+                return winners[0];
+            }
+        }
+
+        // No winner yet
+        return null;
+    }
+
+    checkColWin() {
+        for (let col = 0; col < 3; col++) {
+            let winners = [];
+            for (let row = 0; row < 3; row++) {
+                winners.push(row[col].getLocalState());
+            }
+            // Check if winner exists
+            if (allSame(winners) && winners[0] !== null) {
+                return winners[0];
+            }
+        }
+
+        // No winner yet
+        return null;
+    }
+
+    checkDiagWin() {
+        // Create arrays representing diagonal states
+        let diag1 = [];
+        let diag2 = [];
+        for (let i =- 0; i < 3; i++) {
+            diag1.push(this.globalBoard[i][i].getLocalState());
+            diag2.push(this.globalBoard[i][2 - i].getLocalState());
+        }
+
+        // Check diagonals for wins
+        for (const diag of [diag1, diag2]) {
+            if (allSame(diag) && diag[0] !== null) {
+                return diag[0];
+            }
+        }
+
+        // No winner yet
+        return null;
+    }
+
+    checkGlobalState() {
+        let rowWin = this.checkRowWin();
+        let colWin = this.checkColWin();
+        let diagWin = this.checkDiagWin();
+
+        if (rowWin) {
+            return rowWin;
+        } else if (colWin) {
+            return colWin;
+        } else if (diagWin) {
+            return diagWin;
+        }
+
+        // No winner yet
+        return null;
+    }
+
+    playNextMove(globalRow, globalCol, localRow, localCol) {
+        /* Draws a new instance of GlobalGame, and prints a 
+        victory message if there is now a victor.
+        Note that the function doesn't check for valid moves.
+        This should already be done by the click handler. */
+        let newGlobalGame = this.makeGlobalMove(globalRow, globalCol, localRow, localCol);
+        newGlobalGame.draw();
+        
+        // Check for victor
+        let state = newGlobalGame.checkGlobalState();
+        if (state) {
+            alert("Congratulations, " + digitToSymbol(state) + " wins the game.")
+        }
+    }
+
     validMoveColor() {
         if (this.player === 1) {
             return 'rgba(0, 0, 255, 0.5)';
@@ -145,7 +261,7 @@ class GlobalGame {
                 let game = this.globalBoard[i][j];
                 
                 // Color spaces if valid
-                if (this.nextGlobalCoords === [j, i] ) {
+                if (this.nextGlobalCoords === [j, i]) {
                     alert(this.nextGlobalCoords + j + i);
                     game.draw(ctx, xCoord, yCoord, this.ValidMoveColor());
                 }
