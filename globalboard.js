@@ -4,24 +4,25 @@ class GlobalBoard {
 
   //Represents the overall board, made up of 9 local boards
   constructor(globalBoard = None) {
-
-    globalBoard ? this.globalBoard = globalBoard : {
-      this.globalBoard = [] for (let dummyRow = 0; dummyRow < 3; dummyRow++) {
+    if (globalBoard === None) {
+      globalBoard = [];
+      for (let row = 0; row < 3; row++) {
         globalBoard.push([]);
-        for (let dummyCol = 0; dummyCol < 3; dummyCol++) {
-          globalBoard[dummyRow].push(TicTacToe());
+        for (let col = 0; col < 3; col++) {
+          globalBoard[row].push(TicTacToe());
         }
       }
     }
   }
-  
+
   //analogous to a toString method
   toJSON() {
     let str = "";
     for (r = 0; r < 3; r++) {
       for (c = 0; c < 3; c++) {
-        str += JSON.stringify(globalBoard[r][c]) + " ";
+        str += JSON.stringify(globalBoard[r][c]) + "<br>";
       }
+      str+= "<br><br><br>";
     }
     return str;
   }
@@ -33,17 +34,24 @@ class GlobalBoard {
 
   //makes a deep copy of the entire global board
   copyGlobalBoard() {
-    return _.cloneDeep(this.globalBoard);
+    return _.cloneDeep(globalBoard);
   }
 
   //returns an array representation of the global board
   toArray() {
-
+    let arr = [];
+    for (r = 0; r < 3; r++) {
+      arr.push([]);
+      for (c = 0; c < 3; c++) {
+        arr[r].push(globalBoard[r][c]);
+      }
+    }
+    return arr;
   }
 
   //Makes a move by duplicating the board, making a move on the specified local board, then returning the new board
   makeGlobalMove(player, globalRow, globalCol, localRow, localCol) {
-    let newGlobalBoard = this.copyGlobalBoard();
+    let newGlobalBoard = copyGlobalBoard();
     newGlobalBoard[globalRow][globalCol] = newGlobalBoard[globalRow][globalCol].makeLocalMove(player, localRow, localCol);
     return GlobalBoard(newGlobalBoard);
   }
