@@ -68,7 +68,7 @@ class LocalGame {
             }
         }
 
-        // Check tie
+        // Check for unfilled spaces
         for (const row of this.localBoard) {
             for (let col = 0; col < 3; col++) {
                 if (row[col] !== null) {
