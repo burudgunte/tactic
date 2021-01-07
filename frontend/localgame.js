@@ -17,28 +17,41 @@ function allSame(arr) {
     return true;
 }
 
-class LocalBoard {
+class LocalGame {
 
-    constructor(localBoard = [[null, null, null],
-                              [null, null, null],
-                              [null, null, null]]) {
+    constructor(globalGame, localBoard = [[new Square(), new Square(), new Square()],
+                                          [new Square(), new Square(), new Square()],
+                                          [new Square(), new Square(), new Square()]]) {
         this._localBoard = localBoard;
+        this._globalGame = globalGame;
     }
 
     get localBoard() {
         return this._localBoard;
     }
 
+    get globalGame() {
+        return this._globalGame;
+    }
+
+    getSquareStates() {
+        arr = [[localBoard[0][0]._state, localBoard[0][1]._state, localBoard[0][2]._state],
+               [localBoard[1][0]._state, localBoard[1][1]._state, localBoard[1][2]._state],
+               [localBoard[2][0]._state, localBoard[2][1]._state, localBoard[2][2]._state]];
+        return arr;
+    }
+
     makeLocalMove(player, row, col) {
         let newLocalBoard = JSON.parse(JSON.stringify(this.localBoard));
-        newLocalBoard[row][col] = player;
-        let newLocalBoard = new LocalBoard(newLocalBoard);
-        return newLocalBoard;
+        newLocalBoard[row][col].makeMove(player);
+        let newLocalGame = new LocalGame(newLocalBoard);
+        return newLocalGame;
     }
 
     checkLocalState() {
+        let squareStates = this.localBoard.getSquareStates();
         // Check rows
-        for (const row of this.localBoard) {
+        for (const row of squareStates) {
             if (allSame(row) && row[0] !== null) {
                 return row[0];
             }
@@ -46,17 +59,17 @@ class LocalBoard {
 
         // Check columns
         for (let col = 0; col < 3; col++) {
-            arr = [this.localBoard[0][col],
-                    this.localBoard[1][col],
-                    this.localBoard[2][col]];
+            arr = [this.squareStates[0][col],
+                    this.squareStates[1][col],
+                    this.squareStates[2][col]];
             if (allSame(arr) && arr[0] !== null) {
                 return arr[0];
             }
         }
 
         // Check diagonals
-        diag1 = [this.localBoard[0][0], this.localBoard[1][1]], this.localBoard[2[2]];
-        diag2 = [this.localBoard[0][2], this.localBoard[1][1], this.localBoard[2][0]];
+        diag1 = [this.squareStates[0][0], this.squareStates[1][1]], this.squareStates[2[2]];
+        diag2 = [this.squareStates[0][2], this.squareStates[1][1], this.squareStates[2][0]];
 
         for (const diag of [diag1, diag2]) {
             if (allSame(diag) && diag[0] !== null) {
@@ -65,7 +78,7 @@ class LocalBoard {
         }
 
         // Check tie
-        for (const row of this.localBoard) {
+        for (const row of this.squareStates) {
             for (let col = 0; col < 3; col++) {
                 if (row[col] === null) {
                     return null;
