@@ -1,8 +1,6 @@
-class Square {
-    constructor(row, col, state = 0) {
 export default class Square {
-    
-    constructor(localGame, state = 0) {
+
+    constructor(row, col, state = 0) {    
         this._localGame = localGame;
         this._state = state;
         this._row = row;
