@@ -92,26 +92,27 @@ export default class LocalGame {
         return 0;
     }
 
-    draw(ctx, xCoord, yCoord, color = null) {
-        ctx.strokeRect(xCoord, yCoord, 300, 300);
+    draw(ctx, xCoord, yCoord, boardSize = 150, color = null) {
+        ctx.strokeRect(xCoord, yCoord, boardSize, boardSize);
+        let squareSize = boardSize / 3;
 
-        for (let i = 0; i < 3; i++) {
-            let xSquare = xCoord + 100 * i;
-            for (let j = 0; j < 3; j++) {
+        for (let row = 0; row < 3; row++) {
+            let xSquare = xCoord + (squareSize * row);
+            for (let col = 0; col < 3; col++) {
                 // Draw square
-                let ySquare = yCoord + 100 * j;
-                ctx.strokeRect(xSquare, ySquare, 100, 100);
-                let symbol = digitToSymbol(this.localBoard[i][j]);
+                let ySquare = yCoord + (squareSize * col);
+                ctx.strokeRect(xSquare, ySquare, squareSize, squareSize);
+                let symbol = digitToSymbol(this.localBoard[row][col]);
 
                 // Color if valid move
                 if (color) {
                     ctx.fillStyle = color;
                     if (symbol) {
-                        ctx.fillRect(xSquare, ySquare, 100, 100);
+                        ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
                     }
                 }
                 // Draw symbol
-                ctx.fillText(symbol, xSquare + 33, ySquare + 67);
+                ctx.fillText(symbol, xSquare + Math.floor(squareSize / 3), ySquare + Math.floor(squareSize * 2 / 3));
             }
         }
     }

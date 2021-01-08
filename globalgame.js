@@ -105,4 +105,29 @@ export default class GlobalGame {
     }
     return 0;
   }
+
+  draw(ctx, width, height, boardSize = 450) {
+    /* ctx: canvas.getContext element to draw on
+    width, height: width and height of the canvas 
+    Note that the board is centered in the screen;
+    default dimensions 450px * 450px. */
+    for (let i = 0; i < 3; i++) {
+        let xCoord = ((width / 2) - (boardSize / 2)) + (150 * i);
+        // alert("xCoord: " + xCoord)
+
+        for (let j = 0; j < 3; j++) {
+            let yCoord = ((height / 2) - (boardSize / 2)) + (150 * i);
+            // alert("yCoord: " + yCoord)
+            let game = this.globalBoard[i][j];
+            
+            // Color spaces if valid
+            if (this.nextGlobalCoords === [j, i] ) {
+                alert(this.nextGlobalCoords + j + i);
+                game.draw(ctx, xCoord, yCoord, color = this.ValidMoveColor());
+            }
+            
+            game.draw(ctx, xCoord, yCoord);
+        }
+    }  
+  }
 }

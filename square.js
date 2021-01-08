@@ -1,4 +1,5 @@
 export default class Square {
+    
     constructor(localGame, state = 0) {
         this._localGame = localGame;
         this._state = state;
