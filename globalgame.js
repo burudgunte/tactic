@@ -1,4 +1,4 @@
-import { LocalGame } from "./localgame.js";
+import LocalGame from "./localgame.js";
 
 function allSame(arr) {
   for (const element of arr) {
@@ -9,7 +9,7 @@ function allSame(arr) {
   return true;
 }
 
-class GlobalGame {
+export default class GlobalGame {
 
   //Represents the overall board, made up of 9 local boards
   constructor(globalBoard = null) {
@@ -106,5 +106,3 @@ class GlobalGame {
     return 0;
   }
 }
-
-export { GlobalGame };

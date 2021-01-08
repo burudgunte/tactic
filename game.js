@@ -1,4 +1,4 @@
-import  { GlobalGame } from "./globalgame.js"
+import GlobalGame from "./globalgame.js"
 
 const canvas = document.querySelector('.ultimateBoard');
 const width = canvas.width = window.innerWidth;
