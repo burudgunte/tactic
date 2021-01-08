@@ -45,6 +45,23 @@ export default class GlobalGame {
     return this.globalBoard[row][col];
   }
 
+  //Makes a move by duplicating the board, making a move on the specified local board, then returning the new board
+  makeGlobalMove(player, globalRow, globalCol, localRow, localCol) {
+    let newGlobalBoard = this.copyGlobalBoard();
+    newGlobalBoard[globalRow][globalCol] = newGlobalBoard[globalRow][globalCol].makeLocalMove(player, localRow, localCol);
+    return GlobalBoard(newGlobalBoard);
+  }
+
+  //checks if all elements of the array are the same
+  allSame(arr) {
+    for (const element of arr) {
+        if (element !== arr[0]) {
+            return false;
+        }
+    }
+    return true;
+  }
+
   //Check if there is a row of local boards that are the same and returns 1 or -1
   checkRowWin() {
     for (let i = 0; i < 3; i++) {
