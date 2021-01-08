@@ -1,3 +1,5 @@
+import Square from "./square.js";
+
 function digitToSymbol(digit) {
     if (digit == 1) {
         return "X";
@@ -17,7 +19,7 @@ function allSame(arr) {
     return true;
 }
 
-class LocalGame {
+export default class LocalGame {
 
     constructor(globalGame, localBoard = [[new Square(0, 0), new Square(0, 1), new Square(0, 2)],
                                           [new Square(1, 0), new Square(1, 1), new Square(1, 2)],

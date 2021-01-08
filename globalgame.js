@@ -1,15 +1,26 @@
-class GlobalGame {
+import LocalGame from "./localgame.js";
+
+function allSame(arr) {
+  for (const element of arr) {
+      if (element !== arr[0]) {
+          return false;
+      }
+  }
+  return true;
+}
+
+export default class GlobalGame {
 
   //Represents the overall board, made up of 9 local boards
-  constructor(globalBoard = None) {
+  constructor(globalBoard = null) {
 
     if (globalBoard) {
       this._globalBoard = globalBoard;
     }
     else {
-      globalBoard = [[null, null, null],
-                     [null, null, null],
-                     [null, null, null]]
+      globalBoard = [[new LocalGame(), new LocalGame(), new LocalGame()],
+                     [new LocalGame(), new LocalGame(), new LocalGame()],
+                     [new LocalGame(), new LocalGame(), new LocalGame()]]
       this._globalBoard = globalBoard; 
     }
   }
@@ -26,12 +37,10 @@ class GlobalGame {
     return str;
   }
 
-  //gets the global board
   get globalBoard() {
     return this._globalBoard;
   }
 
-  //gets a single local board
   getLocalBoard(row, col) {
     return this.globalBoard[row][col];
   }

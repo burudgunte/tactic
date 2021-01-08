@@ -1,21 +1,4 @@
-function digitToSymbol(digit) {
-    if (digit == 1) {
-        return "X";
-    } else if (digit == -1) {
-        return "O";
-    } else {
-        return "";
-    }
-}
-
-function allSame(arr) {
-    for (const element of arr) {
-        if (element !== arr[0]) {
-            return false;
-        }
-    }
-    return true;
-}
+import GlobalGame from "./globalgame.js"
 
 const canvas = document.querySelector('.ultimateBoard');
 const width = canvas.width = window.innerWidth;
