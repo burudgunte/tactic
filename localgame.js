@@ -1,3 +1,5 @@
+import { Square } from "./square.js";
+
 function digitToSymbol(digit) {
     if (digit == 1) {
         return "X";
@@ -114,3 +116,5 @@ class LocalGame {
         }
     }
 }
+
+export { LocalGame };

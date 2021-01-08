@@ -12,3 +12,5 @@ class Square {
         state = player;
     }
 }
+
+export { Square };
