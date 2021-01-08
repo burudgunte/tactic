@@ -1,7 +1,7 @@
 class GlobalGame {
 
   //Represents the overall board, made up of 9 local boards
-  constructor(globalBoard = None) {
+  constructor(globalBoard = null) {
 
     if (globalBoard) {
       this._globalBoard = globalBoard;
@@ -26,12 +26,10 @@ class GlobalGame {
     return str;
   }
 
-  //gets the global board
   get globalBoard() {
     return this._globalBoard;
   }
 
-  //gets a single local board
   getLocalBoard(row, col) {
     return this.globalBoard[row][col];
   }
