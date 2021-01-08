@@ -37,12 +37,11 @@ class GlobalGame {
   }
 
   //Makes a move by duplicating the board, making a move on the specified local board, then returning the new board
-  /*
   makeGlobalMove(player, globalRow, globalCol, localRow, localCol) {
     let newGlobalBoard = this.copyGlobalBoard();
     newGlobalBoard[globalRow][globalCol] = newGlobalBoard[globalRow][globalCol].makeLocalMove(player, localRow, localCol);
     return GlobalBoard(newGlobalBoard);
-  }*/
+  }
 
   //checks if all elements of the array are the same
   allSame(arr) {
