@@ -25,7 +25,14 @@ export default class GlobalGame {
     }
   }
 
-  //analogous to a toString method
+  get globalBoard() {
+    return this._globalBoard;
+  }
+
+  getLocalBoard(row, col) {
+    return this.globalBoard[row][col];
+  }
+
   toJSON() {
     let str = "";
     for (r = 0; r < 3; r++) {
@@ -37,29 +44,11 @@ export default class GlobalGame {
     return str;
   }
 
-  get globalBoard() {
-    return this._globalBoard;
-  }
-
-  getLocalBoard(row, col) {
-    return this.globalBoard[row][col];
-  }
-
   //Makes a move by duplicating the board, making a move on the specified local board, then returning the new board
   makeGlobalMove(player, globalRow, globalCol, localRow, localCol) {
     let newGlobalBoard = this.copyGlobalBoard();
     newGlobalBoard[globalRow][globalCol] = newGlobalBoard[globalRow][globalCol].makeLocalMove(player, localRow, localCol);
     return GlobalBoard(newGlobalBoard);
-  }
-
-  //checks if all elements of the array are the same
-  allSame(arr) {
-    for (const element of arr) {
-        if (element !== arr[0]) {
-            return false;
-        }
-    }
-    return true;
   }
 
   //Check if there is a row of local boards that are the same and returns 1 or -1
@@ -123,27 +112,35 @@ export default class GlobalGame {
     return 0;
   }
 
-  draw(ctx, width, height, boardSize = 450) {
+  playerColor() {
+    if (this.player === 1) {
+      return "rgb(0, 0, 255)";
+    } else {
+      return "rgb(255, 165, 0)"
+    }
+  }
+
+  draw(ctx, xGlobal, yGlobal, globalBoardSize = 675) {
     /* ctx: canvas.getContext element to draw on
     width, height: width and height of the canvas 
     Note that the board is centered in the screen;
-    default dimensions 450px * 450px. */
-    for (let i = 0; i < 3; i++) {
-        let xCoord = ((width / 2) - (boardSize / 2)) + (150 * i);
-        // alert("xCoord: " + xCoord)
+    default dimensions 675px * 675px. */
+    let localBoardSize = globalBoardSize / 3;
 
-        for (let j = 0; j < 3; j++) {
-            let yCoord = ((height / 2) - (boardSize / 2)) + (150 * i);
-            // alert("yCoord: " + yCoord)
-            let game = this.globalBoard[i][j];
+    for (let row = 0; row < 3; row++) {
+      let xLocal = xGlobal + (localBoardSize * row);
+
+      for (let col = 0; col < 3; col++) {
+        let yLocal = yGlobal + (localBoardSize * col);
+        // let yCoord = ((height / 2) - (globalBoardSize / 2)) + (localBoardSize * col);
+        let game = this.getLocalBoard(row, col);
             
-            // Color spaces if valid
-            if (this.nextGlobalCoords === [j, i] ) {
-                alert(this.nextGlobalCoords + j + i);
-                game.draw(ctx, xCoord, yCoord, color = this.ValidMoveColor());
-            }
-            
-            game.draw(ctx, xCoord, yCoord);
+          // Color spaces if valid
+          if (!this.nextGlobalCoords || this.nextGlobalCoords === [row, col]) {
+            game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
+          } else {
+            game.draw(ctx, xLocal, yLocal, localBoardSize);
+          }   
         }
     }  
   }
