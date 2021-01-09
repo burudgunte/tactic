@@ -29,7 +29,7 @@ export default class Square {
         }
     }
 
-    copySquare() {
+    copy() {
         return new Square(this.row, this.col, this.state);
     }
 
@@ -49,6 +49,7 @@ export default class Square {
         }
 
         // Draw symbol
+        ctx.fillStyle = "rgb(0, 0, 0)"
         ctx.fillText(symbol, xSquare + Math.floor(squareSize / 3), ySquare + Math.floor(squareSize * 2 / 3));
     }
 }

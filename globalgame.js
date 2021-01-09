@@ -12,7 +12,9 @@ function allSame(arr) {
 export default class GlobalGame {
 
   //Represents the overall board, made up of 9 local boards
-  constructor(globalBoard = null) {
+  constructor(globalBoard = null, player = 1, nextGlobalCoords = null) {
+    this._player = player;
+    this._nextGlobalCoords = nextGlobalCoords;
 
     if (globalBoard) {
       this._globalBoard = globalBoard;
@@ -25,8 +27,24 @@ export default class GlobalGame {
     }
   }
 
+  get player() {
+    return this._player;
+  }
+
   get globalBoard() {
     return this._globalBoard;
+  }
+
+  set globalBoard(newGlobalBoard) {
+    this._globalBoard = newGlobalBoard;
+  }
+
+  set player(newPlayer) {
+    this._player = newPlayer;
+  }
+
+  set nextGlobalCoords(newNextGlobalCoords) {
+    this._nextGlobalCoords = newNextGlobalCoords;
   }
 
   getLocalBoard(row, col) {
@@ -44,14 +62,37 @@ export default class GlobalGame {
     return str;
   }
 
-  //Makes a move by duplicating the board, making a move on the specified local board, then returning the new board
-  makeGlobalMove(player, globalRow, globalCol, localRow, localCol) {
-    let newGlobalBoard = this.copyGlobalBoard();
-    newGlobalBoard[globalRow][globalCol] = newGlobalBoard[globalRow][globalCol].makeLocalMove(player, localRow, localCol);
-    return GlobalBoard(newGlobalBoard);
+  copyGlobalBoard() {
+    let newGlobalBoard = [];
+    for (let r = 0; r < 3; r++) {
+      let row = [];
+      for (let c = 0; c < 3; c++) {
+        row.push(this.globalBoard[r][c].copy());
+      }
+      newGlobalBoard.push(row);
+    }
+    return newGlobalBoard;
   }
 
-  //Check if there is a row of local boards that are the same and returns 1 or -1
+  isValidMove(globalRow, globalCol, localRow, localCol) {
+    let localGame = this.globalBoard[globalRow][globalCol];
+    if (!this.nextGlobalCoords) {
+      return true;
+    } else {
+      return (localGame.checkLocalState() === null && localGame[localRow][localCol].state === 0)
+    }
+  }
+
+  makeGlobalMove(globalRow, globalCol, localRow, localCol) {
+    let newGlobalBoard = this.copyGlobalBoard();
+    newGlobalBoard[globalRow][globalCol] = this.getLocalBoard(localRow, localCol).makeLocalMove(this.player, localRow, localCol);
+    if (newGlobalBoard[localRow][localCol].checkLocalState() === null) {
+      return new GlobalGame(newGlobalBoard, -1 * this.player, [localRow, localCol]);
+    } else {
+      return new GlobalGame(newGlobalBoard, -1 * this.player);
+    }
+  }
+
   checkRowWin() {
     for (let i = 0; i < 3; i++) {
       if (allSame([1, this.globalBoard[i][0].checkLocalState(), this.globalBoard[i][1].checkLocalState(), this.globalBoard[i][2].checkLocalState()])) {
@@ -63,7 +104,6 @@ export default class GlobalGame {
     return None;
   }
 
-  //Check if there is a column of local boards that are the same and returns 1 or -1
   checkColWin() {
     for (let j = 0; j < 3; j++) {
       if (allSame([1, this.globalBoard[0][j].checkLocalState(), this.globalBoard[1][j].checkLocalState(), this.globalBoard[2][j].checkLocalState()])) {
@@ -75,7 +115,6 @@ export default class GlobalGame {
     return None;
   }
 
-  //Check if there is a diagonal of local boards that are the same and returns 1 or -1
   checkDiagWin() {
     //top left to bottom right
     if (allSame([1, this.globalBoard[0][0].checkLocalState(), this.globalBoard[1][1].checkLocalState(), this.globalBoard[2][2].checkLocalState()])) {
@@ -94,7 +133,6 @@ export default class GlobalGame {
     return None;
   }
 
-  //Check if there is a win or a tie using the above checks
   checkGlobalState() {
     if (checkRowWin() === 1 || checkColWin() === 1 || checkDiagWin() === 1) {
       return 1;
@@ -104,8 +142,8 @@ export default class GlobalGame {
     }
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        if (getLocalBoard(i, j).checkLocalState() === None) {
-          return None;
+        if (getLocalBoard(i, j).checkLocalState() === null) {
+          return null;
         }
       }
     }
@@ -116,7 +154,7 @@ export default class GlobalGame {
     if (this.player === 1) {
       return "rgb(0, 0, 255)";
     } else {
-      return "rgb(255, 165, 0)"
+      return "rgb(255, 165, 0)";
     }
   }
 

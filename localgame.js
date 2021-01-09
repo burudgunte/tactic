@@ -21,11 +21,10 @@ function allSame(arr) {
 
 export default class LocalGame {
 
-    constructor(globalGame, localBoard = [[new Square(0, 0), new Square(0, 1), new Square(0, 2)],
-                                          [new Square(1, 0), new Square(1, 1), new Square(1, 2)],
-                                          [new Square(2, 0), new Square(2, 1), new Square(2, 2)]]) {
+    constructor(localBoard = [[new Square(0, 0), new Square(0, 1), new Square(0, 2)],
+                                [new Square(1, 0), new Square(1, 1), new Square(1, 2)],
+                                [new Square(2, 0), new Square(2, 1), new Square(2, 2)]]) {
         this._localBoard = localBoard;
-        this._globalGame = globalGame;
     }
 
     get localBoard() {
@@ -36,33 +35,38 @@ export default class LocalGame {
         return this._globalGame;
     }
 
-    copy() {
+    copyLocalBoard() {
         let newLocalBoard = [[new Square(0, 0), new Square(0, 1), new Square(0, 2)],
                              [new Square(1, 0), new Square(1, 1), new Square(1, 2)],
                              [new Square(2, 0), new Square(2, 1), new Square(2, 2)]];
-        for (r = 0; r < 3; r++) {
-            for (c = 0; c < 3; c++) {
-                newLocalBoard[r][c] = this.localBoard[r][c].copySquare();
+        for (let r = 0; r < 3; r++) {
+            for (let c = 0; c < 3; c++) {
+                newLocalBoard[r][c] = this.localBoard[r][c].copy();
             }
         }
+        return newLocalBoard;
+    }
+
+    copy() {
+        return new LocalGame(this.copyLocalBoard())
     }
 
     getSquareStates() {
-        arr = [[localBoard[0][0]._state, localBoard[0][1]._state, localBoard[0][2]._state],
-               [localBoard[1][0]._state, localBoard[1][1]._state, localBoard[1][2]._state],
-               [localBoard[2][0]._state, localBoard[2][1]._state, localBoard[2][2]._state]];
+        let arr = [[this.localBoard[0][0].state, this.localBoard[0][1].state, this.localBoard[0][2].state],
+                    [this.localBoard[1][0].state, this.localBoard[1][1].state, this.localBoard[1][2].state],
+                    [this.localBoard[2][0].state, this.localBoard[2][1].state, this.localBoard[2][2].state]];
         return arr;
     }
 
     makeLocalMove(player, row, col) {
-        let newLocalBoard = this.localBoard.copy();
-        newLocalBoard[row][col].makeMove(player);
+        let newLocalBoard = this.copyLocalBoard();
+        newLocalBoard[row][col] = newLocalBoard[row][col].makeMove(player);
         let newLocalGame = new LocalGame(newLocalBoard);
         return newLocalGame;
     }
 
     checkLocalState() {
-        let squareStates = this.localBoard.getSquareStates();
+        let squareStates = this.getSquareStates();
         // Check rows
         for (const row of squareStates) {
             if (allSame(row) && row[0] !== null) {

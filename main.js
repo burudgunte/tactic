@@ -26,6 +26,9 @@ const globalBoardSize = 675;
 const xGlobal = ((width / 2) - (globalBoardSize / 2));
 const yGlobal = ((height / 2) - (globalBoardSize / 2));
 
+// Initialize game
+ctx.game = new GlobalGame()
+
 function clickLoc(e) {
     /* Returns location of the click:
         - null if outside the board
@@ -41,10 +44,8 @@ function clickLoc(e) {
 
     if (xInBounds && yInBounds) {
         // Click is on board
-        const col = Math.floor(xClick / (globalBoardSize / 9));
-        const row = Math.floor(yClick / (globalBoardSize / 9));
-
-        // alert("Global row: " + row + " Global col: " + col);
+        const col = Math.floor(yClick / (globalBoardSize / 9));
+        const row = Math.floor(xClick / (globalBoardSize / 9));
 
         const coords = {
             globalRow: Math.floor(row / 3),
@@ -59,11 +60,22 @@ function clickLoc(e) {
     }
 }
 
-function main() {
-    let game = new GlobalGame();
-    game.draw(ctx, xGlobal, yGlobal);
+function onClick(e) {
+    const coords = clickLoc(e);
 
-    canvas.addEventListener("click", clickLoc);
+    if (coords) {
+        if (ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
+            ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
+            ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
+            ctx.game.draw(ctx, xGlobal, yGlobal);
+        }
     }
+
+}
+
+function main() {
+    ctx.game.draw(ctx, xGlobal, yGlobal);
+    canvas.addEventListener("click", onClick);
+}
 
 main()
