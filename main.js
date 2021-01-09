@@ -65,10 +65,15 @@ function onClick(e) {
 
     if (coords) {
         if (ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
+            alert("move valid")
             ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
             ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
             ctx.game.draw(ctx, xGlobal, yGlobal);
+        } else {
+            alert("move invalid")
         }
+    } else {
+        alert("no coords")
     }
 
 }

@@ -76,17 +76,25 @@ export default class GlobalGame {
 
   isValidMove(globalRow, globalCol, localRow, localCol) {
     let localGame = this.globalBoard[globalRow][globalCol];
-    if (!this.nextGlobalCoords) {
+    alert(localGame[localRow][localCol].state)
+    if (!this.nextGlobalCoords && localGame[localRow][localCol].state === null) {
+      alert("move valid bc no nextGlobalCoords")
+      return true;
+    } else if (localGame.checkLocalState() === null && localGame[localRow][localCol].state === 0) {
+      // alert("move valid, game not yet decided");
       return true;
     } else {
-      return (localGame.checkLocalState() === null && localGame[localRow][localCol].state === 0)
+      // alert("invalid move");
+      return false;
     }
   }
 
   makeGlobalMove(globalRow, globalCol, localRow, localCol) {
     let newGlobalBoard = this.copyGlobalBoard();
-    newGlobalBoard[globalRow][globalCol] = this.getLocalBoard(localRow, localCol).makeLocalMove(this.player, localRow, localCol);
+    newGlobalBoard[globalRow][globalCol] = this.getLocalBoard(globalRow, globalCol).makeLocalMove(this.player, localRow, localCol);
+    alert("state of pointed local game: " + newGlobalBoard[localRow][localCol].checkLocalState())
     if (newGlobalBoard[localRow][localCol].checkLocalState() === null) {
+      alert("next global coords should be defined")
       return new GlobalGame(newGlobalBoard, -1 * this.player, [localRow, localCol]);
     } else {
       return new GlobalGame(newGlobalBoard, -1 * this.player);
@@ -170,7 +178,6 @@ export default class GlobalGame {
 
       for (let col = 0; col < 3; col++) {
         let yLocal = yGlobal + (localBoardSize * col);
-        // let yCoord = ((height / 2) - (globalBoardSize / 2)) + (localBoardSize * col);
         let game = this.getLocalBoard(row, col);
             
           // Color spaces if valid

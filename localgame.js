@@ -1,15 +1,5 @@
 import Square from "./square.js";
 
-function digitToSymbol(digit) {
-    if (digit == 1) {
-        return "X";
-    } else if (digit == -1) {
-        return "O";
-    } else {
-        return "";
-    }
-}
-
 function allSame(arr) {
     for (const element of arr) {
         if (element !== arr[0]) {
