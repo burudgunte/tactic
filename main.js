@@ -32,13 +32,31 @@ function clickLoc(e) {
         - object with attributes globalCol, globalRow, 
         localCol, and localRow if inside the board */
     
-    // const xClick = e.clientX;
-    // const yClick =  e.clientY;
+    // Relative coordinates with respect to board
+    const xClick = e.clientX - canvas.offsetLeft - xGlobal;
+    const yClick =  e.clientY - canvas.offsetTop - yGlobal;
 
-    const xInBounds = (e.clientX > xGlobal && e.clientX < (xGlobal + globalBoardSize));
-    const yInBounds = (e.clientY > yGlobal && e.clientY < (yGlobal + globalBoardSize));
+    const xInBounds = (xClick > 0 && xClick < globalBoardSize);
+    const yInBounds = (yClick > 0 && yClick < globalBoardSize);
 
-    alert(xInBounds && yInBounds)
+    if (xInBounds && yInBounds) {
+        // Click is on board
+        const col = Math.floor(xClick / (globalBoardSize / 9));
+        const row = Math.floor(yClick / (globalBoardSize / 9));
+
+        // alert("Global row: " + row + " Global col: " + col);
+
+        const coords = {
+            globalRow: Math.floor(row / 3),
+            globalCol: Math.floor(col / 3),
+            localRow: row % 3,
+            localCol: col % 3
+        };
+        return coords
+    
+    } else {
+        return null;
+    }
 }
 
 function main() {
