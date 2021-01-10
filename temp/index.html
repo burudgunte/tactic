@@ -9,39 +9,40 @@
     <form>
       <div>
         <div class="box">
-          <select name="player1" id="p1" required>
-            <option value="" selected disabled>Select Player 1</option>
-            <option value="human" onclick="disableElement(this.form.timectrl1);">Human</option>
-            <option value="alg1" onclick="enableElement(this.form.timectrl1);">Algorithm 1</option>
-            <option value="alg2" onclick="enableElement(this.form.timectrl1);">Algorithm 2</option>
+          <label>Player 1</label>
+          <select name="player1" id="p1" onchange="toggleOptions1()">
+            <option value="human">Human</option>
+            <option value="alg1">Algorithm 1</option>
+            <option value="alg2">Algorithm 2</option>
           </select>
         </div>
         <div class="box">
-          <select name="timectrl1" id="tc1" required disabled>
-            <option value="" selected disabled>Time Control 1</option>
-            <option value="5sec">5 Seconds</option>
-            <option value="10sec">10 Seconds</option>
-            <option value="nolimit" disabled>None</option>
+          <label>Time Control 1</label>
+          <select name="timectrl1" id="tc1">
+            <option id="nolimit1" value="nolimit">None</option>
+            <option id="5sec1" value="5sec" disabled>5 Seconds</option>
+            <option id="10sec1" value="10sec" disabled>10 Seconds</option>
           </select>
         </div>
         <div class="box">
-          <select name="player2" id="p2" required>
-            <option value="" selected disabled>Select Player 2</option>
-            <option value="human" onclick="disableElement(this.form.timectrl2);">Human</option>
-            <option value="alg1" onclick="enableElement(this.form.timectrl2);">Algorithm 1</option>
-            <option value="alg2" onclick="enableElement(this.form.timectrl2);">Algorithm 2</option>
+          <label>Player 2</label>
+          <select name="player2" id="p2" onchange="toggleOptions2()">
+            <option value="human">Human</option>
+            <option value="alg1">Algorithm 1</option>
+            <option value="alg2">Algorithm 2</option>
           </select>
         </div>
         <div class="box">
-          <select name="timectrl2" id="tc2" required disabled>
-            <option value="" selected disabled>Time Control 2</option>
-            <option value="5sec">5 Seconds</option>
-            <option value="10sec">10 Seconds</option>
-            <option value="nolimit" disabled>None</option>
+          <label>Time Control 2</label>
+          <select name="timectrl2" id="tc2">
+            <option id="nolimit2" value="nolimit">None</option>
+            <option id="5sec2" value="5sec" disabled>5 Seconds</option>
+            <option id="10sec2" value="10sec" disabled>10 Seconds</option>
           </select>
         </div>
         <div class="box">
-          <button type="button">New Game</button>
+          <label class="newgamebutton">New Game</label>
+          <button type="button" onclick="storeInfo()">New Game</button>
         </div>
       </div>
     </form>
