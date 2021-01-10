@@ -1,0 +1,52 @@
+body {
+  background: #2c2c2c;
+  color: #323232;
+
+  margin: 0;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: Helvetica neue, roboto;
+}
+
+.box {
+  display: inline-block;
+  *display: inline;
+}
+
+.box select {
+  vertical-align: middle;
+  background: #393939;
+  color: #fff;
+  padding: 10px;
+  width: 130px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 5px 5px rgba(0,0,0,.25);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.box select:disabled {
+  color: #525252;
+}
+
+.box button {
+  vertical-align: middle;
+  background: #393939;
+  color: #fff;
+  padding: 10px;
+  width: 100px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 5px 5px rgba(0,0,0,.25);
+}
+
+.box button:active {
+  background: #474747;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <script src="script.js"></script>
+    <form>
+      <div>
+        <div class="box">
+          <select name="player1" id="p1" required>
+            <option value="" selected disabled>Select Player 1</option>
+            <option value="human" onclick="disableElement(this.form.timectrl1);">Human</option>
+            <option value="alg1" onclick="enableElement(this.form.timectrl1);">Algorithm 1</option>
+            <option value="alg2" onclick="enableElement(this.form.timectrl1);">Algorithm 2</option>
+          </select>
+        </div>
+        <div class="box">
+          <select name="timectrl1" id="tc1" required disabled>
+            <option value="" selected disabled>Time Control 1</option>
+            <option value="5sec">5 Seconds</option>
+            <option value="10sec">10 Seconds</option>
+            <option value="nolimit" disabled>None</option>
+          </select>
+        </div>
+        <div class="box">
+          <select name="player2" id="p2" required>
+            <option value="" selected disabled>Select Player 2</option>
+            <option value="human" onclick="disableElement(this.form.timectrl2);">Human</option>
+            <option value="alg1" onclick="enableElement(this.form.timectrl2);">Algorithm 1</option>
+            <option value="alg2" onclick="enableElement(this.form.timectrl2);">Algorithm 2</option>
+          </select>
+        </div>
+        <div class="box">
+          <select name="timectrl2" id="tc2" required disabled>
+            <option value="" selected disabled>Time Control 2</option>
+            <option value="5sec">5 Seconds</option>
+            <option value="10sec">10 Seconds</option>
+            <option value="nolimit" disabled>None</option>
+          </select>
+        </div>
+        <div class="box">
+          <button type="button">New Game</button>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
