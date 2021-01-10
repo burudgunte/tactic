@@ -1,18 +1,8 @@
 export default class Square {
 
-    constructor(row, col, state = null) {    
+    constructor(state = null) {    
         // this._localGame = localGame;
-        this._row = row;
-        this._col = col;
         this._state = state;
-    }
-
-    get row() {
-        return this._row;
-    }
-
-    get col() {
-        return this._col;
     }
 
     get state() {
@@ -30,11 +20,11 @@ export default class Square {
     }
 
     copy() {
-        return new Square(this.row, this.col, this.state);
+        return new Square(this.state);
     }
 
     makeMove(player) {
-        return new Square(this.row, this.col, player);
+        return new Square(player);
     }
 
     draw(ctx, xSquare, ySquare, squareSize, color = null) {
