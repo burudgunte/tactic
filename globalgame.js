@@ -12,9 +12,10 @@ function allSame(arr) {
 export default class GlobalGame {
 
   //Represents the overall board, made up of 9 local boards
-  constructor(globalBoard = null, player = 1, nextGlobalCoords = null) {
+  constructor(globalBoard = null, player = 1, nextGlobalRow = null, nextGlobalCol = null) {
     this._player = player;
-    this._nextGlobalCoords = nextGlobalCoords;
+    this._nextGlobalRow = nextGlobalRow;
+    this._nextGlobalCol = nextGlobalCol;
 
     if (globalBoard) {
       this._globalBoard = globalBoard;
@@ -35,16 +36,12 @@ export default class GlobalGame {
     return this._globalBoard;
   }
 
-  set globalBoard(newGlobalBoard) {
-    this._globalBoard = newGlobalBoard;
+  get nextGlobalRow() {
+    return this._nextGlobalRow;
   }
 
-  set player(newPlayer) {
-    this._player = newPlayer;
-  }
-
-  set nextGlobalCoords(newNextGlobalCoords) {
-    this._nextGlobalCoords = newNextGlobalCoords;
+  get nextGlobalCol() {
+    return this._nextGlobalCol;
   }
 
   getLocalBoard(row, col) {
@@ -76,15 +73,11 @@ export default class GlobalGame {
 
   isValidMove(globalRow, globalCol, localRow, localCol) {
     let localGame = this.globalBoard[globalRow][globalCol];
-    alert(localGame[localRow][localCol].state)
-    if (!this.nextGlobalCoords && localGame[localRow][localCol].state === null) {
-      alert("move valid bc no nextGlobalCoords")
+    if (!this.nextGlobalRow && !this.nextGlobalCol && !localGame.localBoard[localRow, localCol].state) {
       return true;
-    } else if (localGame.checkLocalState() === null && localGame[localRow][localCol].state === 0) {
-      // alert("move valid, game not yet decided");
+    } else if (this.nextGlobalRow === globalRow && this.nextGlobalCol === globalCol && !localGame.localBoard[localRow, localCol].state) {
       return true;
     } else {
-      // alert("invalid move");
       return false;
     }
   }
@@ -92,10 +85,10 @@ export default class GlobalGame {
   makeGlobalMove(globalRow, globalCol, localRow, localCol) {
     let newGlobalBoard = this.copyGlobalBoard();
     newGlobalBoard[globalRow][globalCol] = this.getLocalBoard(globalRow, globalCol).makeLocalMove(this.player, localRow, localCol);
-    alert("state of pointed local game: " + newGlobalBoard[localRow][localCol].checkLocalState())
     if (newGlobalBoard[localRow][localCol].checkLocalState() === null) {
-      alert("next global coords should be defined")
-      return new GlobalGame(newGlobalBoard, -1 * this.player, [localRow, localCol]);
+      const nextGlobalRow = localRow;
+      const nextGlobalCol = localCol;
+      return new GlobalGame(newGlobalBoard, -1 * this.player, nextGlobalRow, nextGlobalCol);
     } else {
       return new GlobalGame(newGlobalBoard, -1 * this.player);
     }
@@ -181,7 +174,7 @@ export default class GlobalGame {
         let game = this.getLocalBoard(row, col);
             
           // Color spaces if valid
-          if (!this.nextGlobalCoords || this.nextGlobalCoords === [row, col]) {
+          if ((this.nextGlobalRow === row && this.nextGlobalCol === col) || (!this.nextGlobalRow && !this.nextGlobalCol)) {
             game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
           } else {
             game.draw(ctx, xLocal, yLocal, localBoardSize);

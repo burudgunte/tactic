@@ -11,9 +11,9 @@ function allSame(arr) {
 
 export default class LocalGame {
 
-    constructor(localBoard = [[new Square(0, 0), new Square(0, 1), new Square(0, 2)],
-                                [new Square(1, 0), new Square(1, 1), new Square(1, 2)],
-                                [new Square(2, 0), new Square(2, 1), new Square(2, 2)]]) {
+    constructor(localBoard = [[new Square(), new Square(), new Square()],
+                                [new Square(), new Square(), new Square()],
+                                [new Square(), new Square(), new Square()]]) {
         this._localBoard = localBoard;
     }
 
@@ -26,9 +26,9 @@ export default class LocalGame {
     }
 
     copyLocalBoard() {
-        let newLocalBoard = [[new Square(0, 0), new Square(0, 1), new Square(0, 2)],
-                             [new Square(1, 0), new Square(1, 1), new Square(1, 2)],
-                             [new Square(2, 0), new Square(2, 1), new Square(2, 2)]];
+        let newLocalBoard = [[new Square(), new Square(), new Square()],
+                             [new Square(), new Square(), new Square()],
+                             [new Square(), new Square(), new Square()]];
         for (let r = 0; r < 3; r++) {
             for (let c = 0; c < 3; c++) {
                 newLocalBoard[r][c] = this.localBoard[r][c].copy();
@@ -66,17 +66,17 @@ export default class LocalGame {
 
         // Check columns
         for (let col = 0; col < 3; col++) {
-            arr = [this.squareStates[0][col],
-                    this.squareStates[1][col],
-                    this.squareStates[2][col]];
+            let arr = [squareStates[0][col],
+                    squareStates[1][col],
+                    squareStates[2][col]];
             if (allSame(arr) && arr[0] !== null) {
                 return arr[0];
             }
         }
 
         // Check diagonals
-        diag1 = [this.squareStates[0][0], this.squareStates[1][1]], this.squareStates[2[2]];
-        diag2 = [this.squareStates[0][2], this.squareStates[1][1], this.squareStates[2][0]];
+        let diag1 = [squareStates[0][0], squareStates[1][1], squareStates[2][2]];
+        let diag2 = [squareStates[0][2], squareStates[1][1], squareStates[2][0]];
 
         for (const diag of [diag1, diag2]) {
             if (allSame(diag) && diag[0] !== null) {
@@ -85,7 +85,7 @@ export default class LocalGame {
         }
 
         // Check tie
-        for (const row of this.squareStates) {
+        for (const row of squareStates) {
             for (let col = 0; col < 3; col++) {
                 if (row[col] === null) {
                     return null;
