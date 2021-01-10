@@ -14,7 +14,7 @@ ctx.fillStyle = 'rgb(0, 0, 0)';
 ctx.fillRect(0, 0, width, height);
 
 // Line color and width 
-ctx.strokeStyle = 'rgb(255, 255, 255)';
+ctx.strokeStyle = 'rgb(0, 0, 0)';
 ctx.lineWidth = 5;
 
 // Color and font
@@ -65,17 +65,11 @@ function onClick(e) {
 
     if (coords) {
         if (ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
-            alert("move valid")
             ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
             ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
             ctx.game.draw(ctx, xGlobal, yGlobal);
-        } else {
-            alert("move invalid")
-        }
-    } else {
-        alert("no coords")
-    }
-
+        } 
+    } 
 }
 
 function main() {
