@@ -154,7 +154,7 @@ export default class GlobalGame {
     }
   }
 
-  draw(ctx, xGlobal, yGlobal, globalBoardSize = 675) {
+  draw(ctx, xGlobal, yGlobal, globalBoardSize) {
     /* ctx: canvas.getContext element to draw on
     width, height: width and height of the canvas 
     Note that the board is centered in the screen;

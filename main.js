@@ -1,25 +1,25 @@
-import GlobalGame from "./globalgame.js"
+import GlobalGame from "./globalgame.js";
 
 // Initialize constants
 
 // Canvas elements
-const canvas = document.querySelector('.ultimateBoard');
+const canvas = document.querySelector(".ultimateBoard");
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
 
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext("2d");
 
 // Color whole canvas black
-ctx.fillStyle = 'rgb(0, 0, 0)';
+ctx.fillStyle = "rgb(0, 0, 0)";
 ctx.fillRect(0, 0, width, height);
 
 // Line color and width 
-ctx.strokeStyle = 'rgb(0, 0, 0)';
+ctx.strokeStyle = "rgb(0, 0, 0)";
 ctx.lineWidth = 5;
 
 // Color and font
-ctx.fillStyle = 'white';
-ctx.font = '48px georgia';
+ctx.fillStyle = "white";
+ctx.font = "48px georgia";
 
 // Board size and location
 const globalBoardSize = 675;
@@ -27,7 +27,7 @@ const xGlobal = ((width / 2) - (globalBoardSize / 2));
 const yGlobal = ((height / 2) - (globalBoardSize / 2));
 
 // Initialize game
-ctx.game = new GlobalGame()
+ctx.game = new GlobalGame();
 
 function clickLoc(e) {
     /* Returns location of the click:
@@ -53,7 +53,7 @@ function clickLoc(e) {
             localRow: row % 3,
             localCol: col % 3
         };
-        return coords
+        return coords;
     
     } else {
         return null;
@@ -63,18 +63,21 @@ function clickLoc(e) {
 function onClick(e) {
     const coords = clickLoc(e);
 
-    if (coords) {
-        if (ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
-            ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
-            ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
-            ctx.game.draw(ctx, xGlobal, yGlobal);
-        } 
-    } 
+    if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
+        // play move
+        ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
+        ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
+        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
+    }
+
+    if (ctx.game.checkGlobalState() !== null) {
+        alert("Game over; " + ctx.game.checkGlobalState() + " wins");
+    }
 }
 
 function main() {
-    ctx.game.draw(ctx, xGlobal, yGlobal);
+    ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
     canvas.addEventListener("click", onClick);
 }
 
-main()
+main();
