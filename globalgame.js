@@ -48,17 +48,6 @@ export default class GlobalGame {
     return this.globalBoard[row][col];
   }
 
-  toJSON() {
-    let str = "";
-    for (r = 0; r < 3; r++) {
-      for (c = 0; c < 3; c++) {
-        str += JSON.stringify(this.globalBoard[r][c]) + "<br>";
-      }
-      str+= "<br><br><br>";
-    }
-    return str;
-  }
-
   copyGlobalBoard() {
     let newGlobalBoard = [];
     for (let r = 0; r < 3; r++) {
@@ -73,9 +62,15 @@ export default class GlobalGame {
 
   isValidMove(globalRow, globalCol, localRow, localCol) {
     let localGame = this.globalBoard[globalRow][globalCol];
-    if (!this.nextGlobalRow && !this.nextGlobalCol && !localGame.localBoard[localRow, localCol].state) {
+    if (localGame.checkLocalState()) {
+      // game already won
+      return false;
+    } else if (localGame.localBoard[localRow][localCol].state) {
+      // space already filled
+      return false;
+    } else if (this.nextGlobalRow === null && this.nextGlobalCol === null) {
       return true;
-    } else if (this.nextGlobalRow === globalRow && this.nextGlobalCol === globalCol && !localGame.localBoard[localRow, localCol].state) {
+    } else if (this.nextGlobalRow === globalRow && this.nextGlobalCol === globalCol) {
       return true;
     } else {
       return false;
@@ -174,7 +169,7 @@ export default class GlobalGame {
         let game = this.getLocalBoard(row, col);
             
           // Color spaces if valid
-          if ((this.nextGlobalRow === row && this.nextGlobalCol === col) || (!this.nextGlobalRow && !this.nextGlobalCol)) {
+          if ((this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null)) {
             game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
           } else {
             game.draw(ctx, xLocal, yLocal, localBoardSize);

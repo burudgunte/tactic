@@ -56,6 +56,11 @@ export default class LocalGame {
     }
 
     checkLocalState() {
+        /* Returns:
+            - 1 or -1 for wins
+            - 0 for tie
+            - null for no result yet */
+            
         let squareStates = this.getSquareStates();
         // Check rows
         for (const row of squareStates) {
