@@ -9,12 +9,29 @@ body {
   align-items: center;
   justify-content: center;
   
-  font-family: Helvetica neue, roboto;
+  font-family: Tahoma, sans-serif;
 }
 
 .box {
   display: inline-block;
   *display: inline;
+  padding: 5px;
+}
+
+form div {
+  float: left;
+}
+
+form div.full {
+  clear: both;
+}
+
+form div label {
+  display: block;
+  color: #fff;
+  padding: 3px;
+  font-size: 14px;
+  opacity: 0.5;
 }
 
 .box select {
@@ -40,7 +57,7 @@ body {
   background: #393939;
   color: #fff;
   padding: 10px;
-  width: 100px;
+  width: 110px;
   height: 40px;
   border: none;
   font-size: 16px;
@@ -49,4 +66,8 @@ body {
 
 .box button:active {
   background: #474747;
+}
+
+.newgamebutton {
+  visibility: hidden;
 }
