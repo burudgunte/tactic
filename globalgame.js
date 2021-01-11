@@ -44,7 +44,7 @@ export default class GlobalGame {
     return this._nextGlobalCol;
   }
 
-  getLocalBoard(row, col) {
+  getlocalGame(row, col) {
     return this.globalBoard[row][col];
   }
 
@@ -79,7 +79,7 @@ export default class GlobalGame {
 
   makeGlobalMove(globalRow, globalCol, localRow, localCol) {
     let newGlobalBoard = this.copyGlobalBoard();
-    newGlobalBoard[globalRow][globalCol] = this.getLocalBoard(globalRow, globalCol).makeLocalMove(this.player, localRow, localCol);
+    newGlobalBoard[globalRow][globalCol] = this.getlocalGame(globalRow, globalCol).makeLocalMove(this.player, localRow, localCol);
     if (newGlobalBoard[localRow][localCol].checkLocalState() === null) {
       const nextGlobalRow = localRow;
       const nextGlobalCol = localCol;
@@ -138,7 +138,7 @@ export default class GlobalGame {
     }
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        if (getLocalBoard(i, j).checkLocalState() === null) {
+        if (getlocalGame(i, j).checkLocalState() === null) {
           return null;
         }
       }
@@ -166,10 +166,11 @@ export default class GlobalGame {
 
       for (let col = 0; col < 3; col++) {
         let yLocal = yGlobal + (localBoardSize * col);
-        let game = this.getLocalBoard(row, col);
+        let game = this.getlocalGame(row, col);
             
           // Color spaces if valid
-          if ((this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null)) {
+          let isFree = (this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null);
+          if (isFree && !game.checkLocalState()) {
             game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
           } else {
             game.draw(ctx, xLocal, yLocal, localBoardSize);
