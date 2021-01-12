@@ -17,28 +17,28 @@ function toggleOptions2() {
 function disableTime1() {
   document.getElementById("5sec1").disabled = true;
   document.getElementById("10sec1").disabled = true;
-  document.getElementById("nolimit1").disabled = false;
+  document.getElementById("unlimited1").disabled = false;
   document.getElementById("tc1").selectedIndex = 0;
 }
 
 function disableTime2() {
   document.getElementById("5sec2").disabled = true;
   document.getElementById("10sec2").disabled = true;
-  document.getElementById("nolimit2").disabled = false;
+  document.getElementById("unlimited2").disabled = false;
   document.getElementById("tc2").selectedIndex = 0;
 }
 
 function enableTime1() {
   document.getElementById("5sec1").disabled = false;
   document.getElementById("10sec1").disabled = false;
-  document.getElementById("nolimit1").disabled = true;
+  document.getElementById("unlimited1").disabled = true;
   document.getElementById("tc1").selectedIndex = 1;
 }
 
 function enableTime2() {
   document.getElementById("5sec2").disabled = false;
   document.getElementById("10sec2").disabled = false;
-  document.getElementById("nolimit2").disabled = true;
+  document.getElementById("unlimited2").disabled = true;
   document.getElementById("tc2").selectedIndex = 1;
 }
 
