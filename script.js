@@ -1,3 +1,9 @@
+import main from "./main.js";
+
+document.getElementById("newgame").addEventListener("click", storeInfo);
+document.getElementById("p1").addEventListener("change", toggleOptions1);
+document.getElementById("p2").addEventListener("change", toggleOptions2);
+
 function toggleOptions1() {
   if (document.getElementById("p1").value === "human") {
     disableTime1();
@@ -47,6 +53,6 @@ function storeInfo() {
   let timectrl1 = document.getElementById("tc1").value;
   let player2 = document.getElementById("p2").value;
   let timectrl2 = document.getElementById("tc2").value;
-  console.log(player1, timectrl1, player2, timectrl2);
-  return player1, timectrl1, player2, timectrl2;
+  
+  main();
 }

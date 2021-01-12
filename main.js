@@ -75,9 +75,9 @@ function onClick(e) {
     }
 }
 
-function main() {
+export default function main() {
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
     canvas.addEventListener("click", onClick);
 }
 
-main();
+//main();
