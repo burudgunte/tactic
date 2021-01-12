@@ -9,6 +9,14 @@ function allSame(arr) {
   return true;
 }
 
+function drawLine(ctx, xStart, yStart, xEnd, yEnd, lineWidth = 10) {
+  ctx.beginPath();
+  ctx.moveTo(xStart, yStart);
+  ctx.lineTo(xEnd, yEnd);
+  ctx.lineWidth = lineWidth;
+  ctx.stroke();
+}
+
 export default class GlobalGame {
 
   //Represents the overall board, made up of 9 local boards
@@ -171,14 +179,14 @@ export default class GlobalGame {
         let yLocal = yGlobal + (localBoardSize * col);
         let game = this.getlocalGame(row, col);
             
-          // Color spaces if valid
-          let isFree = (this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null);
-          if (isFree && !game.checkLocalState()) {
-            game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
-          } else {
+        // Color spaces if valid
+        let isFree = (this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null);
+        if (isFree && !game.checkLocalState()) {
+          game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
+        } else {
             game.draw(ctx, xLocal, yLocal, localBoardSize);
-          }   
+        }   
         }
-    }  
+    }
   }
 }
