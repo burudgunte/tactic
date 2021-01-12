@@ -65,13 +65,17 @@ export default class GlobalGame {
     if (localGame.checkLocalState()) {
       // game already won
       return false;
+
     } else if (localGame.localBoard[localRow][localCol].state) {
       // space already filled
       return false;
+
     } else if (this.nextGlobalRow === null && this.nextGlobalCol === null) {
       return true;
+
     } else if (this.nextGlobalRow === globalRow && this.nextGlobalCol === globalCol) {
       return true;
+
     } else {
       return false;
     }
@@ -97,7 +101,7 @@ export default class GlobalGame {
         return -1;
       }
     }
-    return None;
+    return null;
   }
 
   checkColWin() {
@@ -108,7 +112,7 @@ export default class GlobalGame {
         return -1;
       }
     }
-    return None;
+    return null;
   }
 
   checkDiagWin() {
@@ -126,19 +130,19 @@ export default class GlobalGame {
     if (allSame([-1, this.globalBoard[2][0].checkLocalState(), this.globalBoard[1][1].checkLocalState(), this.globalBoard[0][2].checkLocalState()])) {
       return -1;
     }
-    return None;
+    return null;
   }
 
   checkGlobalState() {
-    if (checkRowWin() === 1 || checkColWin() === 1 || checkDiagWin() === 1) {
+    if (this.checkRowWin() === 1 || this.checkColWin() === 1 || this.checkDiagWin() === 1) {
       return 1;
     }
-    if (checkRowWin() === -1 || checkColWin() === -1 || checkDiagWin() === -1) {
+    if (this.checkRowWin() === -1 || this.checkColWin() === -1 || this.checkDiagWin() === -1) {
       return -1;
     }
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        if (getlocalGame(i, j).checkLocalState() === null) {
+        if (this.getlocalGame(i, j).checkLocalState() === null) {
           return null;
         }
       }
@@ -157,8 +161,7 @@ export default class GlobalGame {
   draw(ctx, xGlobal, yGlobal, globalBoardSize) {
     /* ctx: canvas.getContext element to draw on
     width, height: width and height of the canvas 
-    Note that the board is centered in the screen;
-    default dimensions 675px * 675px. */
+    Note that the board is centered in the screen.*/
     let localBoardSize = globalBoardSize / 3;
 
     for (let row = 0; row < 3; row++) {
