@@ -10,7 +10,7 @@ const height = canvas.height = window.innerHeight;
 const ctx = canvas.getContext("2d");
 
 // Color whole canvas black
-ctx.fillStyle = "rgb(0, 0, 0)";
+ctx.fillStyle = "rgb(44, 44, 44)";
 ctx.fillRect(0, 0, width, height);
 
 // Line color and width 
