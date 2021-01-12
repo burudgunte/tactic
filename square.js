@@ -35,7 +35,7 @@ export default class Square {
         // Color if valid move
         if (color && !symbol) {
             ctx.fillStyle = color;
-            ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
+            ctx.fillRect(xSquare, ySquare, squareSize - ctx.lineWidth, squareSize - ctx.lineWidth);
         }
 
         // Draw symbol

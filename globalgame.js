@@ -15,6 +15,9 @@ function drawLine(ctx, xStart, yStart, xEnd, yEnd, lineWidth = 10) {
   ctx.lineTo(xEnd, yEnd);
   ctx.lineWidth = lineWidth;
   ctx.stroke();
+
+  // Reset width
+  ctx.lineWidth = 1;
 }
 
 export default class GlobalGame {

@@ -15,7 +15,6 @@ ctx.fillRect(0, 0, width, height);
 
 // Line color and width 
 ctx.strokeStyle = "rgb(0, 0, 0)";
-ctx.lineWidth = 5;
 
 // Color and font
 ctx.fillStyle = "white";
