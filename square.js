@@ -38,7 +38,7 @@ export default class Square {
         // Draw symbol
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "rgb(0, 0, 0)";
+        ctx.fillStyle = "#FFFFFF";
         ctx.fillText(symbol, xSquare + (squareSize / 2), ySquare + (squareSize / 2));
     }
 }
