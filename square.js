@@ -34,10 +34,12 @@ export default class Square {
 
         // Color based on validity
         ctx.fillStyle = color;
-        ctx.fillRect(xSquare, ySquare, squareSize - ctx.lineWidth, squareSize - ctx.lineWidth);
+        ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
 
         // Draw symbol
-        ctx.fillStyle = "rgb(0, 0, 0)"
-        ctx.fillText(symbol, xSquare + Math.floor(squareSize / 3), ySquare + Math.floor(squareSize * 2 / 3));
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "rgb(0, 0, 0)";
+        ctx.fillText(symbol, xSquare + (squareSize / 2), ySquare + (squareSize / 2));
     }
 }
