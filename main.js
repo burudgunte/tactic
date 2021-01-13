@@ -6,7 +6,7 @@ import GlobalGame from "./globalgame.js";
 // Canvas elements
 const canvas = document.querySelector(".ultimateBoard");
 const width = canvas.width = window.innerWidth;
-const height = canvas.height = window.innerHeight;
+const height = canvas.height = window.innerHeight - 250;
 
 const ctx = canvas.getContext("2d");
 
@@ -22,7 +22,7 @@ ctx.fillStyle = "white";
 ctx.font = "48px georgia";
 
 // Board size and location
-const globalBoardSize = 500;
+const globalBoardSize = height - 50;
 const xGlobal = ((width / 2) - (globalBoardSize / 2));
 const yGlobal = ((height / 2) - (globalBoardSize / 2));
 

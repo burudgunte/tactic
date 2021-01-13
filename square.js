@@ -27,16 +27,14 @@ export default class Square {
         return new Square(player);
     }
 
-    draw(ctx, xSquare, ySquare, squareSize, color = null) {
+    draw(ctx, xSquare, ySquare, squareSize, color = "rgb(57, 57, 57)") {
         // Draw square
         ctx.strokeRect(xSquare, ySquare, squareSize, squareSize);
         let symbol = this.stateToSymbol();
 
-        // Color if valid move
-        if (color && !symbol) {
-            ctx.fillStyle = color;
-            ctx.fillRect(xSquare, ySquare, squareSize - ctx.lineWidth, squareSize - ctx.lineWidth);
-        }
+        // Color based on validity
+        ctx.fillStyle = color;
+        ctx.fillRect(xSquare, ySquare, squareSize - ctx.lineWidth, squareSize - ctx.lineWidth);
 
         // Draw symbol
         ctx.fillStyle = "rgb(0, 0, 0)"
