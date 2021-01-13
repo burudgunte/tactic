@@ -25,9 +25,6 @@ const globalBoardSize = 675;
 const xGlobal = ((width / 2) - (globalBoardSize / 2));
 const yGlobal = ((height / 2) - (globalBoardSize / 2));
 
-// Initialize game
-ctx.game = new GlobalGame();
-
 function clickLoc(e) {
     /* Returns location of the click:
         - null if outside the board
@@ -75,8 +72,7 @@ function onClick(e) {
 }
 
 export default function main() {
+    ctx.game = new GlobalGame();
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
     canvas.addEventListener("click", onClick);
 }
-
-//main();
