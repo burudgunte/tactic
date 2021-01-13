@@ -21,7 +21,7 @@ ctx.fillStyle = "white";
 ctx.font = "48px georgia";
 
 // Board size and location
-const globalBoardSize = 675;
+const globalBoardSize = 500;
 const xGlobal = ((width / 2) - (globalBoardSize / 2));
 const yGlobal = ((height / 2) - (globalBoardSize / 2));
 
