@@ -1,4 +1,4 @@
-import main from "./main.js";
+import main from "./game/main.js";
 
 document.getElementById("newgame").addEventListener("click", storeInfo);
 document.getElementById("p1").addEventListener("change", toggleOptions1);
