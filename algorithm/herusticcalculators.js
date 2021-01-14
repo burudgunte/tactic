@@ -1,3 +1,9 @@
+/*
+
+helper functions
+
+*/
+
 function allSame(arr) {
     for (const element of arr) {
         if (element !== arr[0]) {
@@ -113,7 +119,7 @@ export default function localEdgesWon(player) {
 }
 
 //calculates what turn it is (idk might be useful for something)
-export default function getTurn(player) {
+export default function getTurns(player) {
     return localMiddlesWon(player) + localCornersWon(player) + localEdgesWon(player);
 }
 
@@ -142,10 +148,50 @@ export default function globalWinThreats(player) {
     return count;
 }
 
-//helper function that returns true if there is a threat, for example, calling it on a row that is [X win, X win, no winner and still active] returns true
+//helper function that returns true if there is a threat. For example, calling it on a row that is [X win, X win, no winner and still active] returns true
 export default function isAThreat(player, a, b, c) {
-    if (allSame(player, a, b) && c === Null || allSame(player, a, c) && b === Null || allSame(player, b, c) && a === Null) {
+    if (allSame(player, a, b) && c === null || allSame(player, a, c) && b === Null || allSame(player, b, c) && a === null) {
         return true;
     }
     return false;
+}
+
+//helper function that returns if a move (given the local coordinates) sends the opponent to a filled board (generally bad)
+export default function sendsToFilledBoard(i, j) {
+    if (this.checkLocalGameState(i, j) === null) {
+        return false;
+    }
+    return true;
+}
+
+/*
+
+heuristics
+
+*/
+
+//my first attempt at a heuristic that combines a bunch of stuff
+export default function heuristicA(player) {
+    count = 0;
+    count += 
+        
+        //your stuff
+        middleBoardsWon(player) * 10 + 
+        edgeBoardsWon(player) * 6 + 
+        cornerBoardsWon(player) * 4 + 
+        localMiddlesWon(player) * 2 + 
+        localCornerWon(player) * 1.5 + 
+        localEdgesWon(player) * 1 + 
+        globalWinThreats(player) * 10
+        
+        //your opponent's stuff
+        middleBoardsWon(-player) * -10 + 
+        edgeBoardsWon(-player) * -6 + 
+        cornerBoardsWon(-player) * -4 + 
+        localMiddlesWon(-player) * -2 + 
+        localCornerWon(-player) * -1.5 + 
+        localEdgesWon(-player) * -1 + 
+        globalWinThreats(-player) * -10
+
+    return count
 }
