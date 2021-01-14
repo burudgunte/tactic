@@ -69,10 +69,13 @@ function onClick(e) {
 
     if (ctx.game.checkGlobalState() !== null) {
         if (ctx.game.checkGlobalState() === 1) {
-            alert("Game over; X wins");
+            alert("Game over; X wins!");
         }
         if (ctx.game.checkGlobalState() === -1) {
-            alert("Game over; O wins");
+            alert("Game over; O wins!");
+        }
+        if (ctx.game.checkGlobalState() === 0) {
+            alert("Game over; It's a tie!");
         }
     }
 }
