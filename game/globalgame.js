@@ -92,6 +92,22 @@ export default class GlobalGame {
     }
   }
 
+  getValidMoves() {
+    let validMoves = [];
+    for (let gr = 0; gr < 3; gr ++) {
+      for (let gc = 0; gc < 3; gc ++) {
+        for (let lr = 0; lr < 3; lr ++) {
+          for (let lc = 0; lc < 3; lc ++) {
+            if (this.isValidMove(gr, gc, lr, lc)) {
+              validMoves.push([gr, gc, lr, lc]);
+            }
+          }
+        }
+      }
+    }
+    return validMoves;
+  }
+
   makeGlobalMove(globalRow, globalCol, localRow, localCol) {
     let newGlobalBoard = this.copyGlobalBoard();
     newGlobalBoard[globalRow][globalCol] = this.getlocalGame(globalRow, globalCol).makeLocalMove(this.player, localRow, localCol);
