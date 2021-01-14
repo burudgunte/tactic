@@ -55,5 +55,5 @@ function storeInfo() {
   let player2 = document.getElementById("p2").value;
   let timectrl2 = document.getElementById("tc2").value;
 
-  startGame(null, randomMove);
+  startGame(randomMove, randomMove);
 }

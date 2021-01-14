@@ -215,11 +215,29 @@ export default class GlobalGame {
         let game = this.getlocalGame(row, col);
             
         // Color spaces if valid
-        let isFree = (this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null);
-        if (isFree && !game.checkLocalState()) {
+        let isValid = (this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null);
+        let state = game.checkLocalState();
+        if (state !== null) {
+          game.draw(ctx, xLocal, yLocal, localBoardSize);
+
+          if (state === 1) {
+            var symbol = "X";
+          } else if (state === -1) {
+            var symbol = "O"
+          } else {
+            var symbol = ""
+          }
+
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          let fontSize = globalBoardSize / 3;
+          ctx.font = fontSize + "px georgia";
+          ctx.fillText(symbol, xLocal + (localBoardSize * 5 / 8), yLocal + (localBoardSize * 5 / 8));
+
+        } else if (isValid) {
           game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
         } else {
-            game.draw(ctx, xLocal, yLocal, localBoardSize);
+          game.draw(ctx, xLocal, yLocal, localBoardSize);
         }   
         }
     }
