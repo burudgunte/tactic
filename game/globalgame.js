@@ -56,7 +56,15 @@ export default class GlobalGame {
   }
 
   getlocalGame(row, col) {
-    return this.globalBoard[row][col];
+    return this._globalBoard[row][col];
+  }
+
+  checkLocalGameState(row, col) {
+    return this._globalBoard[row][col].checkLocalState();
+  }
+
+  checkSquareState(gr, gc, lr, lc) {
+    return this._globalBoard[gr][gc]._getLocalBoard[lr][lc];
   }
 
   copyGlobalBoard() {
