@@ -68,7 +68,12 @@ function onClick(e) {
     }
 
     if (ctx.game.checkGlobalState() !== null) {
-        alert("Game over; " + ctx.game.checkGlobalState() + " wins");
+        if (ctx.game.checkGlobalState() === 1) {
+            alert("Game over; X wins");
+        }
+        if (ctx.game.checkGlobalState() === -1) {
+            alert("Game over; O wins");
+        }
     }
 }
 
