@@ -22,11 +22,16 @@ function drawLine(ctx, xStart, yStart, xEnd, yEnd, lineWidth = 10) {
 
 export default class GlobalGame {
 
-  //Represents the overall board, made up of 9 local boards
-  constructor(globalBoard = null, player = 1, nextGlobalRow = null, nextGlobalCol = null) {
+  
+  constructor(globalBoard = null, player = 1, nextGlobalRow = null, nextGlobalCol = null, p1Algorithm = null, p2Algorithm = null) {
+    /* Represents the overall board, made up of 9 local boards.
+    Note that an algorithm is any function that takes a game as
+    an argument and returns a valid move. */
     this._player = player;
     this._nextGlobalRow = nextGlobalRow;
     this._nextGlobalCol = nextGlobalCol;
+    this._p1Algorithm = p1Algorithm;
+    this._p2Algorithm = p2Algorithm;
 
     if (globalBoard) {
       this._globalBoard = globalBoard;
@@ -53,6 +58,22 @@ export default class GlobalGame {
 
   get nextGlobalCol() {
     return this._nextGlobalCol;
+  }
+
+  get p1Algorithm() {
+    return this._p1Algorithm;
+  }
+
+  get p2Algorithm() {
+    return this._p2Algorithm;
+  }
+
+  currentPlayerAlgorithm() {
+    if (this.player === 1) {
+      return this.p1Algorithm;
+    } else {
+      return this.p2Algorithm;
+    }
   }
 
   getlocalGame(row, col) {
@@ -98,10 +119,20 @@ export default class GlobalGame {
     if (newGlobalBoard[localRow][localCol].checkLocalState() === null) {
       const nextGlobalRow = localRow;
       const nextGlobalCol = localCol;
-      return new GlobalGame(newGlobalBoard, -1 * this.player, nextGlobalRow, nextGlobalCol);
+      return new GlobalGame(newGlobalBoard, -1 * this.player, nextGlobalRow, nextGlobalCol, this.p1Algorithm, this.p2Algorithm);
     } else {
-      return new GlobalGame(newGlobalBoard, -1 * this.player);
+      return new GlobalGame(newGlobalBoard, -1 * this.player, null, null, this.p1Algorithm, this.p2Algorithm);
     }
+  }
+
+  makeAlgorithmMove() {
+    /* Applies the appropriate algorithm. Returns a 
+    new GlobalGame object representing the old game with 
+    the recommended move. */
+    let algorithm = this.currentPlayerAlgorithm();
+    const nextMove = algorithm(this);
+    console.log("next Move: " + nextMove);
+    return this.makeGlobalMove(nextMove.globalRow, nextMove.globalCol, nextMove.localRow, nextMove.localCol);
   }
 
   checkRowWin() {
@@ -173,6 +204,7 @@ export default class GlobalGame {
     /* ctx: canvas.getContext element to draw on
     width, height: width and height of the canvas 
     Note that the board is centered in the screen.*/
+    ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
     let localBoardSize = globalBoardSize / 3;
 
     for (let row = 0; row < 3; row++) {

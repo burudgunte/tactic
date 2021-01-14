@@ -1,4 +1,4 @@
-import main from "./game/main.js";
+import startGame from "./game/main.js";
 import randomMove from "./algorithm/randommove.js"
 
 document.getElementById("newgame").addEventListener("click", storeInfo);
@@ -55,5 +55,5 @@ function storeInfo() {
   let player2 = document.getElementById("p2").value;
   let timectrl2 = document.getElementById("tc2").value;
 
-  main(null, randomMove);
+  startGame(null, randomMove);
 }

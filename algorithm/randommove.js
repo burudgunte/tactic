@@ -1,13 +1,12 @@
-export default function randomMove() {
-    let gr = Math.floor(Math.random() * 3);
-    let gc = Math.floor(Math.random() * 3);
-    let lr = Math.floor(Math.random() * 3);
-    let lc = Math.floor(Math.random() * 3);
-    while (!isValidMove(gr, gc, lr, lc)) {
-        gr = Math.floor(Math.random() * 3);
-        gc = Math.floor(Math.random() * 3);
-        lr = Math.floor(Math.random() * 3);
-        lc = Math.floor(Math.random() * 3);
-    }
-    return [gr, gc, lr, lc];
+export default function randomMove(globalGame) {
+    do {
+        var move = {
+            globalRow: Math.floor(Math.random() * 3),
+            globalCol: Math.floor(Math.random() * 3),
+            localRow: Math.floor(Math.random() * 3),
+            localCol: Math.floor(Math.random() * 3)
+        };
+        
+    } while (!globalGame.isValidMove(move.globalRow, move.globalCol, move.localRow, move.localCol))
+    return move;
 }

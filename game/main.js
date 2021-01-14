@@ -10,7 +10,7 @@ const width = canvas.width = window.innerWidth / 2;
 
 const ctx = canvas.getContext("2d");
 
-// Color whole canvas black
+// Color whole canvas gray
 ctx.fillStyle = "rgb(44, 44, 44)";
 ctx.fillRect(0, 0, width, height);
 
@@ -63,15 +63,11 @@ function onClick(e) {
     if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
         // play move
         ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
-        ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
         ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
-        if (ctx.game.algorithm2) {
-            // await new Promise(r => setTimeout(r, 1000));
-            nextMove = ctx.game.algorithm2(ctx.game);
-            ctx.game = ctx.game.makeGlobalMove(nextMove[0], nextMove[1], nextMove[2], nextMove[3]);    
-            ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
-            ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);        
+        if (ctx.game.p2Algorithm !== null) {
+            ctx.game = ctx.game.makeAlgorithmMove();
+            ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize)
         }
     }
 
@@ -88,12 +84,8 @@ function onClick(e) {
     }
 }
 
-export default function main(algorithm1 = null, algorithm2 = null) {
-    ctx.game = new GlobalGame();
-
-    ctx.game.algorithm1 = algorithm1;
-    ctx.game.algorithm2 = algorithm2;
-
+export default function startGame(p1Algorithm = null, p2Algorithm = null) {
+    ctx.game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
     canvas.addEventListener("click", onClick);
 }
