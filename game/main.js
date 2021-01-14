@@ -1,5 +1,5 @@
 import GlobalGame from "./globalgame.js";
-// import randomMove from "./randommove.js";
+// import randomMove from "../algorithm/randommove.js";
 
 // Initialize constants
 
@@ -65,6 +65,14 @@ function onClick(e) {
         ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
         ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
         ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
+
+        if (ctx.game.algorithm2) {
+            // await new Promise(r => setTimeout(r, 1000));
+            nextMove = ctx.game.algorithm2(ctx.game);
+            ctx.game = ctx.game.makeGlobalMove(nextMove[0], nextMove[1], nextMove[2], nextMove[3]);    
+            ctx.clearRect(xGlobal, yGlobal, globalBoardSize, globalBoardSize);
+            ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);        
+        }
     }
 
     if (ctx.game.checkGlobalState() !== null) {
@@ -80,8 +88,12 @@ function onClick(e) {
     }
 }
 
-export default function main() {
+export default function main(algorithm1 = null, algorithm2 = null) {
     ctx.game = new GlobalGame();
+
+    ctx.game.algorithm1 = algorithm1;
+    ctx.game.algorithm2 = algorithm2;
+
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
     canvas.addEventListener("click", onClick);
 }

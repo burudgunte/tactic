@@ -1,4 +1,4 @@
-export function randomMove() {
+export default function randomMove() {
     let gr = Math.floor(Math.random() * 3);
     let gc = Math.floor(Math.random() * 3);
     let lr = Math.floor(Math.random() * 3);
