@@ -5,8 +5,8 @@ import GlobalGame from "./globalgame.js";
 
 // Canvas elements
 const canvas = document.querySelector(".ultimateBoard");
-const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight - 250;
+const width = canvas.width = window.innerWidth / 2;
 
 const ctx = canvas.getContext("2d");
 
