@@ -2,7 +2,11 @@
 
 helper functions
 
+"this" refers to the GlobalGame, so everything in this file may want to be moved to globalgame.js at some point
+
 */
+
+import GlobalGame from "./globalgame.js";
 
 function allSame(arr) {
     for (const element of arr) {
@@ -14,8 +18,8 @@ function allSame(arr) {
   }
 
 //counts the number of boards won by the player
-export default function countBoards(player) {
-    return middleBoardsWon(player) + cornerBoardsWon(player) + edgeBoardsWon(player);
+export default function countBoardsWon(player) {
+    return this.middleBoardsWon(player) + this.cornerBoardsWon(player) + this.edgeBoardsWon(player);
 }
 
 //notes if the middle board is won, returns 1 if it is
@@ -66,7 +70,7 @@ export default function localMiddlesWon(player) {
     let count = 0;
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-            if (checkSquareState(i, j, 1, 1) === player) {
+            if (this.checkSquareState(i, j, 1, 1) === player) {
                 count++;
             }
         }
@@ -79,16 +83,16 @@ export default function localCornersWon(player) {
     let count = 0;
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-            if (checkSquareState(i, j, 0, 1) === player) {
+            if (this.checkSquareState(i, j, 0, 1) === player) {
                 count++;
             }
-            if (checkSquareState(i, j, 1, 0) === player) {
+            if (this.checkSquareState(i, j, 1, 0) === player) {
                 count++;
             }
-            if (checkSquareState(i, j, 2, 1) === player) {
+            if (this.checkSquareState(i, j, 2, 1) === player) {
                 count++;
             }
-            if (checkSquareState(i, j, 1, 2) === player) {
+            if (this.checkSquareState(i, j, 1, 2) === player) {
                 count++;
             }
         }
@@ -101,16 +105,16 @@ export default function localEdgesWon(player) {
     let count = 0;
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-            if (checkSquareState(i, j, 0, 0) === player) {
+            if (this.checkSquareState(i, j, 0, 0) === player) {
                 count++;
             }
-            if (checkSquareState(i, j, 2, 0) === player) {
+            if (cthis.heckSquareState(i, j, 2, 0) === player) {
                 count++;
             }
-            if (checkSquareState(i, j, 2, 2) === player) {
+            if (this.checkSquareState(i, j, 2, 2) === player) {
                 count++;
             }
-            if (checkSquareState(i, j, 0, 2) === player) {
+            if (this.checkSquareState(i, j, 0, 2) === player) {
                 count++;
             }
         }
@@ -120,7 +124,7 @@ export default function localEdgesWon(player) {
 
 //calculates what turn it is (idk might be useful for something)
 export default function getTurns(player) {
-    return localMiddlesWon(player) + localCornersWon(player) + localEdgesWon(player);
+    return this.localMiddlesWon(player) + this.localCornersWon(player) + this.localEdgesWon(player);
 }
 
 //calculates number of unblocked pairs of boards (threatening a win)
@@ -128,21 +132,21 @@ export default function globalWinThreats(player) {
     let count = 0;
     //row
     for (let i = 0; i < 3; i++) {
-        if (isAThreat(player, checkLocalGameState(i, 0), checkLocalGameState(i, 1), checkLocalGameState(i, 2))) {
+        if (this.isAThreat(player, this.checkLocalGameState(i, 0), this.checkLocalGameState(i, 1), this.checkLocalGameState(i, 2))) {
             count++;
         }
     }
     //column
     for (let j = 0; j < 3; j++) {
-        if (isAThreat(player, checkLocalGameState(j, 0), checkLocalGameState(j, 1), checkLocalGameState(j, 2))) {
+        if (this.isAThreat(player, this.checkLocalGameState(j, 0), this.checkLocalGameState(j, 1), this.checkLocalGameState(j, 2))) {
             count++;
         }
     }
     //diagonal
-    if (isAThreat(player, checkLocalGameState(0, 0), checkLocalGameState(1, 1), checkLocalGameState(2, 2))) {
+    if (this.isAThreat(player, this.checkLocalGameState(0, 0), this.checkLocalGameState(1, 1), this.checkLocalGameState(2, 2))) {
         count++;
     }
-    if (isAThreat(player, checkLocalGameState(2, 0), checkLocalGameState(1, 1), checkLocalGameState(0, 2))) {
+    if (this.isAThreat(player, this.checkLocalGameState(2, 0), this.checkLocalGameState(1, 1), this.checkLocalGameState(0, 2))) {
         count++;
     }
     return count;
@@ -157,8 +161,8 @@ export default function isAThreat(player, a, b, c) {
 }
 
 //helper function that returns if a move (given the local coordinates) sends the opponent to a filled board (generally bad)
-export default function sendsToFilledBoard(i, j) {
-    if (this.checkLocalGameState(i, j) === null) {
+export default function sendsToFilledBoard(row, col) {
+    if (this.checkLocalGameState(row, col) === null) {
         return false;
     }
     return true;
@@ -170,28 +174,33 @@ heuristics
 
 */
 
-//my first attempt at a heuristic that combines a bunch of stuff
+//my first attempt at a positional heuristic that combines a bunch of stuff
 export default function heuristicA(player) {
     count = 0;
     count += 
         
         //your stuff
-        middleBoardsWon(player) * 10 + 
-        edgeBoardsWon(player) * 6 + 
-        cornerBoardsWon(player) * 4 + 
-        localMiddlesWon(player) * 2 + 
-        localCornerWon(player) * 1.5 + 
-        localEdgesWon(player) * 1 + 
-        globalWinThreats(player) * 10
+        this.middleBoardsWon(player) * 10 + 
+        this.edgeBoardsWon(player) * 6 + 
+        this.cornerBoardsWon(player) * 4 + 
+        this.localMiddlesWon(player) * 2 + 
+        this.localCornerWon(player) * 1.5 + 
+        this.localEdgesWon(player) * 1 + 
+        this.globalWinThreats(player) * 10
         
         //your opponent's stuff
-        middleBoardsWon(-player) * -10 + 
-        edgeBoardsWon(-player) * -6 + 
-        cornerBoardsWon(-player) * -4 + 
-        localMiddlesWon(-player) * -2 + 
-        localCornerWon(-player) * -1.5 + 
-        localEdgesWon(-player) * -1 + 
-        globalWinThreats(-player) * -10
+        this.middleBoardsWon(-player) * -10 + 
+        this.edgeBoardsWon(-player) * -6 + 
+        this.cornerBoardsWon(-player) * -4 + 
+        this.localMiddlesWon(-player) * -2 + 
+        this.localCornerWon(-player) * -1.5 + 
+        this.localEdgesWon(-player) * -1 + 
+        this.globalWinThreats(-player) * -10;
 
-    return count
+        //sent to a filled board
+        if (this.sendsToFilledBoard(this.nextGlobalRow, this.nextGlobalCol)) {
+            count += 5;
+        }
+
+    return count;
 }

@@ -263,7 +263,7 @@ export default class GlobalGame {
         } else {
           game.draw(ctx, xLocal, yLocal, localBoardSize);
         }   
-        }
+      }
     }
   }
 }
