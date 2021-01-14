@@ -65,7 +65,7 @@ function onClick(e) {
         ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
         ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
-        if (ctx.game.p2Algorithm !== null) {
+        if (ctx.game.currentPlayerAlgorithm()) {
             ctx.game = ctx.game.makeAlgorithmMove();
             ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize)
         }
@@ -87,5 +87,18 @@ function onClick(e) {
 export default function startGame(p1Algorithm = null, p2Algorithm = null) {
     ctx.game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
+
+    if (ctx.game.p1Algorithm && ctx.game.p2Algorithm) {
+        // Two bots play each other
+        while (ctx.game.checkGlobalState() === null) {
+            ctx.game = ctx.game.makeAlgorithmMove();
+            ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize); 
+        }    
+    } else if (ctx.game.p1Algorithm) {
+        // Make first move then wait for user input
+        ctx.game = ctx.game.makeAlgorithmMove();
+        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize); 
+    }
+
     canvas.addEventListener("click", onClick);
 }
