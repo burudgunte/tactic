@@ -26,6 +26,12 @@ const globalBoardSize = height - 50;
 const xGlobal = ((width / 2) - (globalBoardSize / 2));
 const yGlobal = ((height / 2) - (globalBoardSize / 2));
 
+function delayDrawGame() {
+    setTimeout(function() {
+        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
+    }, 1000)
+}
+
 function clickLoc(e) {
     /* Returns location of the click:
         - null if outside the board
@@ -67,7 +73,7 @@ function onClick(e) {
 
         if (ctx.game.currentPlayerAlgorithm()) {
             ctx.game = ctx.game.makeAlgorithmMove();
-            ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize)
+            delayDrawGame()
         }
     }
 
@@ -92,13 +98,15 @@ export default function startGame(p1Algorithm = null, p2Algorithm = null) {
         // Two bots play each other
         while (ctx.game.checkGlobalState() === null) {
             ctx.game = ctx.game.makeAlgorithmMove();
-            ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize); 
-        }    
+            // TODO: wait one second before next iteration
+            delayDrawGame()
+        }
+
     } else if (ctx.game.p1Algorithm) {
         // Make first move then wait for user input
         ctx.game = ctx.game.makeAlgorithmMove();
-        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize); 
-    }
+        delayDrawGame()
+    }    
 
     canvas.addEventListener("click", onClick);
 }
