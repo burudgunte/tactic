@@ -26,13 +26,13 @@ export default class Square {
         return new Square(player);
     }
 
-    draw(ctx, xSquare, ySquare, squareSize, color = "rgb(44, 44, 44)") {
+    draw(ctx, xSquare, ySquare, squareSize, color = null) {
         // Draw square
         ctx.strokeRect(xSquare, ySquare, squareSize, squareSize);
         let symbol = this.stateToSymbol();
 
         // Color based on validity
-        if (!symbol) {
+        if (!symbol && color) {
             ctx.fillStyle = color;
             ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
         }
