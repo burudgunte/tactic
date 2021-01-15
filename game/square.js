@@ -41,7 +41,7 @@ export default class Square {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#FFFFFF";
-        ctx.font = "48px georgia"
+        ctx.font = "48px georgia";
         ctx.fillText(symbol, xSquare + (squareSize / 2), ySquare + (squareSize / 2));
     }
 }

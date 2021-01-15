@@ -1,6 +1,6 @@
-import GlobalGame from "./globalgame.js";
+import GlobalGame from "../game/globalgame.js";
 
-function minimaxSearch(game) {
+export default function minimaxSearch(game) {
     let bestMove = maxValue(game)[1];
     return bestMove;
 }
