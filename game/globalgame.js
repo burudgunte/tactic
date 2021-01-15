@@ -155,7 +155,6 @@ export default class GlobalGame {
     the recommended move. */
     let algorithm = this.currentPlayerAlgorithm();
     const nextMove = algorithm(this);
-    console.log("next Move: " + nextMove);
     return this.makeGlobalMove(nextMove.globalRow, nextMove.globalCol, nextMove.localRow, nextMove.localCol);
   }
 
@@ -244,6 +243,7 @@ export default class GlobalGame {
         if (state !== null) {
           game.draw(ctx, xLocal, yLocal, localBoardSize);
 
+          // Draw large symbol if game is won
           if (state === 1) {
             var symbol = "X";
           } else if (state === -1) {
@@ -256,7 +256,7 @@ export default class GlobalGame {
           ctx.textBaseline = "middle";
           let fontSize = globalBoardSize / 3;
           ctx.font = fontSize + "px georgia";
-          ctx.fillText(symbol, xLocal + (localBoardSize * 5 / 8), yLocal + (localBoardSize * 5 / 8));
+          ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize / 2));
 
         } else if (isValid) {
           game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
