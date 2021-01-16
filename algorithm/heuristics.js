@@ -161,7 +161,7 @@ function isAThreat(player, a, b, c) {
     /* Helper function that returns true if there is a threat. 
     For example, calling it on a row that is [X win, X win, no winner and still active] returns true */
 
-    if (allSame(player, a, b) && c === null || allSame(player, a, c) && b === Null || allSame(player, b, c) && a === null) {
+    if (allSame[player, a, b] && c === null || allSame[player, a, c] && b === Null || allSame[player, b, c] && a === null) {
         return true;
     }
     return false;
@@ -177,7 +177,7 @@ function sendsToFilledBoard(game, row, col) {
 }
 
 function sigmoid(t) {
-    return 1/(1+Math.pow(Math.E, -t));
+    return 2 * 1/(1+Math.pow(Math.E, -t)) - 2;
 }
 
 /*
