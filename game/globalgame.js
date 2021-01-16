@@ -21,7 +21,6 @@ function drawLine(ctx, xStart, yStart, xEnd, yEnd, lineWidth = 10) {
 }
 
 export default class GlobalGame {
-
   
   constructor(globalBoard = null, player = 1, nextGlobalRow = null, nextGlobalCol = null, p1Algorithm = null, p2Algorithm = null) {
     /* Represents the overall board, made up of 9 local boards.
@@ -77,15 +76,15 @@ export default class GlobalGame {
   }
 
   getlocalGame(row, col) {
-    return this._globalBoard[row][col];
+    return this.globalBoard[row][col];
   }
 
   checkLocalGameState(row, col) {
-    return this._globalBoard[row][col].checkLocalState();
+    return this.globalBoard[row][col].checkLocalState();
   }
 
   checkSquareState(gr, gc, lr, lc) {
-    return this._globalBoard[gr][gc]._getLocalBoard[lr][lc];
+    return this.globalBoard[gr][gc]._getLocalBoard[lr][lc];
   }
 
   copyGlobalBoard() {
@@ -128,7 +127,13 @@ export default class GlobalGame {
         for (let lr = 0; lr < 3; lr ++) {
           for (let lc = 0; lc < 3; lc ++) {
             if (this.isValidMove(gr, gc, lr, lc)) {
-              validMoves.push([gr, gc, lr, lc]);
+              let move = {
+                globalRow: gr,
+                globalCol: gc,
+                localRow: lr, 
+                localCol: lc
+              };
+              validMoves.push(move);
             }
           }
         }
