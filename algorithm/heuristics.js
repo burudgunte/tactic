@@ -3,7 +3,7 @@
 helper functions
 */
 
-import GlobalGame from "./globalgame.js";
+import GlobalGame from "../game/globalgame.js";
 
 function allSame(arr) {
     for (const element of arr) {

@@ -7,6 +7,7 @@ export default function randomMove(globalGame) {
             localCol: Math.floor(Math.random() * 3)
         };
         
-    } while (!globalGame.isValidMove(move.globalRow, move.globalCol, move.localRow, move.localCol))
-    return move;
+    } while (!globalGame.isValidMove(move.globalRow, move.globalCol, move.localRow, move.localCol)) {
+        return move;
+    }
 }
