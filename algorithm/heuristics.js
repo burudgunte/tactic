@@ -161,7 +161,7 @@ function isAThreat(player, a, b, c) {
     /* Helper function that returns true if there is a threat. 
     For example, calling it on a row that is [X win, X win, no winner and still active] returns true */
 
-    if (allSame[player, a, b] && c === null || allSame[player, a, c] && b === Null || allSame[player, b, c] && a === null) {
+    if (allSame([player, a, b]) && c === null || allSame([player, a, c]) && b === null || allSame([player, b, c]) && a === null) {
         return true;
     }
     return false;
@@ -215,10 +215,12 @@ export default function heuristicA(game) {
         localEdgesWon(game, -player) * -1 + 
         globalWinThreats(game, -player) * -10;
 
-        //sent to a filled board
+    //sent to a filled board
+    if (game.nextGlobalRow !== null && game.nextGlobalCol !== null) {
         if (sendsToFilledBoard(game, game.nextGlobalRow, game.nextGlobalCol)) {
             count += 5;
         }
-
+    }
+    
     return sigmoid(count);
 }
