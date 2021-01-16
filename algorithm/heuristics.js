@@ -189,7 +189,7 @@ heuristics
 //my first attempt at a positional heuristic that combines a bunch of stuff
 export default function heuristicA(game) {
     //checks if game over
-    if (Math.abs(game.checkGlobalState()) === 1) {
+    if (game.checkGlobalState() !== null) {
         return game.checkGlobalState();
     }
 
