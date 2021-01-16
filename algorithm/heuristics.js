@@ -1,5 +1,4 @@
 /*
-
 helper functions
 */
 
@@ -14,13 +13,13 @@ function allSame(arr) {
     return true;
   }
 
-export default function countBoardsWon(game, player) {
+function countBoardsWon(game, player) {
     //counts the number of boards won by the player
 
     return this.middleBoardsWon(player) + game.cornerBoardsWon(player) + game.edgeBoardsWon(player);
 }
 
-export default function middleBoardsWon(game, player) {
+function middleBoardsWon(game, player) {
     //notes if the middle board is won, returns 1 if it is
 
     if (game.checkLocalGameState(1, 1) === player) {
@@ -29,7 +28,7 @@ export default function middleBoardsWon(game, player) {
     return 0;
 }
 
-export default function cornerBoardsWon(game, player) {
+function cornerBoardsWon(game, player) {
     //calculates how many corner boards are won
 
     let count = 0;
@@ -48,7 +47,7 @@ export default function cornerBoardsWon(game, player) {
     return count;
 }
 
-export default function edgeBoardsWon(game, player) {
+function edgeBoardsWon(game, player) {
     //calculates how many edge boards are won
 
     if (game.checkLocalGameState(0, 0) === player) {
@@ -66,7 +65,7 @@ export default function edgeBoardsWon(game, player) {
     return count;
 }
 
-export default function localMiddlesWon(game, player) {
+function localMiddlesWon(game, player) {
     //calculates how many local middle squares are won
 
     let count = 0;
@@ -80,7 +79,7 @@ export default function localMiddlesWon(game, player) {
     return count;
 }
 
-export default function localCornersWon(game, player) {
+function localCornersWon(game, player) {
     //calculates how many local corner squares are won
 
     let count = 0;
@@ -103,7 +102,7 @@ export default function localCornersWon(game, player) {
     return count;
 }
 
-export default function localEdgesWon(game, player) {
+function localEdgesWon(game, player) {
     //calculates how many local edge squares are won
 
     let count = 0;
@@ -126,13 +125,13 @@ export default function localEdgesWon(game, player) {
     return count;
 }
 
-export default function getTurns(game, player) {
+function getTurns(game, player) {
     //calculates what turn it is (idk might be useful for something)
 
     return game.localMiddlesWon(player) + game.localCornersWon(player) + game.localEdgesWon(player);
 }
 
-export default function globalWinThreats(game, player) {
+function globalWinThreats(game, player) {
     //calculates number of unblocked pairs of boards (threatening a win)
 
     let count = 0;
@@ -158,7 +157,7 @@ export default function globalWinThreats(game, player) {
     return count;
 }
 
-export default function isAThreat(player, a, b, c) {
+function isAThreat(player, a, b, c) {
     /* Helper function that returns true if there is a threat. 
     For example, calling it on a row that is [X win, X win, no winner and still active] returns true */
 
@@ -168,7 +167,7 @@ export default function isAThreat(player, a, b, c) {
     return false;
 }
 
-export default function sendsToFilledBoard(game, row, col) {
+function sendsToFilledBoard(game, row, col) {
     //helper function that returns if a move (given the local coordinates) sends the opponent to a filled board (generally bad)
 
     if (game.checkLocalGameState(row, col) === null) {
@@ -184,8 +183,14 @@ heuristics
 */
 
 //my first attempt at a positional heuristic that combines a bunch of stuff
-export default function heuristicA(game, player) {
-    count = 0;
+export default function heuristicA(game) {
+    //checks if game over
+    if (Math.abs(game.checkGlobalState()) === 1) {
+        return game.checkGlobalState();
+    }
+
+    let player = game.player;
+    let count = 0;
     count += 
         
         //your stuff
