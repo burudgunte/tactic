@@ -177,7 +177,7 @@ function sendsToFilledBoard(game, row, col) {
 }
 
 function sigmoid(t) {
-    return 2 * 1/(1+Math.pow(Math.E, -t)) - 2;
+    return 2 * 1/(1+Math.pow(Math.E, -t)) - 1;
 }
 
 /*
