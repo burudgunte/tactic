@@ -161,7 +161,7 @@ function isAThreat(player, a, b, c) {
     /* Helper function that returns true if there is a threat. 
     For example, calling it on a row that is [X win, X win, no winner and still active] returns true */
 
-    if (allSame(player, a, b) && c === null || allSame(player, a, c) && b === Null || allSame(player, b, c) && a === null) {
+    if (allSame([player, a, b]) && c === null || allSame([player, a, c]) && b === null || allSame([player, b, c]) && a === null) {
         return true;
     }
     return false;
@@ -169,7 +169,6 @@ function isAThreat(player, a, b, c) {
 
 function sendsToFilledBoard(game, row, col) {
     //helper function that returns if a move (given the local coordinates) sends the opponent to a filled board (generally bad)
-
     if (game.checkLocalGameState(row, col) === null) {
         return false;
     }
@@ -216,9 +215,11 @@ export default function heuristicA(game) {
         globalWinThreats(game, -player) * -10;
 
         //sent to a filled board
+    if (game.nextGlobalRow !== null && game.nextGlobalCol !== null) {
         if (sendsToFilledBoard(game, game.nextGlobalRow, game.nextGlobalCol)) {
             count += 5;
         }
+    }
 
     return sigmoid(count);
 }

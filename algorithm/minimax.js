@@ -33,6 +33,6 @@ function minValue(game, depth) {
 }
 
 export default function minimaxSearch(game) {
-    let bestMove = maxValue(game, 5)[1];
+    let bestMove = maxValue(game, 1)[1];
     return bestMove;
 }
