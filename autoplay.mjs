@@ -14,12 +14,19 @@ function playGame(p1Algorithm = minimaxSearch, p2Algorithm = randomMove) {
 
 function test() {
     let wins = 0;
+    let losses = 0;
+    let ties = 0;
     for (let i = 0; i < 1000; i++) {
-        if (playGame() === 1) {
+        let result = playGame()
+        if (result === 1) {
             wins++;
+        } else if (result === -1) {
+            losses++;
+        } else if (result === 0) {
+            ties++;
         }
     }
-    return wins;
+    return [wins, losses, ties];
 }
 
 console.log(test());
