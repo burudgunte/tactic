@@ -16,7 +16,7 @@ function allSame(arr) {
 function countBoardsWon(game, player) {
     //counts the number of boards won by the player
 
-    return this.middleBoardsWon(player) + game.cornerBoardsWon(player) + game.edgeBoardsWon(player);
+    return middleBoardsWon(game, player) + cornerBoardsWon(game, player) + edgeBoardsWon(game, player);
 }
 
 function middleBoardsWon(game, player) {
@@ -49,7 +49,7 @@ function cornerBoardsWon(game, player) {
 
 function edgeBoardsWon(game, player) {
     //calculates how many edge boards are won
-
+    let count = 0;
     if (game.checkLocalGameState(0, 0) === player) {
         count++;
     }
@@ -128,7 +128,7 @@ function localEdgesWon(game, player) {
 function getTurns(game, player) {
     //calculates what turn it is (idk might be useful for something)
 
-    return game.localMiddlesWon(player) + game.localCornersWon(player) + game.localEdgesWon(player);
+    return localMiddlesWon(game, player) + localCornersWon(game, player) + localEdgesWon(game, player);
 }
 
 function globalWinThreats(game, player) {
@@ -137,21 +137,21 @@ function globalWinThreats(game, player) {
     let count = 0;
     //row
     for (let i = 0; i < 3; i++) {
-        if (game.isAThreat(player, game.checkLocalGameState(i, 0), game.checkLocalGameState(i, 1), game.checkLocalGameState(i, 2))) {
+        if (isAThreat(player, game.checkLocalGameState(i, 0), game.checkLocalGameState(i, 1), game.checkLocalGameState(i, 2))) {
             count++;
         }
     }
     //column
     for (let j = 0; j < 3; j++) {
-        if (game.isAThreat(player, game.checkLocalGameState(j, 0), game.checkLocalGameState(j, 1), game.checkLocalGameState(j, 2))) {
+        if (isAThreat(player, game.checkLocalGameState(j, 0), game.checkLocalGameState(j, 1), game.checkLocalGameState(j, 2))) {
             count++;
         }
     }
     //diagonal
-    if (game.isAThreat(player, game.checkLocalGameState(0, 0), game.checkLocalGameState(1, 1), game.checkLocalGameState(2, 2))) {
+    if (isAThreat(player, game.checkLocalGameState(0, 0), game.checkLocalGameState(1, 1), game.checkLocalGameState(2, 2))) {
         count++;
     }
-    if (game.isAThreat(player, game.checkLocalGameState(2, 0), game.checkLocalGameState(1, 1), game.checkLocalGameState(0, 2))) {
+    if (isAThreat(player, game.checkLocalGameState(2, 0), game.checkLocalGameState(1, 1), game.checkLocalGameState(0, 2))) {
         count++;
     }
     return count;
@@ -176,7 +176,7 @@ function sendsToFilledBoard(game, row, col) {
     return true;
 }
 
-export default function sigmoid(t) {
+function sigmoid(t) {
     return 1/(1+Math.pow(Math.E, -t));
 }
 
@@ -198,25 +198,25 @@ export default function heuristicA(game) {
     count += 
         
         //your stuff
-        game.middleBoardsWon(player) * 10 + 
-        game.edgeBoardsWon(player) * 6 + 
-        game.cornerBoardsWon(player) * 4 + 
-        game.localMiddlesWon(player) * 2 + 
-        game.localCornerWon(player) * 1.5 + 
-        game.localEdgesWon(player) * 1 + 
-        game.globalWinThreats(player) * 10
+        middleBoardsWon(game, player) * 10 + 
+        edgeBoardsWon(game, player) * 6 + 
+        cornerBoardsWon(game, player) * 4 + 
+        localMiddlesWon(game, player) * 2 + 
+        localCornersWon(game, player) * 1.5 + 
+        localEdgesWon(game, player) * 1 + 
+        globalWinThreats(game, player) * 10
         
         //your opponent's stuff
-        game.middleBoardsWon(-player) * -10 + 
-        game.edgeBoardsWon(-player) * -6 + 
-        game.cornerBoardsWon(-player) * -4 + 
-        game.localMiddlesWon(-player) * -2 + 
-        game.localCornerWon(-player) * -1.5 + 
-        game.localEdgesWon(-player) * -1 + 
-        game.globalWinThreats(-player) * -10;
+        middleBoardsWon(game, -player) * -10 + 
+        edgeBoardsWon(game, -player) * -6 + 
+        cornerBoardsWon(game, -player) * -4 + 
+        localMiddlesWon(game, -player) * -2 + 
+        localCornersWon(game, -player) * -1.5 + 
+        localEdgesWon(game, -player) * -1 + 
+        globalWinThreats(game, -player) * -10;
 
         //sent to a filled board
-        if (game.sendsToFilledBoard(game.nextGlobalRow, game.nextGlobalCol)) {
+        if (sendsToFilledBoard(game, game.nextGlobalRow, game.nextGlobalCol)) {
             count += 5;
         }
 
