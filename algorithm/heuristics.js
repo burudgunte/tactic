@@ -176,6 +176,10 @@ function sendsToFilledBoard(game, row, col) {
     return true;
 }
 
+export default function sigmoid(t) {
+    return 1/(1+Math.pow(Math.E, -t));
+}
+
 /*
 
 heuristics
@@ -216,5 +220,5 @@ export default function heuristicA(game) {
             count += 5;
         }
 
-    return count;
+    return sigmoid(count);
 }
