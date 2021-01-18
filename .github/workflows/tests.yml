@@ -1,0 +1,9 @@
+name: tests
+on: [push]
+jobs:
+  testMinimax:
+    steps:
+      - run: |
+          chmod +x ./test/minimax
+          ./test/minimax
+        shell: bash
