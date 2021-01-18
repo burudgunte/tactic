@@ -4,5 +4,7 @@ jobs:
   testMinimax:
     runs-on: ubuntu-latest
     steps:
+      - run: pwd
+        shell: bash
       - run: ../../test/minimax
         shell: bash
