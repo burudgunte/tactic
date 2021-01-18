@@ -4,7 +4,6 @@ jobs:
   testMinimax:
     runs-on: ubuntu-latest
     steps:
-      - run: pwd
-        shell: bash
-      - run: ../../test/minimax
+      - uses: actions/checkout@v2
+      - run: ./test/minimax
         shell: bash
