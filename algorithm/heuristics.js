@@ -199,21 +199,23 @@ export default function heuristicA(game) {
         
         //your stuff
         middleBoardsWon(game, player) * 10 + 
-        edgeBoardsWon(game, player) * 6 + 
-        cornerBoardsWon(game, player) * 4 + 
-        localMiddlesWon(game, player) * 2 + 
-        localCornersWon(game, player) * 1.5 + 
-        localEdgesWon(game, player) * 1 + 
-        globalWinThreats(game, player) * 10
+        edgeBoardsWon(game, player) * 4 + 
+        cornerBoardsWon(game, player) * 6 + 
+        //localMiddlesWon(game, player) * 2 + 
+        //localCornersWon(game, player) * 1.5 + 
+        //localEdgesWon(game, player) * 1 + 
+        //globalWinThreats(game, player) * 10
         
         //your opponent's stuff
         middleBoardsWon(game, -player) * -10 + 
-        edgeBoardsWon(game, -player) * -6 + 
-        cornerBoardsWon(game, -player) * -4 + 
-        localMiddlesWon(game, -player) * -2 + 
-        localCornersWon(game, -player) * -1.5 + 
-        localEdgesWon(game, -player) * -1 + 
-        globalWinThreats(game, -player) * -10;
+        edgeBoardsWon(game, -player) * -4 + 
+        cornerBoardsWon(game, -player) * -6; 
+        //localMiddlesWon(game, -player) * -2 + 
+        //localCornersWon(game, -player) * -1.5 + 
+        //localEdgesWon(game, -player) * -1 + 
+        //globalWinThreats(game, -player) * -10
+
+        
 
     //sent to a filled board
     if (game.nextGlobalRow !== null && game.nextGlobalCol !== null) {
