@@ -40,7 +40,7 @@ function minValue(game, depth, alpha, beta) {
     return [minUtility, bestMove];
 }
 
-export default function minimaxSearch(game) {
+export default function alphaBetaSearch(game) {
     let bestMove = maxValue(game, 3, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)[1];
     // console.log("minimax moving");
     return bestMove;
