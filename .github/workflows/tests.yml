@@ -4,7 +4,5 @@ jobs:
   testMinimax:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          chmod +x ../../test/minimax
-          ../../test/minimax
+      - run: ../../test/minimax
         shell: bash
