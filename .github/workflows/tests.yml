@@ -2,6 +2,7 @@ name: tests
 on: [push]
 jobs:
   testMinimax:
+    runs-on: ubuntu-latest
     steps:
       - run: |
           chmod +x ./test/minimax
