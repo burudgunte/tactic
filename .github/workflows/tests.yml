@@ -7,9 +7,17 @@ jobs:
       - uses: actions/checkout@v2
       - run: ./test/winloss minimaxSearch
         shell: bash
+      - uses: actions/upload-artifact@v2
+        with:
+          name: minimaxSearch
+          path: minimaxSearch.csv
   alphabeta:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: ./test/winloss alphaBetaSearch
         shell: bash
+      - uses: actions/upload-artifact@v2
+        with:
+          name: alphaBetaSearch
+          path: alphaBetaSearch.csv
