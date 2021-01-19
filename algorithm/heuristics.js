@@ -198,18 +198,18 @@ export default function heuristicA(game) {
     count += 
         
         //your stuff
-        middleBoardsWon(game, player) * 5 + 
-        edgeBoardsWon(game, player) * 2 + 
-        cornerBoardsWon(game, player) * 3 + 
+        middleBoardsWon(game, 1) * 10 + 
+        edgeBoardsWon(game, 1) * 4 + 
+        cornerBoardsWon(game, 1) * 6 + 
         //localMiddlesWon(game, player) * 2 + 
         //localCornersWon(game, player) * 1.5 + 
         //localEdgesWon(game, player) * 1 + 
         //globalWinThreats(game, player) * 10
         
         //your opponent's stuff
-        middleBoardsWon(game, -player) * -5 + 
-        edgeBoardsWon(game, -player) * -2 + 
-        cornerBoardsWon(game, -player) * -3; 
+        middleBoardsWon(game, -1) * -10 + 
+        edgeBoardsWon(game, -1) * -4 + 
+        cornerBoardsWon(game, -1) * -6; 
         //localMiddlesWon(game, -player) * -2 + 
         //localCornersWon(game, -player) * -1.5 + 
         //localEdgesWon(game, -player) * -1 + 

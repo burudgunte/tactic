@@ -33,7 +33,11 @@ function minValue(game, depth) {
 }
 
 export default function minimaxSearch(game) {
-    let bestMove = maxValue(game, 3)[1];
+    if (game.player === 1) {
+        var bestMove = maxValue(game, 3)[1];
+    } else if (game.player === -1) {
+        var bestMove = minValue(game, 3)[1]
+    }
     // console.log("minimax moving");
     return bestMove;
 }
