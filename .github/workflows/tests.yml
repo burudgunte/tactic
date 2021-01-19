@@ -12,7 +12,10 @@ jobs:
       - run: ./test/winloss minimaxSearch
         shell: bash
       - name: Commit
-        run: git commit -am "Auto-update win-loss stats"
+        run: | 
+          git config --local user.email "actions@github.com"
+          git config --local user.name "github-actions"
+          git commit -am "Auto-update win-loss stats"
       - name: Push
         uses: ad-m/github-push-action@master
         with:
