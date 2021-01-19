@@ -6,3 +6,4 @@ msg=$(git log --format=%B -n 1 main)
 time=$(git log --format=%ci -n 1 main)
 
 echo "$commit,$msg,$time,$record" 
+echo "$commit,$msg,$time,$record" >> "./test/data/$1.csv"
