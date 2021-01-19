@@ -10,7 +10,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: minimaxSearch
-          path: minimaxSearch.csv
+          path: ./test/data/minimaxSearch.csv
   alphabeta:
     runs-on: ubuntu-latest
     steps:
@@ -20,4 +20,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: alphaBetaSearch
-          path: alphaBetaSearch.csv
+          path: ./test/data/alphaBetaSearch.csv
