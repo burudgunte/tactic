@@ -3,8 +3,8 @@ on: [push]
 jobs:
   minimax:
     - uses: actions/checkout@v2
-       with:
-         fetch-depth: 0
+      with:
+        fetch-depth: 0
     - run: ./test/winloss alphaBetaSearch
       shell: bash
     - run: ./test/winloss minimaxSearch
