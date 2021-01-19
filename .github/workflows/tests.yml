@@ -5,11 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: ./test/minimax
+      - run: ./test/winloss minimaxSearch
         shell: bash
   alphabeta:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: ./test/alphabeta
+      - run: ./test/winloss alphaBetaSearch
         shell: bash
