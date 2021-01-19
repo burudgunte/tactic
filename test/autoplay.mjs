@@ -11,7 +11,7 @@ import beamSearch from "../algorithm/beam.js";
 
 function playGame(p1Algorithm, p2Algorithm) {
     var game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
-
+    
     while (game.checkGlobalState() === null) {
         game = game.makeAlgorithmMove();
     }
@@ -24,7 +24,7 @@ function test(numIters = 100, p1Algorithm = minimaxSearch, p2Algorithm = randomM
     let losses = 0;
     let ties = 0;
     for (let i = 0; i < numIters; i++) {
-        let result = playGame(p1Algorithm, p2Algorithm)
+        let result = playGame(p1Algorithm, p2Algorithm);
         if (result === 1) {
             wins++;
         } else if (result === -1) {
@@ -33,10 +33,11 @@ function test(numIters = 100, p1Algorithm = minimaxSearch, p2Algorithm = randomM
             ties++;
         }
     }
+
     const output = {
         wins:wins,
-        losses:losses,
-        ties:ties
+        ties:ties,
+        losses:losses
     };
     console.log(JSON.stringify(output))
 }
