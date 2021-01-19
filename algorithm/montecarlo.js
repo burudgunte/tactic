@@ -67,9 +67,10 @@ export default class TreeLeaf {
         this.ties = 0;
     }
 
-    expandToNewLeaf(currentNode) {
-        newNode = TreeNode(currentNode.game);
-        newNode.addChild(pickMoveFrom);
+    expandToNewLeaf(leaf) {
+        //converts the TreeLeaf to a TreeNode
+        leaf = TreeNode(node.game);
+        node.addChild();
     }
 
     playout() {

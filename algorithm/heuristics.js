@@ -216,7 +216,7 @@ export default function heuristicA(game) {
         //globalWinThreats(game, -player) * -10
 
         
-
+        
     //sent to a filled board
     if (game.nextGlobalRow !== null && game.nextGlobalCol !== null) {
         if (sendsToFilledBoard(game, game.nextGlobalRow, game.nextGlobalCol)) {
