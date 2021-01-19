@@ -8,9 +8,9 @@ jobs:
         with:
           fetch-depth: 0
       - run: ./test/winloss alphaBetaSearch
-       shell: bash
+        shell: bash
       - run: ./test/winloss minimaxSearch
-       shell: bash
+        shell: bash
       - name: Commit
         run: git commit -am "Auto-update win-loss stats"
       - name: Push
