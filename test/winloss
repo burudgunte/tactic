@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 commit=$(git log --format=%h -n 1)
-record=$(node --experimental-modules ./test/autoplay.mjs 100)
+record=$(node --experimental-modules ./test/autoplay.mjs 100 $1)
 msg=$(git log --format=%B -n 1 main)
 time=$(git log --format=%ci -n 1 main)
 
