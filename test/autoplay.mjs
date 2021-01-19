@@ -39,7 +39,8 @@ function test(numIters = 100, p1Algorithm = minimaxSearch, p2Algorithm = randomM
         ties:ties,
         losses:losses
     };
-    console.log(JSON.stringify(output))
+    // console.log(JSON.stringify(output))
+    console.log(wins + "," + losses + "," + ties)
 }
 
 function main() {
@@ -48,6 +49,9 @@ function main() {
         case "randomMove":
             test(args[0], randomMove);
             break;
+        case "minimaxSearch":
+            test(args[0], minimaxSearch);
+            break;
         case "beamSearch":
             test(args[0], beamSearch);
             break;
@@ -55,7 +59,7 @@ function main() {
             test(args[0], alphaBetaSearch);
             break;
         default:
-            test(args[0], args[1]);
+            test(args[0], randomMove);
             break;
     }
 }

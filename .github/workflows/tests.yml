@@ -5,11 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: ./test/winloss minimaxSearch
-        shell: bash
-  alphabeta:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - run: ./test/winloss alphaBetaSearch
         shell: bash
+      - run: ./test/winloss minimaxSearch
+        shell: bash
+      - name: Commit
+        run: | 
+          git config --local user.email "actions@github.com"
+          git config --local user.name "github-actions"
+          git commit -am "Auto-update win-loss stats"
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
