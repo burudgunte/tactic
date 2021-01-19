@@ -2,28 +2,17 @@ name: tests
 on: [push]
 jobs:
   minimax:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: minimaxSearch
       - uses: actions/checkout@v2
-      - run: ./test/winloss minimaxSearch
-        shell: bash
-      - uses: actions/upload-artifact@v2
         with:
-          name: minimaxSearch
-          path: ./test/data/minimaxSearch.csv
-  alphabeta:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v2
-        with: 
-          name: alphaBetaSearch
-      - uses: actions/checkout@v2
+          fetch-depth: 0
       - run: ./test/winloss alphaBetaSearch
         shell: bash
-      - uses: actions/upload-artifact@v2
+      - run: ./test/winloss minimaxSearch
+        shell: bash
+      - name: Commit
+        run: git commit -am "Auto-update win-loss stats"
+      - name: Push
+        uses: ad-m/github/push-action@master
         with:
-          name: alphaBetaSearch
-          path: ./test/data/alphaBetaSearch.csv
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
