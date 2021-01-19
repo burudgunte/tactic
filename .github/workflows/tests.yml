@@ -4,6 +4,9 @@ jobs:
   minimax:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: minimaxSearch
       - uses: actions/checkout@v2
       - run: ./test/winloss minimaxSearch
         shell: bash
@@ -14,6 +17,9 @@ jobs:
   alphabeta:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v2
+        with: 
+          name: alphaBetaSearch
       - uses: actions/checkout@v2
       - run: ./test/winloss alphaBetaSearch
         shell: bash
