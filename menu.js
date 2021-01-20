@@ -1,6 +1,7 @@
 import startGame from "./game/main.js";
 import randomMove from "./algorithm/random.js";
 import minimaxSearch from "./algorithm/minimax.js";
+import alphaBetaSearch from "./algorithm/alphabeta.js";
 
 document.getElementById("newgame").addEventListener("click", storeInfo);
 document.getElementById("p1").addEventListener("change", toggleOptions1);
@@ -56,5 +57,5 @@ function storeInfo() {
   let player2 = document.getElementById("p2").value;
   let timectrl2 = document.getElementById("tc2").value;
 
-  startGame(randomMove, minimaxSearch);
+  startGame(randomMove, alphaBetaSearch);
 }
