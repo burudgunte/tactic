@@ -15,8 +15,15 @@ function allSame(arr) {
 
 function countBoardsWon(game, player) {
     //counts the number of boards won by the player
-
-    return middleBoardsWon(game, player) + cornerBoardsWon(game, player) + edgeBoardsWon(game, player);
+    let count = 0;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (game.checkLocalGameState(1, 1) === player) {
+                count++;
+            }
+        }
+    }
+    //return middleBoardsWon(game, player) + cornerBoardsWon(game, player) + edgeBoardsWon(game, player);
 }
 
 function middleBoardsWon(game, player) {
@@ -229,6 +236,7 @@ export default function heuristicA(game) {
         return game.checkGlobalState();
     }
 
+    let player = game.player;
     let count = 0;
     count += 
         
