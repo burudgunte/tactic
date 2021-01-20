@@ -157,8 +157,44 @@ function globalWinThreats(game, player) {
     return count;
 }
 
+function localBoardWinThreats(game, player, row, col) {
+    //calculates number of unblocked pairs of squares (threatening a local win)
+
+    let count = 0;
+    //row
+    for (let i = 0; i < 3; i++) {
+        if (isAThreat(player, game.checkSquareState(row, col, i, 0), game.checkSquareState(row, col, i, 1), game.checkSquareState(row, col, i, 2))) {
+            count++;
+        }
+    }
+    //column
+    for (let j = 0; j < 3; j++) {
+        if (isAThreat(player, game.checkSquareState(row, col, j, 0), game.checkSquareState(row, col, j, 1), game.checkSquareState(row, col, j, 2))) {
+            count++;
+        }
+    }
+    //diagonal
+    if (isAThreat(player, game.checkSquareState(row, col, 0, 0), game.checkSquareState(row, col, 1, 1), game.checkSquareState(row, col, 2, 2))) {
+        count++;
+    }
+    if (isAThreat(player, game.checkSquareState(row, col, 2, 0), game.checkSquareState(row, col, 1, 1), game.checkSquareState(row, col, 0, 2))) {
+        count++;
+    }
+    return count;
+}
+
+function overallLocalWinThreats(game, player) {
+    let count = 0;
+    for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col++) {
+            count += localBoardWinThreats(game, player, row, col);
+        }
+    }
+    return count;
+}
+
 function isAThreat(player, a, b, c) {
-    /* Helper function that returns true if there is a threat. 
+    /* Helper function that returns true if there is a threat of winning a row, col, or diag. 
     For example, calling it on a row that is [X win, X win, no winner and still active] returns true */
 
     if (allSame([player, a, b]) && c === null || allSame([player, a, c]) && b === null || allSame([player, b, c]) && a === null) {
@@ -193,26 +229,17 @@ export default function heuristicA(game) {
         return game.checkGlobalState();
     }
 
-    let player = game.player;
     let count = 0;
     count += 
         
         //your stuff
         countBoardsWon(game, 1) +
-        //localMiddlesWon(game, player) * 2 + 
-        //localCornersWon(game, player) * 1.5 + 
-        //localEdgesWon(game, player) * 1 + 
-        //globalWinThreats(game, player) * 10
+        //overallLocalWinThreats(game, 1) +
         
         //your opponent's stuff
-        -countBoardsWon(game, -1); 
-        //localMiddlesWon(game, -player) * -2 + 
-        //localCornersWon(game, -player) * -1.5 + 
-        //localEdgesWon(game, -player) * -1 + 
-        //globalWinThreats(game, -player) * -10
-
+        -countBoardsWon(game, -1);
+        //-overallLocalWinThreats(game, -1)
         
-
     //sent to a filled board
     if (game.nextGlobalRow !== null && game.nextGlobalCol !== null) {
         if (sendsToFilledBoard(game, game.nextGlobalRow, game.nextGlobalCol)) {
