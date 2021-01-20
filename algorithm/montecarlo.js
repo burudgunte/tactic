@@ -1,46 +1,46 @@
 /*
 
 Monte Carlo steps:
-
-2. Begin building a tree by generating the current state as a TreeNode and its children as TreeLeaves
-3. Repeat these steps for the number of iterations(default 100)
-    3a. Select a TreeLeaf according to the selectNewMove
-    3b. Make the TreeLeaf a TreeNode and expand to a new TreeLeaf, a child of the other one
-    3c. Run playout (default is random)
-    3d. Record win to the TreeLeaf and all its ancestor TreeNodes in lineage
-4. return the move with the highest number of plays
+1. Begin building a tree by generating the current state as a TreeNode and its children as TreeLeaves
+2. Repeat these steps for the number of iterations(default 100)
+    2a. Select a TreeLeaf according to the selectNewMove, log all nodes traversed to lineage
+    2b. Make the TreeLeaf a TreeNode and expand to a new TreeLeaf, a child of the other one
+    2c. Run playout (default is random)
+    2d. Record win to the TreeLeaf and all its ancestor TreeNodes in lineage
+    2e. Reset lineage
+3. return the move with the highest number of plays
 */
 
-const numIterations = 1;
+const numIterations = 20;
 const cVal = Math.SQRT2;
 
 export default function monteCarlo(game) {
-    //Step 2
+    //Step 1
     let currentState = TreeLeaf(game);
 
     let lineage = [currentState];
 
-    //Step 3
+    //Step 2
     for (let i = 0; i < numIterations; i++) {
         
-        //Step 3a
+        //Step 2a
         let currentLeaf = currentState.selectLeaf();
 
-        //Step 3b
+        //Step 2b
         let child = currentLeaf.expandToNewLeaf();
 
-        //Step 3c
+        //Step 2c
         let result = child.playout();
         console.log(result);
 
-        //Step 3d
+        //Step 2d
         child.updateCounts(lineage, result);
 
-        //reset lineage
+        //Reset lineage
         lineage = [currentState];
     }
 
-    //Step 4
+    //Step 3
     return currentState.selectBestMove();
 }
 
@@ -48,9 +48,10 @@ export default function monteCarlo(game) {
 
 export default class TreeNode {
     //creates a TreeNode with a list of its children 
-    constructor(game) {
+    constructor(game, move) {
         this.game = game;
         this.children = [];
+        this.move = null;
         this.wins = 0;
         this.losses = 0;
         this.ties = 0;
@@ -92,7 +93,7 @@ export default class TreeNode {
                 toReturn = child;
             }
         }
-        return toReturn;
+        return toReturn.move;
     }
 }
 
@@ -100,8 +101,9 @@ export default class TreeNode {
 
 export default class TreeLeaf {
     //creates a TreeLeaf class
-    constructor(game) {
+    constructor(game, move) {
         this.game = game;
+        this.move = move;
         this.wins = 0;
         this.losses = 0;
         this.ties = 0;
@@ -114,13 +116,13 @@ export default class TreeLeaf {
 
     expandToNewLeaf(leaf) {
         //converts the TreeLeaf to a TreeNode and creates a new TreeLeaf from a random move from the list of valid moves
-        leaf = TreeNode(node.game);
+        node = TreeNode(leaf.game, leaf.move);
         newMove = node.game.getValidMoves()[Math.floor(Math.random() * node.game.getValidMoves().length)];
         node.addChild(newMove);
 
         //replace leaf with node in it's parent's list of children
-        let i = parent[node].children.indexOf(node);
-        parent[node].children.splice(i).push(node);
+        let parentNode = parent[leaf];
+        parentNode.children.splice(parentNode.children.indexOf(node)).push(node);
     }
 
     playout() {
@@ -133,13 +135,13 @@ export default class TreeLeaf {
     updateCounts(lineage, winner) {
         for (node in lineage) {
             if (winner === this.game.player) {
-                wins++;
+                node.wins++;
             }
             if (winner === -this.game.player) {
-                losses++;
+                node.losses++;
             }
             if (winner === 0) {
-                ties++;
+                node.ties++;
             }
         }
     }
