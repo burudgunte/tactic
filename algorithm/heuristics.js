@@ -18,7 +18,7 @@ function countBoardsWon(game, player) {
     let count = 0;
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-            if (game.checkLocalGameState(1, 1) === player) {
+            if (game.checkLocalGameState(i, j) === player) {
                 count++;
             }
         }
@@ -229,7 +229,7 @@ heuristics
 
 */
 
-//my first attempt at a positional heuristic that combines a bunch of stuff
+//my first attempt at a positional heuristic
 export default function heuristicA(game) {
     //checks if game over
     if (game.checkGlobalState() !== null) {
