@@ -23,7 +23,7 @@ function countBoardsWon(game, player) {
             }
         }
     }
-    //return middleBoardsWon(game, player) + cornerBoardsWon(game, player) + edgeBoardsWon(game, player);
+    return middleBoardsWon(game, player) + cornerBoardsWon(game, player) + edgeBoardsWon(game, player);
 }
 
 function middleBoardsWon(game, player) {
