@@ -40,12 +40,14 @@ function minValue(game, depth, alpha, beta) {
     return [minUtility, bestMove];
 }
 
-export default function alphaBetaSearch(game) {
+function alphaBetaSearch(game) {
     // console.log("minimax moving");
     if (game.player === 1) {
         var bestMove = maxValue(game, 3, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)[1];
     } else if (game.player === -1) {
-        var bestMove = minValue(game, 3, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)[1]
+        var bestMove = minValue(game, 3, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)[1];
     }
     return bestMove;
 }
+
+export { maxValue, minValue, alphaBetaSearch }

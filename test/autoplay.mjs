@@ -6,7 +6,7 @@
 import GlobalGame from "../game/globalgame.js";
 import randomMove from "../algorithm/random.js";
 import minimaxSearch from "../algorithm/minimax.js";
-import alphaBetaSearch from "../algorithm/alphabeta.js";
+import { alphaBetaSearch } from "../algorithm/alphabeta.js";
 import beamSearch from "../algorithm/beam.js";
 import monteCarlo from "../algorithm/montecarlo.js";
 
