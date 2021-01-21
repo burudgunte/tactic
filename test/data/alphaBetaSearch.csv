@@ -6,3 +6,4 @@ bd171dc,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-
 7d31a8d,Remove failed runs from logs,2021-01-19 21:40:59 -0600,59,38,3
 4c4d4a3,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-01-19 23:18:53 -0500,59,37,4
 83dc546,Fix class methods in montecarlo,2021-01-20 19:44:26 -0600,54,41,5
+74d16d0,Pull additional win-loss stats,2021-01-20 23:54:07 -0600,57,34,9
