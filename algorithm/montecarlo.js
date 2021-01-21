@@ -10,13 +10,15 @@ Monte Carlo steps:
     2e. Reset lineage
 3. return the move with the highest number of plays
 */
+import GlobalGame from "../game/globalgame.js";
+import randomMove from "./random.js";
 
 const numIterations = 20;
 const cVal = Math.SQRT2;
 
 export default function monteCarlo(game) {
     //Step 1
-    let currentState = TreeLeaf(game);
+    let currentState = new TreeLeaf(game, null);
 
     let lineage = [currentState];
 
@@ -31,7 +33,7 @@ export default function monteCarlo(game) {
 
         //Step 2c
         let result = child.playout();
-        console.log(result);
+        // console.log(result);
 
         //Step 2d
         child.updateCounts(lineage, result);
@@ -46,7 +48,7 @@ export default function monteCarlo(game) {
 
 //the TreeNode class
 
-export default class TreeNode {
+class TreeNode {
     //creates a TreeNode with a list of its children 
     constructor(game, move) {
         this.game = game;
@@ -99,7 +101,7 @@ export default class TreeNode {
 
 //the TreeLeaf class
 
-export default class TreeLeaf {
+class TreeLeaf {
     //creates a TreeLeaf class
     constructor(game, move) {
         this.game = game;
@@ -114,15 +116,17 @@ export default class TreeLeaf {
         return this;
     }
 
-    expandToNewLeaf(leaf) {
+    expandToNewLeaf() {
         //converts the TreeLeaf to a TreeNode and creates a new TreeLeaf from a random move from the list of valid moves
-        node = TreeNode(leaf.game, leaf.move);
-        newMove = node.game.getValidMoves()[Math.floor(Math.random() * node.game.getValidMoves().length)];
+        let node = new TreeNode(this.game, this.move);
+        let newMove = node.game.getValidMoves()[Math.floor(Math.random() * node.game.getValidMoves().length)];
         node.addChild(newMove);
 
         //replace leaf with node in it's parent's list of children
-        let parentNode = parent[leaf];
+        let parentNode = parent[this];
         parentNode.children.splice(parentNode.children.indexOf(node)).push(node);
+
+        return new TreeLeaf(this.game, newMove);
     }
 
     playout() {
@@ -133,7 +137,7 @@ export default class TreeLeaf {
 
 
     updateCounts(lineage, winner) {
-        for (node in lineage) {
+        for (let node of lineage) {
             if (winner === this.game.player) {
                 node.wins++;
             }
@@ -145,16 +149,31 @@ export default class TreeLeaf {
             }
         }
     }
+
+    selectBestMove() {
+        //selects the move that the entire monte carlo algorithm will suggest
+        let count = 0;
+        let toReturn = this.children[0];
+        for (child in this.children) {
+            if (count < child.wins + child.losses + child.ties) {
+                count = child.wins + child.losses + child.ties;
+                toReturn = child;
+            }
+        }
+        return toReturn.move;
+    }
 }
+
+//the 
 
 //Helper functions
 
-export default function simulateMove(game, move) {
+function simulateMove(game, move) {
     //returns a new game that has the move played
     return game.makeGlobalMove(move[0], move[1], move[2], move[3]);
 }
 
-export default function playRandomGame(game) {
+function playRandomGame(game) {
     var game = new GlobalGame(undefined, undefined, undefined, undefined, randomMove, randomMove);
 
     while (game.checkGlobalState() === null) {
@@ -166,4 +185,4 @@ export default function playRandomGame(game) {
 
 //Dictionary which matches each node to their parent
 
-parent = {}
+let parent = {};

@@ -8,6 +8,7 @@ import randomMove from "../algorithm/random.js";
 import minimaxSearch from "../algorithm/minimax.js";
 import alphaBetaSearch from "../algorithm/alphabeta.js";
 import beamSearch from "../algorithm/beam.js";
+import monteCarlo from "../algorithm/montecarlo.js";
 
 function playGame(p1Algorithm, p2Algorithm) {
     var game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
@@ -58,6 +59,8 @@ function main() {
         case "alphaBetaSearch":
             test(args[0], alphaBetaSearch);
             break;
+        case "montecarlo":
+            test(args[0], monteCarlo);
         default:
             test(args[0], randomMove);
             break;
