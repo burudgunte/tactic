@@ -241,19 +241,16 @@ export default function heuristicA(game) {
     count += 
         
         //your stuff
-        countBoardsWon(game, 1) +
+        5 * countBoardsWon(game, 1) +
         //overallLocalWinThreats(game, 1) +
         
         //your opponent's stuff
-        -countBoardsWon(game, -1);
+        5 * -countBoardsWon(game, -1);
         //-overallLocalWinThreats(game, -1)
         
     //sent to a filled board
-    if (game.nextGlobalRow !== null && game.nextGlobalCol !== null) {
-        if (sendsToFilledBoard(game, game.nextGlobalRow, game.nextGlobalCol)) {
-            count += 0;
-        }
-    }
+    
+    count += game.getValidMoves().length * game.player / 18;
     
     return sigmoid(count);
 }
