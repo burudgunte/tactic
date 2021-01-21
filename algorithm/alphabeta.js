@@ -1,13 +1,12 @@
 import heuristicA from "./heuristics.js";
 
 function maxValue(game, depth, alpha, beta) {
-    if (game.checkGlobalState() || depth === 0) {
+    if (game.checkGlobalState() !== null || depth === 0) {
         return [heuristicA(game), null];
     }
     let maxUtility = Number.NEGATIVE_INFINITY;
     for (let possibleMove of game.getValidMoves()) {
-        let newUtility = minValue(game.makeGlobalMove(possibleMove.localRow, possibleMove.localCol, 
-                                                        possibleMove.globalRow, possibleMove.globalCol), depth - 1, alpha, beta)[0];
+        let newUtility = minValue(game.makeGlobalMove(possibleMove.globalRow, possibleMove.globalCol, possibleMove.localRow, possibleMove.localCol), depth - 1, alpha, beta)[0];
         if (newUtility > maxUtility) {
             maxUtility = newUtility;
             var bestMove = possibleMove;
@@ -21,13 +20,12 @@ function maxValue(game, depth, alpha, beta) {
 }
 
 function minValue(game, depth, alpha, beta) {
-    if (game.checkGlobalState() || depth === 0) {
+    if (game.checkGlobalState() !== null || depth === 0) {
         return [heuristicA(game), null];
     }
     let minUtility = Number.POSITIVE_INFINITY;
     for (let possibleMove of game.getValidMoves()) {
-        let newUtility = maxValue(game.makeGlobalMove(possibleMove.localRow,possibleMove.localCol, 
-                                                        possibleMove.globalRow, possibleMove.globalCol), depth - 1)[0];
+        let newUtility = maxValue(game.makeGlobalMove(possibleMove.globalRow,possibleMove.globalCol, possibleMove.localRow, possibleMove.localCol), depth - 1)[0];
         if (newUtility < minUtility) {
             minUtility = newUtility;
             var bestMove = possibleMove;
@@ -36,6 +34,8 @@ function minValue(game, depth, alpha, beta) {
         if (minUtility <= alpha) {
             return [minUtility, bestMove];
         }
+        // console.log("just considered move ",  possibleMove.localRow, possibleMove.localCol);
+        // console.log("new utility " + newUtility);
     }
     return [minUtility, bestMove];
 }

@@ -143,6 +143,11 @@ export default class GlobalGame {
   }
 
   makeGlobalMove(globalRow, globalCol, localRow, localCol) {
+    if (!this.isValidMove(globalRow, globalCol, localRow, localCol)) {
+      // Below statement should never run
+      return this;
+    }
+
     let newGlobalBoard = this.copyGlobalBoard();
     newGlobalBoard[globalRow][globalCol] = this.getlocalGame(globalRow, globalCol).makeLocalMove(this.player, localRow, localCol);
     if (newGlobalBoard[localRow][localCol].checkLocalState() === null) {

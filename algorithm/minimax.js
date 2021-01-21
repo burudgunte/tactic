@@ -6,8 +6,8 @@ function maxValue(game, depth) {
     }
     let maxUtility = Number.NEGATIVE_INFINITY;
     for (let possibleMove of game.getValidMoves()) {
-        let newUtility = minValue(game.makeGlobalMove(possibleMove.localRow, possibleMove.localCol, 
-                                                        possibleMove.globalRow, possibleMove.globalCol), depth - 1)[0];
+        let newUtility = minValue(game.makeGlobalMove(possibleMove.globalRow, possibleMove.globalCol, 
+                                                        possibleMove.localRow, possibleMove.localCol), depth - 1)[0];
         if (newUtility > maxUtility) {
             maxUtility = newUtility;
             var bestMove = possibleMove;
@@ -22,8 +22,8 @@ function minValue(game, depth) {
     }
     let minUtility = Number.POSITIVE_INFINITY;
     for (let possibleMove of game.getValidMoves()) {
-        let newUtility = maxValue(game.makeGlobalMove(possibleMove.localRow,possibleMove.localCol, 
-                                                        possibleMove.globalRow, possibleMove.globalCol), depth - 1)[0];
+        let newUtility = maxValue(game.makeGlobalMove(possibleMove.globalRow,possibleMove.globalCol, 
+                                                        possibleMove.localRow, possibleMove.localCol), depth - 1)[0];
         if (newUtility < minUtility) {
             minUtility = newUtility;
             var bestMove = possibleMove;
