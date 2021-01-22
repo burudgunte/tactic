@@ -53,8 +53,8 @@ class TreeNode {
 
     UCB1() {
         //calculates the UCB1 of a node
-        let exploitationTerm = (node.wins + 0.5 * node.ties) / (node.wins + node.ties + node.losses);
-        let explorationTerm = Math.sqrt(Math.log(parent[node].wins + parent[node].ties + parent[node].losses) / (node.wins + node.ties + node.losses));
+        let exploitationTerm = (this.wins + 0.5 * this.ties) / (this.wins + this.ties + this.losses);
+        let explorationTerm = Math.sqrt(Math.log(parent[this].wins + parent[this].ties + parent[this].losses) / (this.wins + this.ties + node.losses));
         return exploitationTerm + cVal * explorationTerm;
     }
 
