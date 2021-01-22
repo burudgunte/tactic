@@ -1,7 +1,7 @@
 import GlobalGame from "../game/globalgame.js";
 import randomMove from "./random.js";
 
-const numIterations = 20;
+const numIterations = 50;
 const cVal = Math.SQRT2;
 let parent = {};
 
@@ -51,10 +51,10 @@ class TreeNode {
         this.ties = 0;
     }
 
-    UCB1() {
+    ucb1() {
         //calculates the UCB1 of a node
         let exploitationTerm = (this.wins + 0.5 * this.ties) / (this.wins + this.ties + this.losses);
-        let explorationTerm = Math.sqrt(Math.log(parent[this].wins + parent[this].ties + parent[this].losses) / (this.wins + this.ties + node.losses));
+        let explorationTerm = Math.sqrt(Math.log(parent[this].wins + parent[this].ties + parent[this].losses) / (this.wins + this.ties + this.losses));
         return exploitationTerm + cVal * explorationTerm;
     }
 
@@ -67,13 +67,13 @@ class TreeNode {
         //calls selectLeaf on the child with the highest UCB1
         let ucb1Val = 0;
         let toReturn = this.children[0];
-        for (child in this.children) {
-            if (ucb1Val < child.UCB1()) {
-                ucb1Val = child.UCB1();
+        for (let child of this.children) {
+            if (ucb1Val < child.ucb1()) {
+                ucb1Val = child.ucb1();
                 toReturn = child;
             }
         }
-        return selectLeaf(toReturn);
+        return toReturn.selectLeaf();
     }
 
     addChild(newChild) {
@@ -86,7 +86,7 @@ class TreeNode {
         //selects the move that the entire monte carlo algorithm will suggest, from the list of children of the current state
         let numPlayouts = 0;
         let toReturn = this.children[0];
-        for (child in this.children) {
+        for (let child of this.children) {
             if (numPlayouts < child.wins + child.losses + child.ties) {
                 numPlayouts = child.wins + child.losses + child.ties;
                 toReturn = child;
@@ -97,7 +97,7 @@ class TreeNode {
 
     expandToNewLeaf() {
         //creates a new node from every possible move and adds it to the list of children
-        for (let newMove in this.game.getValidMoves()) {
+        for (let newMove of this.game.getValidMoves()) {
             let newNode = new TreeNode(this.game, newMove);
             this.addChild(newNode);
         }
@@ -106,9 +106,9 @@ class TreeNode {
     selectToBePlayedOut() {
         let ucb1Val = 0;
         let toReturn = this.children[0];
-        for (let child in this.children) {
-            if (ucb1Val < child.UCB1()) {
-                ucb1Val = child.UCB1();
+        for (let child of this.children) {
+            if (ucb1Val < child.ucb1()) {
+                ucb1Val = child.ucb1();
                 toReturn = child;
             }
         }

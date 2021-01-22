@@ -59,7 +59,7 @@ function main() {
         case "alphaBetaSearch":
             test(args[0], alphaBetaSearch);
             break;
-        case "montecarlo":
+        case "monteCarlo":
             test(args[0], monteCarlo);
         default:
             test(args[0], randomMove);
