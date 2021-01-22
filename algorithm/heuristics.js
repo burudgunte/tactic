@@ -237,21 +237,20 @@ export default function heuristicA(game) {
         return game.checkGlobalState();
     }
 
-    let player = game.player;
-    let count = 0;
+    let heuristic = 0;
 
-    count += 10 * countBoardsWon(game, 1);
-    count -= 10 * countBoardsWon(game, -1);
+    heuristic += 10 * countBoardsWon(game, 1);
+    heuristic -= 10 * countBoardsWon(game, -1);
     
-    count += 0.01 * overallLocalWinThreats(game, 1);
-    count -= 0.01 * overallLocalWinThreats(game, -1);
+    heuristic += 0.001 * overallLocalWinThreats(game, 1);
+    heuristic -= 0.001 * overallLocalWinThreats(game, -1);
 
-    count += 0.1 * globalWinThreats(game, 1);
-    count -= 0.1 * globalWinThreats(game, -1);
+    heuristic += 0.01 * globalWinThreats(game, 1);
+    heuristic -= 0.01 * globalWinThreats(game, -1);
     
-    count += 0.1 * game.getValidMoves().length * (game.player - 9);
+    heuristic += 0.05 * game.getValidMoves().length * (game.player - 9);
 
-    count *= newSigmoid(getTurns(game, 1));
+    heuristic *= newSigmoid(getTurns(game, 1));
     
-    return newSigmoid(count);
+    return newSigmoid(heuristic);
 }
