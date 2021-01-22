@@ -28,10 +28,10 @@ function minValue(game, depth, alpha, beta, heuristic) {
     }
     let minUtility = Number.POSITIVE_INFINITY;
     for (let possibleMove of game.getValidMoves()) {
-        let newUtility = maxValue(game.makeGlobalMove(possibleMove.globalRow,
+        let newGame = game.makeGlobalMove(possibleMove.globalRow,
                                 possibleMove.globalCol, possibleMove.localRow, 
-                                possibleMove.localCol), depth - 1, alpha, beta,
-                                heuristic)[0];
+                                possibleMove.localCol)
+        let newUtility = maxValue(newGame, depth - 1, alpha, beta, heuristic)[0];
         if (newUtility < minUtility) {
             minUtility = newUtility;
             var bestMove = possibleMove;
@@ -44,13 +44,12 @@ function minValue(game, depth, alpha, beta, heuristic) {
     return [minUtility, bestMove];
 }
 
-function alphaBetaSearch(game, heuristic = heuristicA) {
-    // console.log("minimax moving");
+export default function alphaBetaSearch(game, heuristic = heuristicA) {
     if (game.player === 1) {
         var bestMove = maxValue(game, 3, Number.NEGATIVE_INFINITY, 
             Number.POSITIVE_INFINITY, heuristic)[1];
     } else if (game.player === -1) {
-        var bestMove = minValue(game, 3, heuristic, Number.NEGATIVE_INFINITY, 
+        var bestMove = minValue(game, 3, Number.NEGATIVE_INFINITY, 
             Number.POSITIVE_INFINITY, heuristic)[1];
     }
     return bestMove;

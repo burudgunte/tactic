@@ -63,20 +63,7 @@ function clickLoc(e) {
     }
 }
 
-function onClick(e) {
-    const coords = clickLoc(e);
-
-    if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
-        // play move
-        ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
-        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
-
-        if (ctx.game.currentPlayerAlgorithm()) {
-            ctx.game = ctx.game.makeAlgorithmMove();
-            delayDrawGame()
-        }
-    }
-
+function checkWin() {
     if (ctx.game.checkGlobalState() !== null) {
         if (ctx.game.checkGlobalState() === 1) {
             alert("Game over; X wins!");
@@ -87,6 +74,25 @@ function onClick(e) {
         if (ctx.game.checkGlobalState() === 0) {
             alert("Game over; It's a tie!");
         }
+    }
+}
+
+function onClick(e) {
+    const coords = clickLoc(e);
+
+    if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
+        // play move
+        ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
+        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
+
+        checkWin();
+
+        if (ctx.game.currentPlayerAlgorithm()) {
+            ctx.game = ctx.game.makeAlgorithmMove();
+            delayDrawGame();
+        }
+
+        checkWin();
     }
 }
 
