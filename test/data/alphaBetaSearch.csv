@@ -9,3 +9,5 @@ bd171dc,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-
 74d16d0,Pull additional win-loss stats,2021-01-20 23:54:07 -0600,57,34,9
 3905a2f,Merge minimax bug fix @de6d7,2021-01-21 00:11:59 -0600,95,1,4
 665ce64,Fix basic minimax tie handling,2021-01-21 00:32:15 -0600,99,1,0
+5e73581,Modify export statements in alpha-beta for experimental use,2021-01-21 17:08:03 -0600,96,3,1
+4288622,Merge win-loss update,2021-01-21 17:24:22 -0600,92,3,5

@@ -8,3 +8,5 @@ bd171dc,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-
 83dc546,Fix class methods in montecarlo,2021-01-20 19:44:26 -0600,54,40,6
 74d16d0,Pull additional win-loss stats,2021-01-20 23:54:07 -0600,51,38,11
 665ce64,Fix basic minimax tie handling,2021-01-21 00:32:15 -0600,97,1,2
+5e73581,Modify export statements in alpha-beta for experimental use,2021-01-21 17:08:03 -0600,99,0,1
+4288622,Merge win-loss update,2021-01-21 17:24:22 -0600,94,4,2
