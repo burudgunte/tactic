@@ -16,3 +16,7 @@ bd171dc,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-
 7e9af3f,Merge win-loss updates,2021-01-21 19:42:11 -0600,97,0,3
 563f13d,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-01-21 22:10:55 -0500,95,3,2
 20f0147,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-01-21 22:39:25 -0500,92,4,4
+8512ce2,Add heuristic as an argument to alpha-beta minimax.
+
+Fix import statements in game.
+Check wins both before and after algorithm move.,2021-01-21 21:58:05 -0600,94,1,5
