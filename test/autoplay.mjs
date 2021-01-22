@@ -37,8 +37,8 @@ function test(numIters = 100, p1Algorithm = minimaxSearch, p2Algorithm = randomM
 
     const output = {
         wins:wins,
-        ties:ties,
-        losses:losses
+        losses:losses,
+        ties:ties
     };
     // console.log(JSON.stringify(output))
     console.log(wins + "," + losses + "," + ties)

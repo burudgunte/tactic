@@ -219,7 +219,8 @@ function sendsToFilledBoard(game, row, col) {
     return true;
 }
 
-function sigmoid(t) {
+//goes from -1 to 1 instead of 0 to 1
+function newSigmoid(t) {
     return 2 * 1/(1+Math.pow(Math.E, -t)) - 1;
 }
 
@@ -238,19 +239,19 @@ export default function heuristicA(game) {
 
     let player = game.player;
     let count = 0;
-    count += 
-        
-        //your stuff
-        5 * countBoardsWon(game, 1) +
-        0.01 * overallLocalWinThreats(game, 1) +
-        0.1 * globalWinThreats(game, 1) +
-        
-        //your opponent's stuff
-        -5 * countBoardsWon(game, -1) +
-        -0.01 * overallLocalWinThreats(game, -1) +
-        -0.1 * globalWinThreats(game, 1);
+
+    count += 10 * countBoardsWon(game, 1);
+    count -= 10 * countBoardsWon(game, -1);
     
-    count += game.getValidMoves().length * (game.player - 18) / 18;
+    count += 0.01 * overallLocalWinThreats(game, 1);
+    count -= 0.01 * overallLocalWinThreats(game, -1);
+
+    count += 0.1 * globalWinThreats(game, 1);
+    count -= 0.1 * globalWinThreats(game, -1);
     
-    return sigmoid(count);
+    count += 0.1 * game.getValidMoves().length * (game.player - 9);
+
+    count *= newSigmoid(getTurns(game, 1));
+    
+    return newSigmoid(count);
 }
