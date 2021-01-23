@@ -18,4 +18,3 @@ bd171dc,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-
 8512ce2,Add heuristic as an argument to alpha-beta minimax,2021-01-21 21:58:05 -0600,93,3,4
 ccefddc,Fix win-loss data and add basic plotting script,2021-01-21 22:22:33 -0600,94,3,3
 e8498fb,Add Monte Carlo to menu and start collecting probcut data,2021-01-22 00:17:12 -0600,96,1,3
-3f2292c,fixed weird stuff in heuristics.js,2021-01-22 20:03:02 -0500,
