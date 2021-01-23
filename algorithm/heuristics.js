@@ -23,7 +23,7 @@ function countBoardsWon(game, player) {
             }
         }
     }
-    return middleBoardsWon(game, player) + cornerBoardsWon(game, player) + edgeBoardsWon(game, player);
+    return count;
 }
 
 function middleBoardsWon(game, player) {
@@ -263,7 +263,6 @@ export default function heuristicA(game) {
     heuristic += 10 * countBoardsWon(game, 1);
     heuristic -= 10 * countBoardsWon(game, -1);
 
-    // heuristic -= sigmoid(boardsOccupied(game, 1) / getTurns(game));
     // heuristic += sigmoid(boardsOccupied(game, -1) / getTurns(game));
     
     heuristic += 2 * overallLocalWinThreats(game, 1);
