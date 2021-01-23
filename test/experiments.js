@@ -31,7 +31,7 @@ function compareHeuristics(game, move, depths, heuristic) {
     return comparison;
 }
 
-function simulate(numMoves, depths, heuristic, player1 = alphaBetaSearch, 
+function simulate(numMoves, depths, heuristic, player1 = randomMove, 
             player2 = randomMove) {
     /* Simulates a game to completion. 
      * After each move, if number of moves is an element of array numMoves, pauses
@@ -45,16 +45,18 @@ function simulate(numMoves, depths, heuristic, player1 = alphaBetaSearch,
         move++;
         console.log("now on move " + move);
         if (numMoves.includes(move)) {
-            console.log(compareHeuristics(game, move, depths, heuristic))
+            console.log(compareHeuristics(game, move, depths, heuristic));
+            return null;
         }
     }
+    console.log("winner: " + game.checkGlobalState());
 }
 
 function main() {
     const args = process.argv.slice(2);
     const numGames = args[0];
-    const numMoves = [5, 10, 20, 30, 40, 50, 60];
-    const depths = [4, 5, 6, 7, 8];
+    const numMoves = [25];
+    const depths = [2, 6];
 
     for (let i = 0; i < numGames; i++) {
         console.log("simulating a game");

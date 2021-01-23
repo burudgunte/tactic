@@ -203,11 +203,7 @@ function overallLocalWinThreats(game, player) {
 function isAThreat(player, a, b, c) {
     /* Helper function that returns true if there is a threat of winning a row, col, or diag. 
     For example, calling it on a row that is [X win, X win, no winner and still active] returns true */
-
-    if (allSame([player, a, b]) && c === null || allSame([player, a, c]) && b === null || allSame([player, b, c]) && a === null) {
-        return true;
-    }
-    return false;
+    return ((allSame([player, a, b]) && c === null) || (allSame([player, a, c]) && b === null) || (allSame([player, b, c]) && a === null));
 }
 
 function sendsToFilledBoard(game, row, col) {
@@ -220,8 +216,33 @@ function sendsToFilledBoard(game, row, col) {
 }
 
 //goes from -1 to 1 instead of 0 to 1
-function newSigmoid(t) {
+function sigmoid(t) {
     return 2 * 1/(1+Math.pow(Math.E, -t)) - 1;
+}
+
+function isOccupied(localBoard, player) {
+    // Returns boolean indicating whether player has occupied any squares in localBoard
+    for (const row of localBoard) {
+        for (const square of row) {
+            if (square.state === player) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function boardsOccupied(game, player) {
+    let count = 0;
+    const globalBoard = game.globalBoard;
+    for (const row of globalBoard) {
+        for (const localGame of row) {
+            if (isOccupied(localGame.localBoard, player)) {
+                count++;
+            }
+        }
+    }
+    return count;
 }
 
 /*
@@ -241,16 +262,20 @@ export default function heuristicA(game) {
 
     heuristic += 10 * countBoardsWon(game, 1);
     heuristic -= 10 * countBoardsWon(game, -1);
-    
-    heuristic += 0.001 * overallLocalWinThreats(game, 1);
-    heuristic -= 0.001 * overallLocalWinThreats(game, -1);
 
-    heuristic += 0.01 * globalWinThreats(game, 1);
-    heuristic -= 0.01 * globalWinThreats(game, -1);
+    // heuristic -= sigmoid(boardsOccupied(game, 1) / getTurns(game));
+    // heuristic += sigmoid(boardsOccupied(game, -1) / getTurns(game));
     
-    heuristic += 0.05 * game.getValidMoves().length * (game.player - 9);
+    heuristic += 2 * overallLocalWinThreats(game, 1);
+    heuristic -= 2 * overallLocalWinThreats(game, -1);
 
-    heuristic *= newSigmoid(getTurns(game, 1));
+    heuristic += 7.5 * globalWinThreats(game, 1);
+    heuristic -= 7.5 * globalWinThreats(game, -1);
+
+    heuristic += (game.getValidMoves().length - 9) * (game.player) / 9;
+
+    heuristic /= 5
+    // heuristic *= sigmoid(getTurns(game, 1));
     
-    return newSigmoid(heuristic);
+    return sigmoid(heuristic);
 }

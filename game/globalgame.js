@@ -84,7 +84,7 @@ export default class GlobalGame {
   }
 
   checkSquareState(gr, gc, lr, lc) {
-    return this.globalBoard[gr][gc].localBoard[lr][lc];
+    return this.globalBoard[gr][gc].localBoard[lr][lc].state;
   }
 
   copyGlobalBoard() {
