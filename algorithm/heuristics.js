@@ -23,7 +23,7 @@ function countBoardsWon(game, player) {
             }
         }
     }
-    return middleBoardsWon(game, player) + cornerBoardsWon(game, player) + edgeBoardsWon(game, player);
+    return count;
 }
 
 function middleBoardsWon(game, player) {
@@ -220,7 +220,7 @@ function sendsToFilledBoard(game, row, col) {
 }
 
 //goes from -1 to 1 instead of 0 to 1
-function newSigmoid(t) {
+function sigmoid(t) {
     return 2 * 1/(1+Math.pow(Math.E, -t)) - 1;
 }
 
@@ -250,7 +250,7 @@ export default function heuristicA(game) {
     
     heuristic += 0.05 * game.getValidMoves().length * (game.player - 9);
 
-    heuristic *= newSigmoid(getTurns(game, 1));
+    heuristic += 0.5 * localBoardWinThreats(game, game.player, game.nextGlobalRow, game.nextGlobalCol);
     
-    return newSigmoid(heuristic);
+    return sigmoid(heuristic);
 }
