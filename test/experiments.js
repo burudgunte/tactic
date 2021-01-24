@@ -16,52 +16,49 @@ function calculateValue(game, heuristic, depth) {
     return heuristicVal;
 }
 
-function compareHeuristics(game, move, depths, heuristic) {
+function compareHeuristics(iteration, game, move, depths, heuristic) {
     /* Compares heuristic value at various depths defined by array depth. 
      * Returns an array of objects with attributes move, depth and value. */
-    let comparison = [];
+    let data = {
+        move: move,
+        iteration: iteration
+    };
     for (const depth of depths) {
-        const data = {
-            depth: depth,
-            value: calculateValue(game, heuristic, depth),
-            move: move
-        };
-        comparison.push(data);
+        data[depth] = calculateValue(game, heuristic, depth); 
     }
-    return comparison;
+    return data;
 }
 
-function simulate(numMoves, depths, heuristic, player1 = randomMove, 
+function simulate(iteration, numMoves, depths, heuristic, player1 = randomMove, 
             player2 = randomMove) {
     /* Simulates a game to completion. 
-     * After each move, if number of moves is an element of array numMoves, pauses
-     * and prints the heuristic values at every depth in array depths.
-     * Returns an array of objects with attributes depth and value. */
+     * After each move, if number of moves is an element of array numMoves, 
+     * returns an array of objects with attributes depth and value. */
     let game = new GlobalGame(undefined, undefined, undefined, undefined, player1, 
                         player2);
     let move = 0;
     while (game.checkGlobalState() === null) {
         game = game.makeAlgorithmMove();
         move++;
-        console.log("now on move " + move);
+        // console.log("now on move " + move);
         if (numMoves.includes(move)) {
-            console.log(compareHeuristics(game, move, depths, heuristic));
-            return null;
+            return compareHeuristics(iteration, game, move, depths, heuristic);
         }
     }
-    console.log("winner: " + game.checkGlobalState());
 }
 
 function main() {
     const args = process.argv.slice(2);
     const numGames = args[0];
     const numMoves = [25];
-    const depths = [2, 6];
-
+    const depths = [5, 8];
+    
+    let output = []; 
     for (let i = 0; i < numGames; i++) {
-        console.log("simulating a game");
-        simulate(numMoves, depths, heuristicA);
+        const comparison = simulate(i + 1, numMoves, depths, heuristicA);
+        output.push(comparison);
     }
+    console.log(JSON.stringify(output, null, 2));
 }
 
 main();
