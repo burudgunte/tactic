@@ -18,6 +18,21 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
+        <div id="modal">
+            <div class="modalcontent">
+                <p class="popupHead">About</p>
+                <p>This implmentation of Ultimate tic-tac-toe was created by three freshmen at Rice University studying computer science. We began this project as an attempt to better our understanding of various game-playing algorithms and we will continue updating it as we learn more in the realm of artificial intelligence. If you would like to get a little insight into how we did this or if you would like to report a bug, please visit our GitHub repository here.</p>
+                <p class="popupHead">Rules</p>
+                <p>Each small 3 × 3 tic-tac-toe board is referred to as a local board, and the larger 3 × 3 board is referred to as the global board.</p>
+                <p>The game starts with X playing wherever they want in any of the 81 empty spots. This move "sends" their opponent to its relative location. For example, if X played in the top right square of their local board, then O needs to play next in the local board at the top right of the global board. O can then play in any one of the nine available spots in that local board, each move sending X to a different local board. </p>
+                <img src="rules.png" width="175" height="175">
+                <p>If a move is played so that it is to win a local board by the rules of normal tic-tac-toe, then the entire local board is marked as a victory for the player in the global board.</p>
+                <p>Once a local board is won by a player or it is filled completely, no more moves may be played in that board. If a player is sent to such a board, then that player may play in any other board.</p>
+                <p>Gameplay ends when either a player wins the global board or there are no legal moves remaining, in which case the game is a draw.</p>
+                <button class="popupButton" id="popupClose">Close</button>
+            </div>
+          </div>
+
         <header>
             <h1>TACTIC: An Ultimate Tic-Tac-Toe Player</h1>
         </header>
@@ -34,11 +49,12 @@
                   </select>
                 </div>
                 <div class="box">
-                  <label>Time Control 1</label>
-                  <select name="timectrl1" id="tc1">
-                    <option id="unlimited1" value="unlimited">Unlimited</option>
-                    <option id="5sec1" value="5sec" disabled>5 Seconds</option>
-                    <option id="10sec1" value="10sec" disabled>10 Seconds</option>
+                  <label>Difficulty 1</label>
+                  <select name="difficulty1" id="diff1">
+                    <option id="nodiff1" value="nodiff">N/A</option>
+                    <option id="easy1" value="easy" disabled>Easy</option>
+                    <option id="medium1" value="medium" disabled>Medium</option>
+                    <option id="hard1" value="hard" disabled>Hard</option>
                   </select>
                 </div>
                 <div class="box">
@@ -50,11 +66,12 @@
                   </select>
                 </div>
                 <div class="box">
-                  <label>Time Control 2</label>
-                  <select name="timectrl2" id="tc2">
-                    <option id="unlimited2" value="unlimited">Unlimited</option>
-                    <option id="5sec2" value="5sec" disabled>5 Seconds</option>
-                    <option id="10sec2" value="10sec" disabled>10 Seconds</option>
+                  <label>Difficulty 2</label>
+                  <select name="difficulty2" id="diff2">
+                    <option id="nodiff2" value="unlimited">N/A</option>
+                    <option id="easy2" value="easy" disabled>Easy</option>
+                    <option id="medium2" value="medium" disabled>Medium</option>
+                    <option id="hard2" value="hard" disabled>Hard</option>
                   </select>
                 </div>
                 <div class="box">
@@ -69,5 +86,12 @@
         </main>
 
     </body>
-
+    
+    <script>
+        window.onload = function () {
+            document.getElementById('popupClose').onclick = function () {
+              document.getElementById('modal').style.display = "none"
+            };
+        };
+    </script>
 </html>

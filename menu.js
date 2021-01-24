@@ -10,53 +10,57 @@ document.getElementById("p2").addEventListener("change", toggleOptions2);
 
 function toggleOptions1() {
   if (document.getElementById("p1").value === "human") {
-    disableTime1();
+    disableDifficulty1();
   } else {
-    enableTime1();
+    enableDifficulty1();
   }
 }
 
 function toggleOptions2() {
   if (document.getElementById("p2").value === "human") {
-    disableTime2();
+    disableDifficulty2();
   } else {
-    enableTime2();
+    enableDifficulty2();
   }
 }
 
-function disableTime1() {
-  document.getElementById("5sec1").disabled = true;
-  document.getElementById("10sec1").disabled = true;
-  document.getElementById("unlimited1").disabled = false;
-  document.getElementById("tc1").selectedIndex = 0;
+function disableDifficulty1() {
+  document.getElementById("easy1").disabled = true;
+  document.getElementById("medium1").disabled = true;
+  document.getElementById("hard1").disabled = true;
+  document.getElementById("nodiff1").disabled = false;
+  document.getElementById("diff1").selectedIndex = 0;
 }
 
-function disableTime2() {
-  document.getElementById("5sec2").disabled = true;
-  document.getElementById("10sec2").disabled = true;
-  document.getElementById("unlimited2").disabled = false;
-  document.getElementById("tc2").selectedIndex = 0;
+function disableDifficulty2() {
+  document.getElementById("easy2").disabled = true;
+  document.getElementById("medium2").disabled = true;
+  document.getElementById("hard2").disabled = true;
+  document.getElementById("nodiff2").disabled = false;
+  document.getElementById("diff2").selectedIndex = 0;
 }
 
-function enableTime1() {
-  document.getElementById("5sec1").disabled = false;
-  document.getElementById("10sec1").disabled = false;
-  document.getElementById("unlimited1").disabled = true;
-  document.getElementById("tc1").selectedIndex = 1;
+function enableDifficulty1() {
+  document.getElementById("easy1").disabled = false;
+  document.getElementById("medium1").disabled = false;
+  document.getElementById("hard1").disabled = false;
+  document.getElementById("nodiff1").disabled = true;
+  document.getElementById("diff1").selectedIndex = 1;
 }
 
-function enableTime2() {
-  document.getElementById("5sec2").disabled = false;
-  document.getElementById("10sec2").disabled = false;
-  document.getElementById("unlimited2").disabled = true;
-  document.getElementById("tc2").selectedIndex = 1;
+function enableDifficulty2() {
+  document.getElementById("easy2").disabled = false;
+  document.getElementById("medium2").disabled = false;
+  document.getElementById("hard2").disabled = false;
+  document.getElementById("nodiff2").disabled = true;
+  document.getElementById("diff2").selectedIndex = 1;
 }
 
 function storeInfo() {
   let player1 = document.getElementById("p1").value;
-  let timectrl1 = document.getElementById("tc1").value;
+  let difficulty1 = document.getElementById("diff1").value;
   let player2 = document.getElementById("p2").value;
-  let timectrl2 = document.getElementById("tc2").value;
+  let difficulty2 = document.getElementById("diff2").value;
 
   startGame(null, alphaBetaSearch);
 }

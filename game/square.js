@@ -30,17 +30,13 @@ export default class Square {
         // Draw square
         ctx.strokeRect(xSquare, ySquare, squareSize, squareSize);
         let symbol = this.stateToSymbol();
-        // Color based on validity
-        //ctx.fillStyle = "#393939";
-        //ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
-        console.log(row, col);
-
+        // Color based on validity and local board
         if (!symbol && color) {
             ctx.fillStyle = color;
         } else if ((row + col) % 2 === 1) {
             ctx.fillStyle = "#464646";
         } else {
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "#393939";
         }
         ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
 

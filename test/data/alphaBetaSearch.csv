@@ -21,3 +21,5 @@ ccefddc,Fix win-loss data and add basic plotting script,2021-01-21 22:22:33 -060
 e8498fb,Add Monte Carlo to menu and start collecting probcut data,2021-01-22 00:17:12 -0600,96,0,4
 fbdba04,Fix testing data and stop testing basic minimax,2021-01-22 21:32:27 -0600,100,0,0
 b1f842d,Differentiates between local boards through color,2021-01-23 22:40:03 -0500,98,1,1
+63d7f91,Color board differently from page background,2021-01-23 21:58:38 -0600,100,0,0
+9e411e8,Style changes,2021-01-24 01:37:52 -0500,98,1,1
