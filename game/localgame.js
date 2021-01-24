@@ -102,7 +102,7 @@ export default class LocalGame {
         return 0;
     }
 
-    draw(ctx, xLocal, yLocal, localBoardSize, color = null) {
+    draw(ctx, xLocal, yLocal, localBoardSize, globalRow, globalCol, color = null) {
         ctx.strokeRect(xLocal, yLocal, localBoardSize, localBoardSize);
         let squareSize = localBoardSize / 3;
 
@@ -114,9 +114,9 @@ export default class LocalGame {
                 let square = this.localBoard[row][col];
 
                 if (color) {
-                    square.draw(ctx, xSquare, ySquare, squareSize, color);
+                    square.draw(ctx, xSquare, ySquare, squareSize, globalRow, globalCol, color);
                 } else {
-                    square.draw(ctx, xSquare, ySquare, squareSize);
+                    square.draw(ctx, xSquare, ySquare, squareSize, globalRow, globalCol);
                 }
             }
         }

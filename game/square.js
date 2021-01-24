@@ -26,16 +26,23 @@ export default class Square {
         return new Square(player);
     }
 
-    draw(ctx, xSquare, ySquare, squareSize, color = null) {
+    draw(ctx, xSquare, ySquare, squareSize, row, col, color = null) {
         // Draw square
         ctx.strokeRect(xSquare, ySquare, squareSize, squareSize);
         let symbol = this.stateToSymbol();
-
         // Color based on validity
+        //ctx.fillStyle = "#393939";
+        //ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
+        console.log(row, col);
+
         if (!symbol && color) {
             ctx.fillStyle = color;
             ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
+        } else if (((row === 0 || row === 2 ) && col === 1) || ((col === 0 || col === 2) && row === 1)) {
+            ctx.fillStyle = "#464646";
+            ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
         }
+        
 
         // Draw symbol
         ctx.textAlign = "center";

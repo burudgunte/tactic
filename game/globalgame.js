@@ -251,7 +251,7 @@ export default class GlobalGame {
         let isValid = (this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null);
         let state = game.checkLocalState();
         if (state !== null) {
-          game.draw(ctx, xLocal, yLocal, localBoardSize);
+          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col);
 
           // Draw large symbol if game is won
           if (state === 1) {
@@ -269,9 +269,9 @@ export default class GlobalGame {
           ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize / 2));
 
         } else if (isValid) {
-          game.draw(ctx, xLocal, yLocal, localBoardSize, this.playerColor());
+          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor());
         } else {
-          game.draw(ctx, xLocal, yLocal, localBoardSize);
+          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col);
         }   
       }
     }
