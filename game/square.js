@@ -37,11 +37,13 @@ export default class Square {
 
         if (!symbol && color) {
             ctx.fillStyle = color;
-            ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
-        } else if (((row === 0 || row === 2 ) && col === 1) || ((col === 0 || col === 2) && row === 1)) {
+        } else if ((row + col) % 2 === 1) {
             ctx.fillStyle = "#464646";
-            ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
+        } else {
+            ctx.fillStyle = "green";
         }
+        ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
+
         
 
         // Draw symbol
