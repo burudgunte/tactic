@@ -74,6 +74,8 @@ function checkWin() {
         if (ctx.game.checkGlobalState() === 0) {
             alert("Game over; It's a tie!");
         }
+
+        canvas.removeEventListener("click", onClick);
     }
 }
 
@@ -83,7 +85,7 @@ function onClick(e) {
     if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
         // play move
         ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
-        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
+        delayDrawGame();
 
         checkWin();
 

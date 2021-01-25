@@ -268,7 +268,7 @@ export default class GlobalGame {
           ctx.font = fontSize + "px georgia";
           ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize / 2));
 
-        } else if (isValid) {
+        } else if (isValid && this.checkGlobalState() === null) {
           game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor());
         } else {
           game.draw(ctx, xLocal, yLocal, localBoardSize, row, col);
