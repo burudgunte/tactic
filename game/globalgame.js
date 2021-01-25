@@ -227,9 +227,9 @@ export default class GlobalGame {
 
   playerColor() {
     if (this.player === 1) {
-      return "#1a1ae6";
+      return "#3078e8";
     } else {
-      return "#e68c00";
+      return "#cf8717";
     }
   }
 
