@@ -62,5 +62,7 @@ function storeInfo() {
   let player2 = document.getElementById("p2").value;
   let difficulty2 = document.getElementById("diff2").value;
 
+  document.getElementById("winmsg").style.display = "none";
+
   startGame(null, alphaBetaSearch);
 }
