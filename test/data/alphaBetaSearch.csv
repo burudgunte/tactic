@@ -28,3 +28,4 @@ b1f842d,Differentiates between local boards through color,2021-01-23 22:40:03 -0
 b9e1a13,Merge post-game fixes,2021-01-24 18:03:24 -0600,99,1,0
 db8924b,Merge fixes to algorithm drawing,2021-01-24 18:54:04 -0600,98,0,2
 24fe7c2,positioning changes + win message,2021-01-24 21:38:10 -0500,100,0,0
+68a1210,Merge branch 'main' of https://github.com/arnav-b/tactic into main,2021-01-24 21:52:27 -0500,99,0,1
