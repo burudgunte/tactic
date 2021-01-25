@@ -82,6 +82,7 @@ async function checkWin() {
 
 function onClick(e) {
     canvas.removeEventListener("click", onClick); // Prevent a second click before move is played
+    console.log("removed event listener");
     const coords = clickLoc(e);
 
     if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
@@ -112,13 +113,13 @@ export default function startGame(p1Algorithm = null, p2Algorithm = null) {
         while (ctx.game.checkGlobalState() === null) {
             ctx.game = ctx.game.makeAlgorithmMove();
             // TODO: wait one second before next iteration
-            delayDrawGame()
+            delayDrawGame();
         }
 
     } else if (ctx.game.p1Algorithm) {
         // Make first move then wait for user input
         ctx.game = ctx.game.makeAlgorithmMove();
-        delayDrawGame()
+        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
     }    
 
     canvas.addEventListener("click", onClick);

@@ -62,5 +62,5 @@ function storeInfo() {
   let player2 = document.getElementById("p2").value;
   let difficulty2 = document.getElementById("diff2").value;
 
-  startGame(null, alphaBetaSearch);
+  startGame(alphaBetaSearch, null);
 }

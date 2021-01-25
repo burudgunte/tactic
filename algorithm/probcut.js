@@ -3,7 +3,7 @@ import heuristicA from "./heuristics.js";
 const SLOPE = 0.91718;
 const INTERCEPT = 0.08862;
 const SIGMA = 0.1758; // Standard error of residuals
-const PERCENTILE = 1.5; // Cutoff percentile for shallow value
+const PERCENTILE = 1.75; // Cutoff percentile for shallow value
 const SHALLOW = 5; // Shallow depth for initial search
 const DEEP = 8; // Deep depth if probability warrants
 
