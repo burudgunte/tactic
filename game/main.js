@@ -63,7 +63,8 @@ function clickLoc(e) {
     }
 }
 
-function checkWin() {
+async function checkWin() {
+
     if (ctx.game.checkGlobalState() !== null) {
         if (ctx.game.checkGlobalState() === 1) {
             alert("Game over; X wins!");
@@ -80,22 +81,26 @@ function checkWin() {
 }
 
 function onClick(e) {
+    canvas.removeEventListener("click", onClick); // Prevent a second click before move is played
     const coords = clickLoc(e);
 
     if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
         // play move
         ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
-        delayDrawGame();
+        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
         checkWin();
 
         if (ctx.game.currentPlayerAlgorithm()) {
+            // alert("algorithm moving now");
             ctx.game = ctx.game.makeAlgorithmMove();
             delayDrawGame();
         }
 
         checkWin();
     }
+
+    canvas.addEventListener("click", onClick);
 }
 
 export default function startGame(p1Algorithm = null, p2Algorithm = null) {
