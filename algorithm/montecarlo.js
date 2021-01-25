@@ -1,7 +1,7 @@
 import GlobalGame from "../game/globalgame.js";
 import randomMove from "./random.js";
 
-const numIterations = 50;
+const numIterations = 1000;
 const cVal = Math.SQRT2;
 let parent = {};
 
@@ -15,14 +15,12 @@ export default function monteCarlo(game) {
     //Runs simulations to generate number of wins, ties, losses for each TreeNode
     for (let i = 0; i < numIterations; i++) {
         
+        //console.log(lineage);
         //Selects a TreeNode that is not expanded
-        let currentLeaf = currentNode.selectLeaf();
+        let currentLeaf = currentNode.selectLeaf(lineage); //THIS FUNCTION NEEDS SOME WORK
 
-        //Expands it
-        currentLeaf.expandToNewLeaf();
-
-        //Selects a child of currentLeaf to do the playout from
-        let child = currentLeaf.selectToBePlayedOut();
+        //Expands it and selects a child of currentLeaf to do the playout from
+        let child = currentLeaf.expandToNewLeaf();
 
         //Does the playout (random by default)
         let result = child.playout();
@@ -49,6 +47,7 @@ class TreeNode {
         this.wins = 0;
         this.losses = 0;
         this.ties = 0;
+        this.unusedMoves = this.game.getValidMoves();
     }
 
     ucb1() {
@@ -59,27 +58,36 @@ class TreeNode {
     }
 
     //Selects a TreeNode that has no children
-    selectLeaf() {
-        //checks if it has no children
+    selectLeaf(lineage) {
+        //Checks if it has no children
         if (this.children.length === 0) {
             return this;
         }
-        //calls selectLeaf on the child with the highest UCB1
+        if (this.children.length < this.game.getValidMoves().length) {
+            return this;
+        }
+        //Selects the child with the highest UCB1
         let ucb1Val = 0;
-        let toReturn = this.children[0];
+        let selectedChild = this.children[0];
         for (let child of this.children) {
             if (ucb1Val < child.ucb1()) {
                 ucb1Val = child.ucb1();
-                toReturn = child;
+                selectedChild = child;
             }
         }
-        return toReturn.selectLeaf();
+        //Adds the child to lineage
+        //console.log(selectedChild);
+        lineage.push(selectedChild);
+
+        //Calls selectLeaf() on the child
+        return selectedChild.selectLeaf(lineage);
     }
 
     addChild(newChild) {
         //adds newChild to the list of children of the current node and logs the child-parent relationship to the dictionary
         this.children.push(newChild);
         parent[newChild] = this;
+        //console.log(parent);
     }
 
     selectBestMove() {
@@ -96,23 +104,10 @@ class TreeNode {
     }
 
     expandToNewLeaf() {
-        //creates a new node from every possible move and adds it to the list of children
-        for (let newMove of this.game.getValidMoves()) {
-            let newNode = new TreeNode(this.game, newMove);
-            this.addChild(newNode);
-        }
-    }
-
-    selectToBePlayedOut() {
-        let ucb1Val = 0;
-        let toReturn = this.children[0];
-        for (let child of this.children) {
-            if (ucb1Val < child.ucb1()) {
-                ucb1Val = child.ucb1();
-                toReturn = child;
-            }
-        }
-        return toReturn;
+        //creates a new node from every unused move and adds it to the list of children
+        let newNode = new TreeNode(this.game, this.unusedMoves.shift());
+        this.addChild(newNode);
+        return newNode;
     }
 
     playout() {
@@ -121,12 +116,25 @@ class TreeNode {
     }
 
     updateCounts(lineage, winner) {
+        //a move for the current player
         for (let node of lineage) {
             if (winner === this.game.player) {
                 node.wins++;
             }
             if (winner === -this.game.player) {
                 node.losses++;
+            }
+            if (winner === 0) {
+                node.ties++;
+            }
+        }
+        //a move for the other player
+        for (let node of lineage) {
+            if (winner === this.game.player) {
+                node.losses++;
+            }
+            if (winner === -this.game.player) {
+                node.wins++;
             }
             if (winner === 0) {
                 node.ties++;
