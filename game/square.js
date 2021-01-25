@@ -26,13 +26,17 @@ export default class Square {
         return new Square(player);
     }
 
-    draw(ctx, xSquare, ySquare, squareSize, row, col, color = null) {
+    draw(ctx, xSquare, ySquare, squareSize, row, col, color1 = null, color2 = null) {
         // Draw square
         ctx.strokeRect(xSquare, ySquare, squareSize, squareSize);
         let symbol = this.stateToSymbol();
         // Color based on validity and local board
-        if (!symbol && color) {
-            ctx.fillStyle = color;
+        if (!symbol && color1) {
+            if ((row + col) % 2 === 1) {
+                ctx.fillStyle = color2;
+            } else {
+                ctx.fillStyle = color1;
+            }
         } else if ((row + col) % 2 === 1) {
             ctx.fillStyle = "#464646";
         } else {

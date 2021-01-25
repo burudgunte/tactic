@@ -225,13 +225,23 @@ export default class GlobalGame {
     return 0;
   }
 
-  playerColor() {
+  playerColor1() {
     if (this.currentPlayerAlgorithm()) {
       return null;
     } else if (this.player === 1) {
       return "#3078e8";
     } else {
       return "#cf8717";
+    }
+  }
+
+  playerColor2() {
+    if (this.currentPlayerAlgorithm()) {
+      return null;
+    } else if (this.player === 1) {
+      return "#538fec";
+    } else {
+      return "#e79c26";
     }
   }
 
@@ -271,7 +281,7 @@ export default class GlobalGame {
           ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize / 2));
 
         } else if (isValid && this.checkGlobalState() === null) {
-          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor());
+          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor1(), this.playerColor2());
         } else {
           game.draw(ctx, xLocal, yLocal, localBoardSize, row, col);
         }   
