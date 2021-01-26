@@ -1,8 +1,5 @@
 import startGame from "./game/main.js";
-import randomMove from "./algorithm/random.js";
-import minimaxSearch from "./algorithm/minimax.js";
-import alphaBetaSearch from "./algorithm/alphabeta.js";
-import monteCarlo from "./algorithm/montecarlo.js";
+
 
 document.getElementById("newgame").addEventListener("click", storeInfo);
 document.getElementById("p1").addEventListener("change", toggleOptions1);
@@ -64,5 +61,17 @@ function storeInfo() {
 
   document.getElementById("winmsg").style.display = "none";
 
-  startGame(null, alphaBetaSearch);
+  //console.log(player1, difficulty1, player2, difficulty2);
+
+  if (player1 === "bot") {
+    player1 = difficulty1;
+  }
+
+  if (player2 === "bot") {
+    player2 = difficulty2;
+  }
+
+  //console.log(player1, difficulty1, player2, difficulty2);
+
+  startGame(player1, player2);
 }

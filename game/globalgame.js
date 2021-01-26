@@ -1,4 +1,6 @@
 import LocalGame from "./localgame.js";
+import alphaBetaSearch from "../algorithm/alphabeta.js";
+import randomMove from "../algorithm/random.js";
 
 function allSame(arr) {
   for (const element of arr) {
@@ -163,10 +165,31 @@ export default class GlobalGame {
     /* Applies the appropriate algorithm. Returns a 
     new GlobalGame object representing the old game with 
     the recommended move. */
-    let algorithm = this.currentPlayerAlgorithm();
-    const nextMove = algorithm(this);
+
+    let algorithm = this.p1Algorithm;
+    if (this.player === -1) {
+      algorithm = this.p2Algorithm;
+    }
+    let nextMove = {};
+
+    console.log(algorithm);
+    if (algorithm === "easy") {
+      nextMove = randomMove(this);
+      if (Math.random() > 0.5) {
+        nextMove = alphaBetaSearch(this, 2);
+      }
+    }
+
+    if (algorithm === "medium") {
+      nextMove = alphaBetaSearch(this, 3);
+    }
+
+    if (algorithm === "hard") {
+      nextMove = alphaBetaSearch(this, 6);
+    }
     return this.makeGlobalMove(nextMove.globalRow, nextMove.globalCol, nextMove.localRow, nextMove.localCol);
   }
+
 
   checkRowWin() {
     for (let i = 0; i < 3; i++) {

@@ -8,7 +8,6 @@ export default function randomMove(globalGame) {
         };
         
     } while (!globalGame.isValidMove(move.globalRow, move.globalCol, move.localRow, move.localCol)) {
-        // console.log("random moving");
         return move;
     }
 }

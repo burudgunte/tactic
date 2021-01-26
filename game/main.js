@@ -106,23 +106,25 @@ function onClick(e) {
     canvas.addEventListener("click", onClick);
 }
 
-export default function startGame(p1Algorithm = null, p2Algorithm = null) {
+export default function startGame(p1Algorithm, p2Algorithm) {
     ctx.game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
-    if (ctx.game.p1Algorithm && ctx.game.p2Algorithm) {
+    if (p1Algorithm !== "human" && p2Algorithm !== "human") {
         // Two bots play each other
         while (ctx.game.checkGlobalState() === null) {
+            console.log(p1Algorithm + " vs " + p2Algorithm);
             ctx.game = ctx.game.makeAlgorithmMove();
             // TODO: wait one second before next iteration
-            delayDrawGame()
+            delayDrawGame();
         }
 
-    } else if (ctx.game.p1Algorithm) {
+    } else if (p1Algorithm !== "human") {
         // Make first move then wait for user input
+        console.log(p1Algorithm + " vs human");
         ctx.game = ctx.game.makeAlgorithmMove();
         delayDrawGame()
-    }    
+    }
 
     canvas.addEventListener("click", onClick);
 }

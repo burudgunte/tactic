@@ -41,11 +41,10 @@
             <form>
               <div>
                 <div class="box">
-                  <label>Player 1</label>
+                  <label>Player 1 (X)</label>
                   <select name="player1" id="p1" onchange="toggleOptions1()">
-                    <option value="human">Human</option>
-                    <option value="alg1">Algorithm 1</option>
-                    <option value="alg2">Algorithm 2</option>
+                    <option id="human1" value="human">Human</option>
+                    <option id="bot1" value="bot">Computer</option>
                   </select>
                 </div>
                 <div class="box">
@@ -58,17 +57,16 @@
                   </select>
                 </div>
                 <div class="box">
-                  <label>Player 2</label>
+                  <label>Player 2 (O)</label>
                   <select name="player2" id="p2" onchange="toggleOptions2()">
-                    <option value="human">Human</option>
-                    <option value="alg1">Algorithm 1</option>
-                    <option value="alg2">Algorithm 2</option>
+                    <option id="human2" value="human">Human</option>
+                    <option id="bot2" value="bot">Computer</option>
                   </select>
                 </div>
                 <div class="box">
                   <label>Difficulty 2</label>
                   <select name="difficulty2" id="diff2">
-                    <option id="nodiff2" value="unlimited">N/A</option>
+                    <option id="nodiff2" value="nodiff">N/A</option>
                     <option id="easy2" value="easy" disabled>Easy</option>
                     <option id="medium2" value="medium" disabled>Medium</option>
                     <option id="hard2" value="hard" disabled>Hard</option>
