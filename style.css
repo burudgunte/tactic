@@ -153,3 +153,11 @@ a:hover {
   position: absolute;
   margin-left: 19%;
 }
+
+#mainbody {
+  visibility: hidden;
+}
+
+#title {
+  visibility: hidden;
+}

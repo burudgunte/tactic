@@ -33,11 +33,11 @@
             </div>
           </div>
 
-        <header>
+        <header id="title">
             <h1>TACTIC: An Ultimate Tic-Tac-Toe Player</h1>
         </header>
 
-        <main>
+        <main id="mainbody">
             <form>
               <div>
                 <div class="box">
@@ -91,7 +91,9 @@
     <script>
         window.onload = function () {
             document.getElementById('popupClose').onclick = function () {
-              document.getElementById('modal').style.display = "none"
+              document.getElementById('modal').style.display = "none";
+              document.getElementById("title").style.visibility = "visible";
+              document.getElementById("mainbody").style.visibility = "visible";
             };
         };
     </script>
