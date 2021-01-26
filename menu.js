@@ -5,8 +5,22 @@ import alphaBetaSearch from "./algorithm/alphabeta.js";
 import monteCarlo from "./algorithm/montecarlo.js";
 
 document.getElementById("newgame").addEventListener("click", storeInfo);
+document.getElementById("information").addEventListener("click", toggleInfo);
+document.getElementById("popupClose").addEventListener("click", toggleInfo);
 document.getElementById("p1").addEventListener("change", toggleOptions1);
 document.getElementById("p2").addEventListener("change", toggleOptions2);
+
+function toggleInfo() {
+  if (document.getElementById("modal").style.visibility === "visible") {
+    document.getElementById("modal").style.visibility = "hidden";
+    document.getElementById("title").style.visibility = "visible";
+    document.getElementById("mainbody").style.visibility = "visible";
+  } else {
+    document.getElementById("modal").style.visibility = "visible";
+    document.getElementById("title").style.visibility = "hidden";
+    document.getElementById("mainbody").style.visibility = "hidden";
+  }
+}
 
 function toggleOptions1() {
   if (document.getElementById("p1").value === "human") {
