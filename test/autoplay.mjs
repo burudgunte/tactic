@@ -8,6 +8,7 @@ import randomMove from "../algorithm/random.js";
 import minimaxSearch from "../algorithm/minimax.js";
 import { alphaBetaSearch } from "../algorithm/alphabeta.js";
 import beamSearch from "../algorithm/beam.js";
+import probCutSearch from "../algorithm/probcut.js";
 import monteCarlo from "../algorithm/montecarlo.js";
 
 function alphaBetaSearch4 (game) {
@@ -17,12 +18,20 @@ function alphaBetaSearch4 (game) {
 
 function playGame(p1Algorithm, p2Algorithm) {
     var game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
-    const move = randomMove(game);
-    game = game.makeGlobalMove(move.globalRow, move.globalCol, move.localRow, 
-                move.localCol);
 
+    // Randomize the first two moves
+    // Useful for testing two deterministic algorithms
+    for (let i = 0; i < 2; i++) {
+        var randMove = randomMove(game);
+        game = game.makeGlobalMove(randMove.globalRow, randMove.globalCol,
+                randMove.localRow, randMove.localCol);
+    }
+
+    let move = 0;
     while (game.checkGlobalState() === null) {
         game = game.makeAlgorithmMove();
+        move++;
+        // console.log("now on move " + move);
     }
 
     return game.checkGlobalState();
@@ -41,6 +50,7 @@ function test(numIters = 100, p1Algorithm = minimaxSearch, p2Algorithm = randomM
         } else if (result === 0) {
             ties++;
         }
+        console.log("Game " + i + " result: " + result);
     }
 
     const output = {
@@ -60,11 +70,18 @@ function main() {
         "alphaBetaSearch": alphaBetaSearch,
         "alphaBetaSearch4": alphaBetaSearch4,
         "beamSearch": beamSearch,
+        "probCutSearch": probCutSearch,
         "monteCarlo": monteCarlo
     };
     const p1Algorithm = strToFunction[args[1]];
     const p2Algorithm = strToFunction[args[2]];
-    test(args[0], p1Algorithm, p2Algorithm);
+    if (p1Algorithm && p2Algorithm) {
+        test(args[0], p1Algorithm, p2Algorithm);
+    } else if (p1Algorithm) {
+        test(args[0], p1Algorithm, randomMove);
+    } else {
+        test(args[0], randomMove, randomMove);
+    }
 }
 
 main();

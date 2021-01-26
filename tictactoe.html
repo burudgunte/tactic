@@ -20,24 +20,19 @@
     <body>
         <div id="modal">
             <div class="modalcontent">
-                <p class="popupHead">About</p>
-                <p>This implmentation of Ultimate tic-tac-toe was created by three freshmen at Rice University studying computer science. We began this project as an attempt to better our understanding of various game-playing algorithms and we will continue updating it as we learn more in the realm of artificial intelligence. If you would like to get a little insight into how we did this or if you would like to report a bug, please visit our GitHub repository <a href="https://github.com/arnav-b/tactic" target="_blank" rel="noreferrer noopener">here</a>.</p>
-                <p class="popupHead">Rules</p>
-                <p>Each small 3 × 3 tic-tac-toe board is referred to as a local board, and the larger 3 × 3 board is referred to as the global board.</p>
-                <p>The game starts with X playing wherever they want in any of the 81 empty spots. This move "sends" their opponent to its relative location. For example, if X played in the top right square of their local board, then O needs to play next in the local board at the top right of the global board. O can then play in any one of the nine available spots in that local board, each move sending X to a different local board. </p>
-                <img src="rules.png" width="175" height="175">
-                <p>If a move is played so that it is to win a local board by the rules of normal tic-tac-toe, then the entire local board is marked as a victory for the player in the global board.</p>
-                <p>Once a local board is won by a player or it is filled completely, no more moves may be played in that board. If a player is sent to such a board, then that player may play in any other board.</p>
-                <p>Gameplay ends when either a player wins the global board or there are no legal moves remaining, in which case the game is a draw.</p>
-                <button class="popupButton" id="popupClose">Close</button>
+                <p class="popupHead">Information</p>
+                <p>Your goal is to win three local games of Tic-tac-toe in a row. You may only play in the local board that corresponds to the last square your opponent played. If the local board you are sent to has already been won/tied, you may play anywhere. If you'd like a more in depth description of the rules, please click <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe#Rules" target="_blank" rel="noreferrer noopener">here</a>.</p>
+                <p>If you'd like to report a bug or submit questions, comments, or concerns, please visit our GitHub repository <a href="https://github.com/arnav-b/tactic" target="_blank" rel="noreferrer noopener">here</a>.</p>
+                <p>Created by Arnav Burudgunte, Kian Robinson, and Alan Tapper.</p>
+                <button class="popupButton" id="popupClose">Okay</button>
             </div>
           </div>
 
-        <header>
+        <header id="title">
             <h1>TACTIC: An Ultimate Tic-Tac-Toe Player</h1>
         </header>
 
-        <main>
+        <main id="mainbody">
             <form>
               <div>
                 <div class="box">
@@ -76,6 +71,10 @@
                   <label class="newgamebutton">Play</label>
                   <button type="button" id="newgame">New Game</button>
                 </div>
+                <div class="box">
+                  <label class="infobutton">Information</label>
+                  <button type="button" id="information">Show Info</button>
+                </div>
               </div>
             </form>
             <canvas class="ultimateBoard">
@@ -85,12 +84,4 @@
         </main>
 
     </body>
-    
-    <script>
-        window.onload = function () {
-            document.getElementById('popupClose').onclick = function () {
-              document.getElementById('modal').style.display = "none"
-            };
-        };
-    </script>
 </html>

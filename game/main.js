@@ -85,6 +85,7 @@ async function checkWin() {
 
 function onClick(e) {
     canvas.removeEventListener("click", onClick); // Prevent a second click before move is played
+    console.log("removed event listener");
     const coords = clickLoc(e);
 
     if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
@@ -123,8 +124,8 @@ export default function startGame(p1Algorithm, p2Algorithm) {
         // Make first move then wait for user input
         console.log(p1Algorithm + " vs human");
         ctx.game = ctx.game.makeAlgorithmMove();
-        delayDrawGame()
-    }
+        ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
+    }    
 
     canvas.addEventListener("click", onClick);
 }
