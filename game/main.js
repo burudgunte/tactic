@@ -67,13 +67,16 @@ async function checkWin() {
 
     if (ctx.game.checkGlobalState() !== null) {
         if (ctx.game.checkGlobalState() === 1) {
-            alert("Game over; X wins!");
+            document.getElementById("winmsg").innerHTML = "Game over; X wins!";
+            document.getElementById("winmsg").style.display = "flex";
         }
         if (ctx.game.checkGlobalState() === -1) {
-            alert("Game over; O wins!");
+            document.getElementById("winmsg").innerHTML = "Game over; O wins!";
+            document.getElementById("winmsg").style.display = "flex";
         }
         if (ctx.game.checkGlobalState() === 0) {
-            alert("Game over; It's a tie!");
+            document.getElementById("winmsg").innerHTML = "Game over; it's a tie!";
+            document.getElementById("winmsg").style.display = "flex";
         }
 
         canvas.removeEventListener("click", onClick);
