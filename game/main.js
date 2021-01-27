@@ -85,7 +85,6 @@ async function checkWin() {
 
 function onClick(e) {
     canvas.removeEventListener("click", onClick); // Prevent a second click before move is played
-    console.log("removed event listener");
     const coords = clickLoc(e);
 
     if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
@@ -95,7 +94,7 @@ function onClick(e) {
 
         checkWin();
 
-        if (ctx.game.currentPlayerAlgorithm()) {
+        if (ctx.game.currentPlayerAlgorithm() !== "human") {
             // alert("algorithm moving now");
             ctx.game = ctx.game.makeAlgorithmMove();
             delayDrawGame();

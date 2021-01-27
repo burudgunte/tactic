@@ -8,7 +8,7 @@ document.getElementById("p1").addEventListener("change", toggleOptions1);
 document.getElementById("p2").addEventListener("change", toggleOptions2);
 
 function toggleInfo() {
-  if (document.getElementById("modal").style.visibility === "visible") {
+  if (document.getElementById("modal").style.visibility !== "hidden") {
     document.getElementById("modal").style.visibility = "hidden";
     document.getElementById("title").style.visibility = "visible";
     document.getElementById("mainbody").style.visibility = "visible";

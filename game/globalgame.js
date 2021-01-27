@@ -249,7 +249,7 @@ export default class GlobalGame {
   }
 
   playerColor1() {
-    if (this.currentPlayerAlgorithm()) {
+    if (this.currentPlayerAlgorithm() !== "human") {
       return null;
     } else if (this.player === 1) {
       return "#3078e8";
@@ -259,7 +259,7 @@ export default class GlobalGame {
   }
 
   playerColor2() {
-    if (this.currentPlayerAlgorithm()) {
+    if (this.currentPlayerAlgorithm() !== "human") {
       return null;
     } else if (this.player === 1) {
       return "#538fec";
