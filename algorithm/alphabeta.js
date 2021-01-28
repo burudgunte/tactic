@@ -44,7 +44,7 @@ function minValue(game, depth, alpha, beta, heuristic) {
     return [minUtility, bestMove];
 }
 
-export default function alphaBetaSearch(game, depth = 5, heuristic = heuristicA) {
+export default function alphaBetaSearch(game, depth = 3, heuristic = heuristicA) {
     if (game.player === 1) {
         var bestMove = maxValue(game, depth, Number.NEGATIVE_INFINITY, 
             Number.POSITIVE_INFINITY, heuristic)[1];

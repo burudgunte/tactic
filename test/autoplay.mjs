@@ -31,7 +31,6 @@ function playGame(p1Algorithm, p2Algorithm) {
     while (game.checkGlobalState() === null) {
         game = game.makeAlgorithmMove();
         move++;
-        // console.log("now on move " + move);
     }
 
     return game.checkGlobalState();
@@ -50,7 +49,6 @@ function test(numIters = 100, p1Algorithm = minimaxSearch, p2Algorithm = randomM
         } else if (result === 0) {
             ties++;
         }
-        console.log("Game " + i + " result: " + result);
     }
 
     const output = {
@@ -58,7 +56,6 @@ function test(numIters = 100, p1Algorithm = minimaxSearch, p2Algorithm = randomM
         losses:losses,
         ties:ties
     };
-    // console.log(JSON.stringify(output))
     console.log(wins + "," + losses + "," + ties)
 }
 

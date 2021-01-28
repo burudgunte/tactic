@@ -170,24 +170,28 @@ export default class GlobalGame {
     if (this.player === -1) {
       algorithm = this.p2Algorithm;
     }
-    let nextMove = {};
 
-    console.log(algorithm);
     if (algorithm === "easy") {
-      nextMove = randomMove(this);
+      var nextMove = randomMove(this);
       if (Math.random() > 0.5) {
-        nextMove = alphaBetaSearch(this, 2);
+        var nextMove = alphaBetaSearch(this, 2);
       }
     }
 
     if (algorithm === "medium") {
-      nextMove = alphaBetaSearch(this, 3);
+      var nextMove = alphaBetaSearch(this, 3);
     }
 
     if (algorithm === "hard") {
-      nextMove = alphaBetaSearch(this, 6);
+      var nextMove = alphaBetaSearch(this, 5);
     }
-    return this.makeGlobalMove(nextMove.globalRow, nextMove.globalCol, nextMove.localRow, nextMove.localCol);
+
+    if (!nextMove) {
+      var nextMove = algorithm(this);
+    }
+
+    let newGame = this.makeGlobalMove(nextMove.globalRow, nextMove.globalCol, nextMove.localRow, nextMove.localCol);
+    return newGame;
   }
 
 

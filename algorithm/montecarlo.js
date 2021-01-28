@@ -1,7 +1,7 @@
 import GlobalGame from "../game/globalgame.js";
 import randomMove from "./random.js";
 
-const numIterations = 1000;
+const numIterations = 100;
 const cVal = Math.SQRT2;
 let parent = {};
 
@@ -19,9 +19,10 @@ export default function monteCarlo(game) {
         //Selects a TreeNode that is not expanded
         let currentLeaf = currentNode.selectLeaf(lineage)[0]; //THIS FUNCTION NEEDS SOME WORK
 
-        if (currentNode.selectLeaf()[1]) {
+        if (currentNode.selectLeaf(lineage)[1]) {
             //Expands it and selects a child of currentLeaf to do the playout from
-            var child = currentLeaf.expandToNewLeaf();
+            lineage = currentLeaf.expandToNewLeaf(lineage);
+            child = lineage[lineage.length - 1];
 
             //Does the playout (random by default)
         } else {
@@ -85,7 +86,7 @@ class TreeNode {
         lineage.push(selectedChild);
 
         //Calls selectLeaf() on the child
-        return [selectedChild.selectLeaf(lineage), true];
+        return [selectedChild.selectLeaf(lineage)[0], true];
     }
 
     addChild(newChild) {
@@ -100,20 +101,20 @@ class TreeNode {
         let numPlayouts = 0;
         let toReturn = this.children[0];
         for (let child of this.children) {
-            if (numPlayouts < child.wins + child.losses + child.ties) {
-                numPlayouts = child.wins + child.losses + child.ties;
+            if (numPlayouts < child.wins) {
+                numPlayouts = child.wins;
                 toReturn = child;
             }
         }
         return toReturn.move;
     }
 
-    expandToNewLeaf() {
+    expandToNewLeaf(lineage) {
         //creates a new node from every unused move and adds it to the list of children
         let newNode = new TreeNode(this.game, this.unusedMoves.shift());
         this.addChild(newNode);
         lineage.push(newNode);
-        return newNode;
+        return lineage;
     }
 
     playout() {
