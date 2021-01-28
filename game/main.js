@@ -125,6 +125,12 @@ function onClick(e) {
 }
 
 export default function startGame(p1Algorithm, p2Algorithm) {
+    
+    if(document.querySelector("iframe")) {
+        // Hide result form
+        document.querySelector("iframe").removeAttribute("src");
+    }
+
     ctx.game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
