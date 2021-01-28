@@ -26,21 +26,33 @@ export default class Square {
         return new Square(player);
     }
 
-    draw(ctx, xSquare, ySquare, squareSize, row, col, color1 = null, color2 = null) {
+    draw(ctx, xSquare, ySquare, squareSize, globalRow, globalCol, localRow, localCol, color1 = null, color2 = null, recent) {
         // Draw square
         ctx.strokeRect(xSquare, ySquare, squareSize, squareSize);
         let symbol = this.stateToSymbol();
         // Color based on validity and local board
         if (!symbol && color1) {
-            if ((row + col) % 2 === 1) {
+            if ((globalRow + globalCol) % 2 === 1) {
                 ctx.fillStyle = color2;
             } else {
                 ctx.fillStyle = color1;
             }
-        } else if ((row + col) % 2 === 1) {
+        } else if ((globalRow + globalCol) % 2 === 1) {
             ctx.fillStyle = "#464646";
         } else {
             ctx.fillStyle = "#393939";
+        }
+        if (recent) {
+            if (recent[0] === globalRow && recent[1] === globalCol && recent[2] === localRow && recent[3] === localCol) {
+                console.log(globalRow, globalCol, localRow, localCol);
+                if ((globalRow + globalCol) % 2 === 1) {
+                    console.log("test1");
+                    ctx.fillStyle = "#636363";
+                } else {
+                    console.log("test2");
+                    ctx.fillStyle = "#5a5a5a";
+                }
+            }
         }
         ctx.fillRect(xSquare, ySquare, squareSize, squareSize);
 

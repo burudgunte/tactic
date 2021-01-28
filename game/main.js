@@ -125,7 +125,7 @@ function onClick(e) {
 }
 
 export default function startGame(p1Algorithm, p2Algorithm) {
-    ctx.game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
+    ctx.game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm, undefined);
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
     if (p1Algorithm !== "human" && p2Algorithm !== "human") {

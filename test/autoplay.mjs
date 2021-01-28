@@ -17,7 +17,7 @@ function alphaBetaSearch4 (game) {
 }
 
 function playGame(p1Algorithm, p2Algorithm) {
-    var game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
+    var game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm, undefined);
 
     // Randomize the first two moves
     // Useful for testing two deterministic algorithms

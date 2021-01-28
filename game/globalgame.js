@@ -24,7 +24,7 @@ function drawLine(ctx, xStart, yStart, xEnd, yEnd, lineWidth = 10) {
 
 export default class GlobalGame {
   
-  constructor(globalBoard = null, player = 1, nextGlobalRow = null, nextGlobalCol = null, p1Algorithm = null, p2Algorithm = null) {
+  constructor(globalBoard = null, player = 1, nextGlobalRow = null, nextGlobalCol = null, p1Algorithm = null, p2Algorithm = null, lastMove = null) {
     /* Represents the overall board, made up of 9 local boards.
     Note that an algorithm is any function that takes a game as
     an argument and returns a valid move. */
@@ -33,6 +33,7 @@ export default class GlobalGame {
     this._nextGlobalCol = nextGlobalCol;
     this._p1Algorithm = p1Algorithm;
     this._p2Algorithm = p2Algorithm;
+    this._lastMove = lastMove;
 
     if (globalBoard) {
       this._globalBoard = globalBoard;
@@ -67,6 +68,10 @@ export default class GlobalGame {
 
   get p2Algorithm() {
     return this._p2Algorithm;
+  }
+
+  get lastMove() {
+    return this._lastMove;
   }
 
   currentPlayerAlgorithm() {
@@ -155,9 +160,9 @@ export default class GlobalGame {
     if (newGlobalBoard[localRow][localCol].checkLocalState() === null) {
       const nextGlobalRow = localRow;
       const nextGlobalCol = localCol;
-      return new GlobalGame(newGlobalBoard, -1 * this.player, nextGlobalRow, nextGlobalCol, this.p1Algorithm, this.p2Algorithm);
+      return new GlobalGame(newGlobalBoard, -1 * this.player, nextGlobalRow, nextGlobalCol, this.p1Algorithm, this.p2Algorithm, [globalRow, globalCol, localRow, localCol]);
     } else {
-      return new GlobalGame(newGlobalBoard, -1 * this.player, null, null, this.p1Algorithm, this.p2Algorithm);
+      return new GlobalGame(newGlobalBoard, -1 * this.player, null, null, this.p1Algorithm, this.p2Algorithm, [globalRow, globalCol, localRow, localCol]);
     }
   }
 
@@ -290,7 +295,7 @@ export default class GlobalGame {
         let isValid = (this.nextGlobalRow === row && this.nextGlobalCol === col) || (this.nextGlobalRow === null && this.nextGlobalCol === null);
         let state = game.checkLocalState();
         if (state !== null) {
-          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col);
+          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, null, null, this.lastMove);
 
           // Draw large symbol if game is won
           if (state === 1) {
@@ -308,9 +313,9 @@ export default class GlobalGame {
           ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize / 2));
 
         } else if (isValid && this.checkGlobalState() === null) {
-          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor1(), this.playerColor2());
+          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor1(), this.playerColor2(), this.lastMove);
         } else {
-          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col);
+          game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, null, null, this.lastMove);
         }   
       }
     }
