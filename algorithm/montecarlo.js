@@ -17,13 +17,18 @@ export default function monteCarlo(game) {
         
         //console.log(lineage);
         //Selects a TreeNode that is not expanded
-        let currentLeaf = currentNode.selectLeaf(lineage); //THIS FUNCTION NEEDS SOME WORK
+        let currentLeaf = currentNode.selectLeaf(lineage)[0]; //THIS FUNCTION NEEDS SOME WORK
 
-        //Expands it and selects a child of currentLeaf to do the playout from
-        let child = currentLeaf.expandToNewLeaf();
+        if (currentNode.selectLeaf()[1]) {
+            //Expands it and selects a child of currentLeaf to do the playout from
+            var child = currentLeaf.expandToNewLeaf();
 
-        //Does the playout (random by default)
-        let result = child.playout();
+            //Does the playout (random by default)
+        } else {
+            var child = currentLeaf;
+        }
+
+        var result = child.playout();
 
         //Updates the wins, ties, losses of each TreeNode in lineage
         child.updateCounts(lineage, result);
@@ -59,12 +64,12 @@ class TreeNode {
 
     //Selects a TreeNode that has no children
     selectLeaf(lineage) {
-        //Checks if it has no children
-        if (this.children.length === 0) {
-            return this;
+        if (this.game.getValidMoves().length === 0) {
+            return [this, false];
         }
+        //Checks if it has no children
         if (this.children.length < this.game.getValidMoves().length) {
-            return this;
+            return [this, true];
         }
         //Selects the child with the highest UCB1
         let ucb1Val = 0;
@@ -80,7 +85,7 @@ class TreeNode {
         lineage.push(selectedChild);
 
         //Calls selectLeaf() on the child
-        return selectedChild.selectLeaf(lineage);
+        return [selectedChild.selectLeaf(lineage), true];
     }
 
     addChild(newChild) {
@@ -107,6 +112,7 @@ class TreeNode {
         //creates a new node from every unused move and adds it to the list of children
         let newNode = new TreeNode(this.game, this.unusedMoves.shift());
         this.addChild(newNode);
+        lineage.push(newNode);
         return newNode;
     }
 
@@ -118,23 +124,11 @@ class TreeNode {
     updateCounts(lineage, winner) {
         //a move for the current player
         for (let node of lineage) {
-            if (winner === this.game.player) {
+            if (winner === node.game.player) {
                 node.wins++;
             }
-            if (winner === -this.game.player) {
+            if (winner === -node.game.player) {
                 node.losses++;
-            }
-            if (winner === 0) {
-                node.ties++;
-            }
-        }
-        //a move for the other player
-        for (let node of lineage) {
-            if (winner === this.game.player) {
-                node.losses++;
-            }
-            if (winner === -this.game.player) {
-                node.wins++;
             }
             if (winner === 0) {
                 node.ties++;
@@ -145,9 +139,9 @@ class TreeNode {
 
 //Helper functions
 
-function playRandomGame(game) {
+function playRandomGame(startingGame) {
     //plays a random vs random game from the current state
-    var game = new GlobalGame(undefined, undefined, undefined, undefined, randomMove, randomMove);
+    var game = new GlobalGame(startingGame.globalBoard, startingGame.player, startingGame.nextGlobalRow, startingGame.nextGlobalCol, randomMove, randomMove);
 
     while (game.checkGlobalState() === null) {
         game = game.makeAlgorithmMove();
