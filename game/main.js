@@ -5,8 +5,8 @@ import GlobalGame from "./globalgame.js";
 
 // Canvas elements
 const canvas = document.querySelector(".ultimateBoard");
-const height = canvas.height = window.innerHeight - 250;
-const width = canvas.width = window.innerWidth / 2;
+var height = canvas.height = window.innerHeight - 250;
+var width = canvas.width = window.innerWidth / 2;
 
 const ctx = canvas.getContext("2d");
 
@@ -25,6 +25,11 @@ ctx.font = "48px georgia";
 const globalBoardSize = height - 50;
 const xGlobal = ((width / 2) - (globalBoardSize / 2));
 const yGlobal = ((height / 2) - (globalBoardSize / 2));
+
+window.onresize = function() {
+    height = window.innerHeight - 250;
+    width = window.innerWidth / 2;
+}
 
 function delayDrawGame() {
     setTimeout(function() {
@@ -63,20 +68,33 @@ function clickLoc(e) {
     }
 }
 
-async function checkWin() {
+function addForm() {
+    const results = document.querySelector("iframe");
+    results.src = "https://docs.google.com/forms/d/e/1FAIpQLSdWyDbQRCpcR-e2c67S-Jx3C0ND4DRgpPngV3IDv3QhI7K3Zw/viewform?embedded=true";
+    results.width = window.innerWidth / 3;
+    results.height= globalBoardSize;
+    results.frameborder = 0; 
+    results.marginheight = 0;
+    results.marginwidth = 0;
+}
+
+function checkWin() {
 
     if (ctx.game.checkGlobalState() !== null) {
         if (ctx.game.checkGlobalState() === 1) {
             document.getElementById("winmsg").innerHTML = "Game over; X wins!";
             document.getElementById("winmsg").style.display = "flex";
+            addForm();
         }
         if (ctx.game.checkGlobalState() === -1) {
             document.getElementById("winmsg").innerHTML = "Game over; O wins!";
             document.getElementById("winmsg").style.display = "flex";
+            addForm();
         }
         if (ctx.game.checkGlobalState() === 0) {
             document.getElementById("winmsg").innerHTML = "Game over; it's a tie!";
             document.getElementById("winmsg").style.display = "flex";
+            addForm();
         }
 
         canvas.removeEventListener("click", onClick);
@@ -111,6 +129,7 @@ export default function startGame(p1Algorithm, p2Algorithm) {
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
     if (p1Algorithm !== "human" && p2Algorithm !== "human") {
+
         // Two bots play each other
         while (ctx.game.checkGlobalState() === null) {
             console.log(p1Algorithm + " vs " + p2Algorithm);
