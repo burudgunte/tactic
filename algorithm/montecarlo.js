@@ -142,7 +142,7 @@ class TreeNode {
 
 function playRandomGame(startingGame) {
     //plays a random vs random game from the current state
-    var game = new GlobalGame(startingGame.globalBoard, startingGame.player, startingGame.nextGlobalRow, startingGame.nextGlobalCol, randomMove, randomMove);
+    var game = new GlobalGame(startingGame.globalBoard, startingGame.player, startingGame.nextGlobalRow, startingGame.nextGlobalCol, randomMove, randomMove, undefined);
 
     while (game.checkGlobalState() === null) {
         game = game.makeAlgorithmMove();

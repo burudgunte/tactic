@@ -35,7 +35,7 @@ function simulate(iteration, numMoves, depths, heuristic, player1 = randomMove,
      * After each move, if number of moves is an element of array numMoves, 
      * returns an array of objects with attributes depth and value. */
     let game = new GlobalGame(undefined, undefined, undefined, undefined, player1, 
-                        player2);
+                        player2, undefined);
     let move = 0;
     while (game.checkGlobalState() === null) {
         game = game.makeAlgorithmMove();
