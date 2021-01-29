@@ -1,0 +1,18 @@
+#!/usr/bin/env Rscript
+
+library(tidyverse)
+library(lubridate)
+library(rjson)
+
+# Win rate vs random over time
+alphabeta <- read_csv("./data/alphaBetaSearch.csv")
+alphabeta$Time <- ymd_hms(alphabeta$Time)
+
+png(file = "minimax_vs_random.png")
+ggplot(data = alphabeta, mapping = aes(x = Time, y = Win)) + 
+    ggtitle("TACTIC Win Rate vs Random") +
+    xlab("Time") + 
+    ylab("Games Won Out of 100") +
+    geom_point() +
+    geom_smooth(se = FALSE)
+dev.off()
