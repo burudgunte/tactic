@@ -11,17 +11,6 @@ function allSame(arr) {
   return true;
 }
 
-function drawLine(ctx, xStart, yStart, xEnd, yEnd, lineWidth = 10) {
-  ctx.beginPath();
-  ctx.moveTo(xStart, yStart);
-  ctx.lineTo(xEnd, yEnd);
-  ctx.lineWidth = lineWidth;
-  ctx.stroke();
-
-  // Reset width
-  ctx.lineWidth = 1;
-}
-
 export default class GlobalGame {
   
   constructor(globalBoard = null, player = 1, nextGlobalRow = null, nextGlobalCol = null, p1Algorithm = null, p2Algorithm = null, lastMove = null) {

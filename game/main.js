@@ -112,7 +112,8 @@ function onClick(e) {
 
         checkWin();
 
-        if (game.checkGlobalState === null && ctx.game.currentPlayerAlgorithm() !== "human") {
+
+        if (ctx.game.checkGlobalState() === null && ctx.game.currentPlayerAlgorithm() !== "human") {
             // alert("algorithm moving now");
             ctx.game = ctx.game.makeAlgorithmMove();
             delayDrawGame();
