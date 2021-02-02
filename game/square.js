@@ -43,7 +43,7 @@ export default class Square {
             ctx.fillStyle = "#393939";
         }
         if (recent) {
-            if (recent[0] === globalRow && recent[1] === globalCol && recent[2] === localRow && recent[3] === localCol) {);
+            if (recent[0] === globalRow && recent[1] === globalCol && recent[2] === localRow && recent[3] === localCol) {
                 if ((globalRow + globalCol) % 2 === 1) {
                     ctx.fillStyle = "#636363";
                 } else {
