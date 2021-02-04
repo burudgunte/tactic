@@ -105,46 +105,52 @@ function checkWin() {
 }
 
 function strikethrough(player, win) {
+    ctx.lineWidth = globalBoardSize * 1/27;
+    
     //sets the color
-    if (player === 1) {
-        ctx.fillStyle = "rgb(207, 135, 23)";
-    }
     if (player === -1) {
+        ctx.fillStyle = "rgb(207, 135, 23)";
+        ctx.strokeStyle = "rgb(207, 135, 23)";
+    }
+    if (player === 1) {
         ctx.fillStyle = "rgb(48, 120, 232)";
+        ctx.strokeStyle = "rgb(48, 120, 232)";
     }
     //does the strikethrough
     //rows
     if (win === "row0") {
-        ctx.fillRect(xGlobal, yGlobal + globalBoardSize * 1/9, globalBoardSize, globalBoardSize * 1/9);
+        ctx.fillRect(xGlobal + globalBoardSize * 1/18, yGlobal + globalBoardSize * 4/27, globalBoardSize * 8/9, globalBoardSize * 1/27);
     }
     if (win === "row1") {
-        ctx.fillRect(xGlobal, yGlobal + globalBoardSize * 4/9, globalBoardSize, globalBoardSize * 1/9);
+        ctx.fillRect(xGlobal + globalBoardSize * 1/18, yGlobal + globalBoardSize * 13/27, globalBoardSize * 8/9, globalBoardSize * 1/27);
     }
     if (win === "row2") {
-        ctx.fillRect(xGlobal, yGlobal + globalBoardSize * 7/9, globalBoardSize, globalBoardSize * 1/9);
+        ctx.fillRect(xGlobal + globalBoardSize * 1/18, yGlobal + globalBoardSize * 22/27, globalBoardSize * 8/9, globalBoardSize * 1/27);
     }
 
     //cols
     if (win === "col0") {
-        ctx.fillRect(xGlobal + globalBoardSize * 1/9, yGlobal, globalBoardSize * 1/9, globalBoardSize);
+        ctx.fillRect(xGlobal + globalBoardSize * 4/27, yGlobal + globalBoardSize * 1/18, globalBoardSize * 1/27, globalBoardSize * 8/9);
     }
     if (win === "col1") {
-        ctx.fillRect(xGlobal + globalBoardSize * 4/9, yGlobal, globalBoardSize * 1/9, globalBoardSize);
+        ctx.fillRect(xGlobal + globalBoardSize * 13/27, yGlobal + globalBoardSize * 1/18, globalBoardSize * 1/27, globalBoardSize * 8/9);
     }
     if (win === "col2") {
-        ctx.fillRect(xGlobal + globalBoardSize * 7/9, yGlobal, globalBoardSize * 1/9, globalBoardSize);
+        ctx.fillRect(xGlobal + globalBoardSize * 22/27, yGlobal + globalBoardSize * 1/18, globalBoardSize * 1/27, globalBoardSize * 8/9);
     }
 
     //diags
     if (win === "diag\\") {
-        ctx.rotate(Math.PI / 4);
-        ctx.fillRect(xGlobal + globalBoardSize * 0.85/27 * Math.SQRT2, yGlobal - globalBoardSize * 5/27 * Math.SQRT2, globalBoardSize * 8/9 * Math.SQRT2, globalBoardSize * 1/9 * Math.SQRT2);
-        ctx.rotate(-Math.PI / 4);
+        ctx.beginPath();
+        ctx.moveTo(xGlobal + globalBoardSize * 1/18, yGlobal + globalBoardSize * 1/18);
+        ctx.lineTo(xGlobal + globalBoardSize * 17/18, yGlobal + globalBoardSize * 17/18);
+        ctx.stroke();
     }
     if (win === "diag/") {
-        ctx.rotate(-Math.PI / 4);
-        ctx.fillRect(xGlobal - globalBoardSize * 14/27 * Math.SQRT2, yGlobal + globalBoardSize * 14.9/27 * Math.SQRT2, globalBoardSize * 8/9 * Math.SQRT2, globalBoardSize * 1/9 * Math.SQRT2);
-        ctx.rotate(Math.PI / 4);
+        ctx.beginPath();
+        ctx.moveTo(xGlobal + globalBoardSize * 17/18, yGlobal + globalBoardSize * 1/18);
+        ctx.lineTo(xGlobal + globalBoardSize * 1/18, yGlobal + globalBoardSize * 17/18);
+        ctx.stroke();
     }
 }
 
