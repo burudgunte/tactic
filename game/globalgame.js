@@ -305,14 +305,31 @@ export default class GlobalGame {
           game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, null, null, this.lastMove);
 
           // Draw large symbol if game is won
+          var won = false;
           if (state === 1) {
             var symbol = "X";
+            won = true;
+            if ((row + col) % 2 === 1) {
+              ctx.fillStyle = "rgb(70, 70, 70, 0.75)";
+            } else {
+              ctx.fillStyle = "rgb(57, 57, 57, 0.75)";
+            }
           } else if (state === -1) {
             var symbol = "O"
+            won = true;
+            if ((row + col) % 2 === 1) {
+              ctx.fillStyle = "rgb(70, 70, 70, 0.75)";
+            } else {
+              ctx.fillStyle = "rgb(57, 57, 57, 0.75)";
+            }
           } else {
             var symbol = ""
           }
 
+          if (won) {
+            ctx.fillRect(xLocal, yLocal, localBoardSize, localBoardSize);
+          }
+          ctx.fillStyle = "#FFF";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           let fontSize = globalBoardSize / 3;
