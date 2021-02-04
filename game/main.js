@@ -80,24 +80,71 @@ function addForm() {
 
 function checkWin() {
 
-    if (ctx.game.checkGlobalState() !== null) {
-        if (ctx.game.checkGlobalState() === 1) {
+    if (ctx.game.checkGlobalState()[0] !== null) {
+        console.log(ctx.game.checkGlobalState());
+        if (ctx.game.checkGlobalState()[0] === 1) {
+            strikethrough(1, ctx.game.checkGlobalState()[1]);
             document.getElementById("winmsg").innerHTML = "Game over; X wins!";
             document.getElementById("winmsg").style.display = "flex";
             addForm();
         }
-        if (ctx.game.checkGlobalState() === -1) {
+        if (ctx.game.checkGlobalState()[0] === -1) {
+            strikethrough(-1, ctx.game.checkGlobalState()[1]);
             document.getElementById("winmsg").innerHTML = "Game over; O wins!";
             document.getElementById("winmsg").style.display = "flex";
             addForm();
         }
-        if (ctx.game.checkGlobalState() === 0) {
+        if (ctx.game.checkGlobalState()[0] === 0) {
             document.getElementById("winmsg").innerHTML = "Game over; it's a tie!";
             document.getElementById("winmsg").style.display = "flex";
             addForm();
         }
 
         canvas.removeEventListener("click", onClick);
+    }
+}
+
+function strikethrough(player, win) {
+    //sets the color
+    if (player === 1) {
+        ctx.fillStyle = "rgb(207, 135, 23)";
+    }
+    if (player === -1) {
+        ctx.fillStyle = "rgb(48, 120, 232)";
+    }
+    //does the strikethrough
+    //rows
+    if (win === "row0") {
+        ctx.fillRect(xGlobal, yGlobal + globalBoardSize * 1/9, globalBoardSize, globalBoardSize * 1/9);
+    }
+    if (win === "row1") {
+        ctx.fillRect(xGlobal, yGlobal + globalBoardSize * 4/9, globalBoardSize, globalBoardSize * 1/9);
+    }
+    if (win === "row2") {
+        ctx.fillRect(xGlobal, yGlobal + globalBoardSize * 7/9, globalBoardSize, globalBoardSize * 1/9);
+    }
+
+    //cols
+    if (win === "col0") {
+        ctx.fillRect(xGlobal + globalBoardSize * 1/9, yGlobal, globalBoardSize * 1/9, globalBoardSize);
+    }
+    if (win === "col1") {
+        ctx.fillRect(xGlobal + globalBoardSize * 4/9, yGlobal, globalBoardSize * 1/9, globalBoardSize);
+    }
+    if (win === "col2") {
+        ctx.fillRect(xGlobal + globalBoardSize * 7/9, yGlobal, globalBoardSize * 1/9, globalBoardSize);
+    }
+
+    //diags
+    if (win === "diag\\") {
+        ctx.rotate(Math.PI / 4);
+        ctx.fillRect(xGlobal + globalBoardSize * 0.85/27 * Math.SQRT2, yGlobal - globalBoardSize * 5/27 * Math.SQRT2, globalBoardSize * 8/9 * Math.SQRT2, globalBoardSize * 1/9 * Math.SQRT2);
+        ctx.rotate(-Math.PI / 4);
+    }
+    if (win === "diag/") {
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillRect(xGlobal - globalBoardSize * 14/27 * Math.SQRT2, yGlobal + globalBoardSize * 14.9/27 * Math.SQRT2, globalBoardSize * 8/9 * Math.SQRT2, globalBoardSize * 1/9 * Math.SQRT2);
+        ctx.rotate(Math.PI / 4);
     }
 }
 
@@ -113,7 +160,7 @@ function onClick(e) {
         checkWin();
 
 
-        if (ctx.game.checkGlobalState() === null && ctx.game.currentPlayerAlgorithm() !== "human") {
+        if (ctx.game.checkGlobalState()[0] === null && ctx.game.currentPlayerAlgorithm() !== "human") {
             // alert("algorithm moving now");
             ctx.game = ctx.game.makeAlgorithmMove();
             delayDrawGame();
@@ -126,7 +173,6 @@ function onClick(e) {
 }
 
 export default function startGame(p1Algorithm, p2Algorithm) {
-    
     if(document.querySelector("iframe")) {
         // Hide result form
         document.querySelector("iframe").removeAttribute("src");
@@ -135,10 +181,11 @@ export default function startGame(p1Algorithm, p2Algorithm) {
     ctx.game = new GlobalGame(undefined, undefined, undefined, undefined, p1Algorithm, p2Algorithm);
     ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
 
+
     if (p1Algorithm !== "human" && p2Algorithm !== "human") {
 
         // Two bots play each other
-        while (ctx.game.checkGlobalState() === null) {
+        while (ctx.game.checkGlobalState()[0] === null) {
             console.log(p1Algorithm + " vs " + p2Algorithm);
             ctx.game = ctx.game.makeAlgorithmMove();
             // TODO: wait one second before next iteration

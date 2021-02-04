@@ -37,7 +37,7 @@ function simulate(iteration, numMoves, depths, heuristic, player1 = randomMove,
     let game = new GlobalGame(undefined, undefined, undefined, undefined, player1, 
                         player2, undefined);
     let move = 0;
-    while (game.checkGlobalState() === null) {
+    while (game.checkGlobalState()[0] === null) {
         game = game.makeAlgorithmMove();
         move++;
         // console.log("now on move " + move);

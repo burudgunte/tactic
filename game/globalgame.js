@@ -159,7 +159,7 @@ export default class GlobalGame {
     /* Applies the appropriate algorithm. Returns a 
     new GlobalGame object representing the old game with 
     the recommended move. */
-
+    console.log(this.checkGlobalState());
     let algorithm = this.p1Algorithm;
     if (this.player === -1) {
       algorithm = this.p2Algorithm;
@@ -187,63 +187,81 @@ export default class GlobalGame {
     let newGame = this.makeGlobalMove(nextMove.globalRow, nextMove.globalCol, nextMove.localRow, nextMove.localCol);
     return newGame;
   }
-
-
+  
   checkRowWin() {
-    for (let i = 0; i < 3; i++) {
-      if (allSame([1, this.globalBoard[i][0].checkLocalState(), this.globalBoard[i][1].checkLocalState(), this.globalBoard[i][2].checkLocalState()])) {
-        return 1;
-      } else if (allSame([-1, this.globalBoard[i][0].checkLocalState(), this.globalBoard[i][1].checkLocalState(), this.globalBoard[i][2].checkLocalState()])) {
-        return -1;
+    for (let j = 0; j < 3; j++) {
+      if (allSame([1, this.globalBoard[0][j].checkLocalState(), this.globalBoard[1][j].checkLocalState(), this.globalBoard[2][j].checkLocalState()])) {
+        return [1, j];
+      } else if (allSame([-1, this.globalBoard[0][j].checkLocalState(), this.globalBoard[1][j].checkLocalState(), this.globalBoard[2][j].checkLocalState()])) {
+        return [-1, j];
       }
     }
-    return null;
+    return [null, null];
   }
 
   checkColWin() {
-    for (let j = 0; j < 3; j++) {
-      if (allSame([1, this.globalBoard[0][j].checkLocalState(), this.globalBoard[1][j].checkLocalState(), this.globalBoard[2][j].checkLocalState()])) {
-        return 1;
-      } else if (allSame([-1, this.globalBoard[0][j].checkLocalState(), this.globalBoard[1][j].checkLocalState(), this.globalBoard[2][j].checkLocalState()])) {
-        return -1;
+    for (let i = 0; i < 3; i++) {
+      if (allSame([1, this.globalBoard[i][0].checkLocalState(), this.globalBoard[i][1].checkLocalState(), this.globalBoard[i][2].checkLocalState()])) {
+        return [1, i];
+      } else if (allSame([-1, this.globalBoard[i][0].checkLocalState(), this.globalBoard[i][1].checkLocalState(), this.globalBoard[i][2].checkLocalState()])) {
+        return [-1, i];
       }
     }
-    return null;
+    return [null, null];
   }
 
   checkDiagWin() {
     //top left to bottom right
     if (allSame([1, this.globalBoard[0][0].checkLocalState(), this.globalBoard[1][1].checkLocalState(), this.globalBoard[2][2].checkLocalState()])) {
-      return 1;
+      return [1, "\\"];
     }
     if (allSame([-1, this.globalBoard[0][0].checkLocalState(), this.globalBoard[1][1].checkLocalState(), this.globalBoard[2][2].checkLocalState()])) {
-      return -1;
+      return [-1, "\\"];
     }
     //top right to bottom left
     if (allSame([1, this.globalBoard[2][0].checkLocalState(), this.globalBoard[1][1].checkLocalState(), this.globalBoard[0][2].checkLocalState()])) {
-      return 1;
+      return [1, "/"];
     }
     if (allSame([-1, this.globalBoard[2][0].checkLocalState(), this.globalBoard[1][1].checkLocalState(), this.globalBoard[0][2].checkLocalState()])) {
-      return -1;
+      return [-1, "/"];
     }
-    return null;
+    return [null, null];
   }
 
   checkGlobalState() {
-    if (this.checkRowWin() === 1 || this.checkColWin() === 1 || this.checkDiagWin() === 1) {
-      return 1;
+    if (this.checkRowWin()[0] === 1) {
+      return [1, "row" + this.checkRowWin()[1]];
     }
-    if (this.checkRowWin() === -1 || this.checkColWin() === -1 || this.checkDiagWin() === -1) {
-      return -1;
+
+    if (this.checkColWin()[0] === 1) {
+      return [1, "col" + this.checkColWin()[1]];
     }
+
+    if (this.checkDiagWin()[0] === 1) {
+      return [1, "diag" + this.checkDiagWin()[1]];
+    }
+
+
+    if (this.checkRowWin()[0] === -1) {
+      return [-1, "row" + this.checkRowWin()[1]];
+    }
+
+    if (this.checkColWin()[0] === -1) {
+      return [-1,  "col" + this.checkColWin()[1]];
+    }
+
+    if (this.checkDiagWin()[0] === -1) {
+      return [-1, "diag" + this.checkDiagWin()[1]];
+    }
+
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (this.getlocalGame(i, j).checkLocalState() === null) {
-          return null;
+          return [null, null];
         }
       }
     }
-    return 0;
+    return [0, null];
   }
 
   playerColor1() {
@@ -301,7 +319,7 @@ export default class GlobalGame {
           ctx.font = fontSize + "px georgia";
           ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize / 2));
 
-        } else if (isValid && this.checkGlobalState() === null) {
+        } else if (isValid && this.checkGlobalState()[0] === null) {
           game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor1(), this.playerColor2(), this.lastMove);
         } else {
           game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, null, null, this.lastMove);

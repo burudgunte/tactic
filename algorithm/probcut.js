@@ -8,7 +8,7 @@ const SHALLOW = 5; // Shallow depth for initial search
 const DEEP = 8; // Deep depth if probability warrants
 
 function maxValue(game, depth, alpha, beta, heuristic) {
-    if (game.checkGlobalState() !== null || depth === 0) {
+    if (game.checkGlobalState()[0] !== null || depth === 0) {
         // Terminal state or deep depth reached
         return [heuristic(game), null];
     }
@@ -45,7 +45,7 @@ function maxValue(game, depth, alpha, beta, heuristic) {
 }
 
 function minValue(game, depth, alpha, beta, heuristic) {
-    if (game.checkGlobalState() !== null || depth === 0) {
+    if (game.checkGlobalState()[0] !== null || depth === 0) {
         // Teriminal state or deep depth reached
         return [heuristic(game), null];
     }

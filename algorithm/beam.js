@@ -16,7 +16,7 @@ function sortByHeuristic(game, possibleMoves, heuristic = heuristicA) {
 }
 
 function maxValue(game, depth, beta) {
-    if (game.checkGlobalState() !== null || depth === 0) {
+    if (game.checkGlobalState()[0] !== null || depth === 0) {
         return [heuristicA(game), null];
     }
     let maxUtility = Number.NEGATIVE_INFINITY;
@@ -34,7 +34,7 @@ function maxValue(game, depth, beta) {
 }
 
 function minValue(game, depth, beta) {
-    if (game.checkGlobalState() !== null || depth === 0) {
+    if (game.checkGlobalState()[0] !== null || depth === 0) {
         return [heuristicA(game), null];
     }
     let maxUtility = Number.POSITIVE_INFINITY;

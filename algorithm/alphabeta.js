@@ -1,7 +1,7 @@
 import heuristicA from "./heuristics.js";
 
 function maxValue(game, depth, alpha, beta, heuristic) {
-    if (game.checkGlobalState() !== null || depth === 0) {
+    if (game.checkGlobalState()[0] !== null || depth === 0) {
         return [heuristic(game), null];
     }
     let maxUtility = Number.NEGATIVE_INFINITY;
@@ -23,7 +23,7 @@ function maxValue(game, depth, alpha, beta, heuristic) {
 }
 
 function minValue(game, depth, alpha, beta, heuristic) {
-    if (game.checkGlobalState() !== null || depth === 0) {
+    if (game.checkGlobalState()[0] !== null || depth === 0) {
         return [heuristic(game), null];
     }
     let minUtility = Number.POSITIVE_INFINITY;

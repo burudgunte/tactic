@@ -254,8 +254,8 @@ heuristics
 //my first attempt at a positional heuristic
 export default function heuristicA(game) {
     //checks if game over
-    if (game.checkGlobalState() !== null) {
-        return game.checkGlobalState();
+    if (game.checkGlobalState()[0] !== null) {
+        return game.checkGlobalState()[0];
     }
 
     let heuristic = 0;

@@ -28,7 +28,7 @@ function playGame(p1Algorithm, p2Algorithm) {
     }
 
     let move = 0;
-    while (game.checkGlobalState() === null) {
+    while (game.checkGlobalState()[0] === null) {
         game = game.makeAlgorithmMove();
         move++;
     }
