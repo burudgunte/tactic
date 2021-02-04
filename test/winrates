@@ -1,8 +1,10 @@
 #!/usr/bin/env Rscript
 
+install.packages("tidyverse")
+install.packages("lubridate")
+
 library(tidyverse)
 library(lubridate)
-library(rjson)
 
 # Win rate vs random over time
 alphabeta <- read_csv("./data/alphaBetaSearch.csv")
@@ -16,3 +18,8 @@ ggplot(data = alphabeta, mapping = aes(x = Time, y = Win)) +
     geom_point() +
     geom_smooth(se = FALSE)
 dev.off()
+
+# Win rates vs humans over time 
+vshumans <- read_csv("./data/minimax_vs_humans.csv")
+vshumans$X <- vshumans$("Who played X?")
+vshumans$O <- vshumans$("Who played O?")
