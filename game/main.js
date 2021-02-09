@@ -109,10 +109,10 @@ function logResult () {
         type:'post',
         data: result,
         success: function() {
-          alert("Form Data Submitted")
+          return;
         },
-        error: function(){
-          alert("There was an error")
+        error: function() {
+          return;
         }
     });
 }
@@ -120,27 +120,27 @@ function logResult () {
 function checkWin() {
 
     if (ctx.game.checkGlobalState()[0] !== null) {
-        console.log(ctx.game.checkGlobalState());
+
         if (ctx.game.checkGlobalState()[0] === 1) {
             strikethrough(1, ctx.game.checkGlobalState()[1]);
             document.getElementById("winmsg").innerHTML = "Game over; X wins!";
             document.getElementById("winmsg").style.display = "flex";
-            logResult();
         }
         if (ctx.game.checkGlobalState()[0] === -1) {
             strikethrough(-1, ctx.game.checkGlobalState()[1]);
             document.getElementById("winmsg").innerHTML = "Game over; O wins!";
             document.getElementById("winmsg").style.display = "flex";
-            logResult();
         }
         if (ctx.game.checkGlobalState()[0] === 0) {
             document.getElementById("winmsg").innerHTML = "Game over; it's a tie!";
             document.getElementById("winmsg").style.display = "flex";
-            logResult();
         }
 
         canvas.removeEventListener("click", onClick);
+        logResult();
     }
+
+    canvas.addEventListener("click", onClick)
 }
 
 function strikethrough(player, win) {
@@ -214,12 +214,10 @@ function onClick(e) {
             // alert("algorithm moving now");
             ctx.game = ctx.game.makeAlgorithmMove();
             delayDrawGame();
+            checkWin();
         }
 
-        checkWin();
     }
-
-    canvas.addEventListener("click", onClick);
 }
 
 export default function startGame(p1Algorithm, p2Algorithm) {
