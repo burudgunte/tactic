@@ -159,7 +159,6 @@ export default class GlobalGame {
     /* Applies the appropriate algorithm. Returns a 
     new GlobalGame object representing the old game with 
     the recommended move. */
-    console.log(this.checkGlobalState());
     let algorithm = this.p1Algorithm;
     if (this.player === -1) {
       algorithm = this.p2Algorithm;

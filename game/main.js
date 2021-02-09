@@ -68,14 +68,53 @@ function clickLoc(e) {
     }
 }
 
-function addForm() {
-    const results = document.querySelector("iframe");
-    results.src = "https://docs.google.com/forms/d/e/1FAIpQLSdWyDbQRCpcR-e2c67S-Jx3C0ND4DRgpPngV3IDv3QhI7K3Zw/viewform?embedded=true";
-    results.width = window.innerWidth / 3;
-    results.height= globalBoardSize;
-    results.frameborder = 0; 
-    results.marginheight = 0;
-    results.marginwidth = 0;
+function algToString(algorithm) {
+    // Converts algorithm to human-readable string for logging
+    switch(algorithm) {
+        case "human":
+            return "Human";
+        case "easy":
+            return "Computer - Easy";
+        case "medium":
+            return "Computer - Medium";
+        case  "hard":
+            return "Computer - Hard";
+        default:
+            return algorithm;
+    }
+}
+
+function logResult () {
+    let winner = ctx.game.checkGlobalState()[0];
+    switch(winner) {
+        case 1:
+            winner = "X";
+            break;
+        case -1:
+            winner = "O";
+            break;
+        case 0:
+            winner = "Tie";
+            break;
+    }
+    const result = {
+        "Date": new Date(),
+        "X": algToString(ctx.game.p1Algorithm),
+        "O": algToString(ctx.game.p2Algorithm),
+        "Winner": winner
+    };
+
+    $.ajax({
+        url:'https://api.apispreadsheets.com/data/7902/',
+        type:'post',
+        data: result,
+        success: function() {
+          alert("Form Data Submitted")
+        },
+        error: function(){
+          alert("There was an error")
+        }
+    });
 }
 
 function checkWin() {
@@ -86,18 +125,18 @@ function checkWin() {
             strikethrough(1, ctx.game.checkGlobalState()[1]);
             document.getElementById("winmsg").innerHTML = "Game over; X wins!";
             document.getElementById("winmsg").style.display = "flex";
-            addForm();
+            logResult();
         }
         if (ctx.game.checkGlobalState()[0] === -1) {
             strikethrough(-1, ctx.game.checkGlobalState()[1]);
             document.getElementById("winmsg").innerHTML = "Game over; O wins!";
             document.getElementById("winmsg").style.display = "flex";
-            addForm();
+            logResult();
         }
         if (ctx.game.checkGlobalState()[0] === 0) {
             document.getElementById("winmsg").innerHTML = "Game over; it's a tie!";
             document.getElementById("winmsg").style.display = "flex";
-            addForm();
+            logResult();
         }
 
         canvas.removeEventListener("click", onClick);
