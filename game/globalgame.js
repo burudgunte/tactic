@@ -333,7 +333,7 @@ export default class GlobalGame {
           ctx.textBaseline = "middle";
           let fontSize = globalBoardSize / 3;
           ctx.font = fontSize + "px georgia";
-          ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize / 2));
+          ctx.fillText(symbol, xLocal + (localBoardSize / 2), yLocal + (localBoardSize * 0.58));
 
         } else if (isValid && this.checkGlobalState()[0] === null) {
           game.draw(ctx, xLocal, yLocal, localBoardSize, row, col, this.playerColor1(), this.playerColor2(), this.lastMove);
