@@ -203,7 +203,7 @@ function onClick(e) {
     // canvas.removeEventListener("click", onClick); // Prevent a second click before move is played
     const coords = clickLoc(e);
 
-    if (coords && ctx.game.p1Algorithm === "human" && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
+    if (coords && ctx.game.currentPlayerAlgorithm() === "human" && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
         canvas.removeEventListener("click", onClick);
         // play move
         ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
