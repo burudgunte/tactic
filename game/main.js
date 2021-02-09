@@ -152,6 +152,11 @@ function strikethrough(player, win) {
         ctx.lineTo(xGlobal + globalBoardSize * 1/18, yGlobal + globalBoardSize * 17/18);
         ctx.stroke();
     }
+
+    //resets line width and color
+    ctx.strokeStyle = "rgb(0, 0, 0)";
+    ctx.lineWidth = 1;
+
 }
 
 function onClick(e) {
