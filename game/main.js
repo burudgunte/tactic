@@ -37,37 +37,6 @@ function delayDrawGame() {
     }, 1000)
 }
 
-function clickLoc(e) {
-    /* Returns location of the click:
-        - null if outside the board
-        - object with attributes globalCol, globalRow, 
-        localCol, and localRow if inside the board */
-    
-    // Relative coordinates with respect to board
-    const xClick = e.clientX - canvas.offsetLeft - xGlobal;
-    const yClick =  e.clientY - canvas.offsetTop - yGlobal;
-
-    const xInBounds = (xClick > 0 && xClick < globalBoardSize);
-    const yInBounds = (yClick > 0 && yClick < globalBoardSize);
-
-    if (xInBounds && yInBounds) {
-        // Click is on board
-        const col = Math.floor(yClick / (globalBoardSize / 9));
-        const row = Math.floor(xClick / (globalBoardSize / 9));
-
-        const coords = {
-            globalRow: Math.floor(row / 3),
-            globalCol: Math.floor(col / 3),
-            localRow: row % 3,
-            localCol: col % 3
-        };
-        return coords;
-    
-    } else {
-        return null;
-    }
-}
-
 function algToString(algorithm) {
     // Converts algorithm to human-readable string for logging
     switch(algorithm) {
@@ -115,32 +84,6 @@ function logResult () {
           return;
         }
     });
-}
-
-function checkWin() {
-
-    if (ctx.game.checkGlobalState()[0] !== null) {
-
-        if (ctx.game.checkGlobalState()[0] === 1) {
-            strikethrough(1, ctx.game.checkGlobalState()[1]);
-            document.getElementById("winmsg").innerHTML = "Game over; X wins!";
-            document.getElementById("winmsg").style.display = "flex";
-        }
-        if (ctx.game.checkGlobalState()[0] === -1) {
-            strikethrough(-1, ctx.game.checkGlobalState()[1]);
-            document.getElementById("winmsg").innerHTML = "Game over; O wins!";
-            document.getElementById("winmsg").style.display = "flex";
-        }
-        if (ctx.game.checkGlobalState()[0] === 0) {
-            document.getElementById("winmsg").innerHTML = "Game over; it's a tie!";
-            document.getElementById("winmsg").style.display = "flex";
-        }
-
-        canvas.removeEventListener("click", onClick);
-        logResult();
-    }
-
-    canvas.addEventListener("click", onClick)
 }
 
 function strikethrough(player, win) {
@@ -198,11 +141,70 @@ function strikethrough(player, win) {
 
 }
 
+function checkWin() {
+
+    if (ctx.game.checkGlobalState()[0] !== null) {
+
+        if (ctx.game.checkGlobalState()[0] === 1) {
+            strikethrough(1, ctx.game.checkGlobalState()[1]);
+            document.getElementById("winmsg").innerHTML = "Game over; X wins!";
+            document.getElementById("winmsg").style.display = "flex";
+        }
+        if (ctx.game.checkGlobalState()[0] === -1) {
+            strikethrough(-1, ctx.game.checkGlobalState()[1]);
+            document.getElementById("winmsg").innerHTML = "Game over; O wins!";
+            document.getElementById("winmsg").style.display = "flex";
+        }
+        if (ctx.game.checkGlobalState()[0] === 0) {
+            document.getElementById("winmsg").innerHTML = "Game over; it's a tie!";
+            document.getElementById("winmsg").style.display = "flex";
+        }
+
+        canvas.removeEventListener("click", onClick);
+        logResult();
+    } else {
+        canvas.addEventListener("click", onClick);
+    }
+
+}
+
+function clickLoc(e) {
+    /* Returns location of the click:
+        - null if outside the board
+        - object with attributes globalCol, globalRow, 
+        localCol, and localRow if inside the board */
+    
+    // Relative coordinates with respect to board
+    const xClick = e.clientX - canvas.offsetLeft - xGlobal;
+    const yClick =  e.clientY - canvas.offsetTop - yGlobal;
+
+    const xInBounds = (xClick > 0 && xClick < globalBoardSize);
+    const yInBounds = (yClick > 0 && yClick < globalBoardSize);
+
+    if (xInBounds && yInBounds) {
+        // Click is on board
+        const col = Math.floor(yClick / (globalBoardSize / 9));
+        const row = Math.floor(xClick / (globalBoardSize / 9));
+
+        const coords = {
+            globalRow: Math.floor(row / 3),
+            globalCol: Math.floor(col / 3),
+            localRow: row % 3,
+            localCol: col % 3
+        };
+        return coords;
+    
+    } else {
+        return null;
+    }
+}
+
 function onClick(e) {
-    canvas.removeEventListener("click", onClick); // Prevent a second click before move is played
+    // canvas.removeEventListener("click", onClick); // Prevent a second click before move is played
     const coords = clickLoc(e);
 
-    if (coords && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
+    if (coords && ctx.game.p1Algorithm === "human" && ctx.game.isValidMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol)) {
+        canvas.removeEventListener("click", onClick);
         // play move
         ctx.game = ctx.game.makeGlobalMove(coords.globalRow, coords.globalCol, coords.localRow, coords.localCol);
         ctx.game.draw(ctx, xGlobal, yGlobal, globalBoardSize);
