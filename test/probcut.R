@@ -1,6 +1,6 @@
 # Linear regression for depth 4 vs depth 9, 25 moves in
 
-probcut <- read_csv("./depth25.csv") 
+probcut <- read_csv("./data/depth25.csv") 
 probcut$Depth5 <- probcut$`5`
 probcut$Depth8 <- probcut$`8`
 
