@@ -1,8 +1,4 @@
 #!/usr/bin/env Rscript
-
-install.packages("tidyverse")
-install.packages("lubridate")
-
 library(tidyverse)
 library(lubridate)
 
@@ -19,7 +15,52 @@ ggplot(data = alphabeta, mapping = aes(x = Time, y = Win)) +
     geom_smooth(se = FALSE)
 dev.off()
 
-# Win rates vs humans over time 
-vshumans <- read_csv("./data/minimax_vs_humans.csv")
-vshumans$X <- vshumans$("Who played X?")
-vshumans$O <- vshumans$("Who played O?")
+# Win rate vs humans
+vshumans <- read_csv("./data/vshumans.csv")
+
+get_stats <- function(df, player) {
+    df_X <- filter(df, X == player) 
+    df_O <- filter(df, O == player)
+
+    wins <- sum(df_X$Winner == "X") + sum(df_O$Winner == "O")
+    losses <- sum(df_X$Winner == "O") + sum(df_O$Winner == "X")
+    ties <- sum(df_X$Winner == "Tie") + sum(df_O$Winner == "Tie")
+    total_games <- nrow(df_X) + nrow(df_O)
+
+    return(c(wins, losses, ties, total_games))
+}
+
+players <- c("Computer - Easy", "Computer - Medium", "Computer - Hard")
+wins <- vector("double", 3)
+losses <- vector("double", 3)
+ties <- vector("double", 3)
+games_played <- vector("integer", 3)
+
+for (i in seq_along(players)) {
+    stats <- get_stats(vshumans, players[[i]])
+    wins[[i]] = stats[[1]]
+    losses[[i]] = stats[[2]]
+    ties[[i]] = stats[[3]]
+    games_played[[i]] = stats[[4]]
+}
+
+averages <- (wins + 0.5 * ties) / games_played
+summary <- rbind(
+                data.frame("Difficulty" = players, "games" = ties, "type" = "ties"),
+                data.frame("Difficulty" = players, "games" = losses, "type" = "losses"),
+                data.frame("Difficulty" = players, "games" = wins, "type" = "wins")
+                ) 
+summary$Difficulty <- factor(summary$Difficulty, levels = c("Computer - Easy", 
+                                                            "Computer - Medium",
+                                                            "Computer - Hard"))
+print(summary)
+color <- c("#FFBF00", "#D2222D", "#238823")
+
+png(file = "minimax_vs_humans.png")
+ggplot(data = summary, mapping = aes(x = Difficulty, y = games, fill = type)) +
+    ggtitle("TACTIC Performance vs Humans") + 
+    ylab("Games Played") + 
+    geom_col() +
+    scale_fill_manual(values = color) +
+    theme(legend.title = element_blank())
+dev.off()
