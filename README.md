@@ -16,7 +16,6 @@ implemented [Monte Carlo tree search](https://en.wikipedia.org/wiki/Monte_Carlo_
 In development, we tested TACTIC against randomly-generated moves.
 As we collect data, we'll update the tracker with the algorithm's performance
 against human opponents.
+![TACTIC Performance vs Humans](./test/plots/minimax_vs_humans.png)
 
-![TACTIC Win Rate vs Random](./test/minimax_vs_random.png)
-
-![TACTIC Performance vs Humans](./test/minimax_vs_humans.png)
+![TACTIC Win Rate vs Random](./test/plots/minimax_vs_random.png)
