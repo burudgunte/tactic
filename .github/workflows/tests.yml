@@ -7,5 +7,5 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: ./test/winloss alphaBetaSearch
+      - run: ./test/autoplay.mjs alphaBetaSearch 10
         shell: bash

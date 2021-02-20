@@ -3,10 +3,10 @@ library(tidyverse)
 library(lubridate)
 
 # Win rate vs random over time
-alphabeta <- read_csv("./data/alphaBetaSearch.csv")
+alphabeta <- read_csv("./test/data/alphaBetaSearch.csv")
 alphabeta$Time <- ymd_hms(alphabeta$Time)
 
-png(file = "minimax_vs_random.png")
+png(file = "./test/plots/minimax_vs_random.png")
 ggplot(data = alphabeta, mapping = aes(x = Time, y = Win)) + 
     ggtitle("TACTIC Win Rate vs Random") +
     xlab("Time") + 
@@ -16,7 +16,7 @@ ggplot(data = alphabeta, mapping = aes(x = Time, y = Win)) +
 dev.off()
 
 # Win rate vs humans
-vshumans <- read_csv("./data/vshumans.csv")
+vshumans <- read_csv("./test/data/vshumans.csv")
 
 get_stats <- function(df, player) {
     df_X <- filter(df, X == player) 
@@ -56,7 +56,7 @@ summary$Difficulty <- factor(summary$Difficulty, levels = c("Computer - Easy",
 print(summary)
 color <- c("#FFBF00", "#D2222D", "#238823")
 
-png(file = "minimax_vs_humans.png")
+png(file = "./test/plots/minimax_vs_humans.png")
 ggplot(data = summary, mapping = aes(x = Difficulty, y = games, fill = type)) +
     ggtitle("TACTIC Performance vs Humans") + 
     ylab("Games Played") + 

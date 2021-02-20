@@ -1,0 +1,20 @@
+name: stats
+on:
+  schedule:
+  - cron: 0 0 * * *
+
+jobs:
+  update_stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./test/datacollection
+        shell: bash
+      - run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "github-actions"  
+          git commit -am "Update win tracker"
+      - uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

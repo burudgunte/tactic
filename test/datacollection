@@ -6,6 +6,6 @@ import pandas as pd
 def get_results(url = "https://api.apispreadsheets.com/data/7902/?dataFormat=column"):
     r = requests.get(url)
     results = pd.read_json(r.text)
-    results.to_csv("./data/vshumans.csv")
+    results.to_csv("./test/data/vshumans.csv")
 
 get_results()
