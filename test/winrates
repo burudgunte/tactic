@@ -18,6 +18,7 @@ dev.off()
 # Win rate vs humans
 vshumans <- read_csv("./test/data/vshumans.csv")
 
+# Get results in terms of players
 get_stats <- function(df, player) {
     df_X <- filter(df, X == player) 
     df_O <- filter(df, O == player)
@@ -44,7 +45,8 @@ for (i in seq_along(players)) {
     games_played[[i]] = stats[[4]]
 }
 
-averages <- (wins + 0.5 * ties) / games_played
+averages <- (wins) / games_played
+print(averages)
 summary <- rbind(
                 data.frame("Difficulty" = players, "games" = ties, "type" = "ties"),
                 data.frame("Difficulty" = players, "games" = losses, "type" = "losses"),
@@ -53,7 +55,6 @@ summary <- rbind(
 summary$Difficulty <- factor(summary$Difficulty, levels = c("Computer - Easy", 
                                                             "Computer - Medium",
                                                             "Computer - Hard"))
-print(summary)
 color <- c("#FFBF00", "#D2222D", "#238823")
 
 png(file = "./test/plots/minimax_vs_humans.png")
