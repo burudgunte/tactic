@@ -101,8 +101,8 @@ class TreeNode {
         let numPlayouts = 0;
         let toReturn = this.children[0];
         for (let child of this.children) {
-            if (numPlayouts < child.wins) {
-                numPlayouts = child.wins;
+            if (numPlayouts < child.wins + child.losses + child.ties) {
+                numPlayouts = child.wins + child.losses + child.ties;
                 toReturn = child;
             }
         }
